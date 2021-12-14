@@ -1,0 +1,9 @@
+# visual studio files
+.vscode
+
+# development related files
+*.o
+*.a
+
+# executables
+minishell
