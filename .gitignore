@@ -2,8 +2,12 @@
 .vscode
 
 # development related files
+test*.c
 *.o
 *.a
+
+# other files
+*.txt
 
 # executables
 minishell

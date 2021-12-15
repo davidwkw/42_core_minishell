@@ -2,7 +2,7 @@
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
 LDFLAGS	= -L$(LIBFT_PATH)
-LDLIBS	= -lft
+LDLIBS	= -lft -lreadline
 
 # define source and object files
 SRCS	=	
@@ -16,7 +16,7 @@ NAME		=	minishell
 
 all: $(NAME)
 
-$(NAME): $(LIBFT)
+$(NAME): $(LIBFT) $(MAIN)
 	$(CC) $(CFLAGS) -o $(NAME) $(MAIN) $(LDFLAGS) $(LDLIBS)
 
 $(LIBFT):
