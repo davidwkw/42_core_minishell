@@ -1,29 +1,40 @@
 # define variables used by implicit rule
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
-LDFLAGS	= -L$(LIBFT_PATH)
-LDLIBS	= -lft -lreadline
+LDFLAGS	= -L$(LIBFT_PATH) -L.
+LDLIBS	= -lft -lminishell -lreadline
 
 # define source and object files
-SRCS	=	
+SRCS	=	builtin_cd.c \
+			builtin_echo.c \
+			builtin_env.c \
+			builtin_exit.c \
+			builtin_export.c \
+			builtin_pwd.c \
+			builtin_unset.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
 
 # other variables
 LIBFT_PATH	=	./libft
 LIBFT		=	$(LIBFT_PATH)/libft.a
+LIBRARY		=	libminishell.a
 NAME		=	minishell
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(MAIN)
+$(NAME): $(LIBFT) $(LIBRARY) $(MAIN)
 	$(CC) $(CFLAGS) -o $(NAME) $(MAIN) $(LDFLAGS) $(LDLIBS)
+
+$(LIBRARY): $(OBJS)
+	$(AR) -crs $(LIBRARY) $(OBJS)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_PATH)
 
 clean:
 	$(RM) $(OBJS)
+	$(RM) $(LIBRARY)
 	$(MAKE) clean -C $(LIBFT_PATH)
 
 fclean: clean
