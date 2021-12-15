@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2021/12/15 14:43:09 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/15 17:07:54 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,23 @@ static int	ft_fork_exec(char **args)
 /* Execute a built-in commands, or an external program. */
 static int	ft_builtin_or_execute(char **args)
 {
+	const char	*built_in[] = {"echo", "cd", "pwd",
+							   "export", "unset", "env", "exit"};
+	static int	(*func[])(char **) = {&ft_echo, &ft_cd, &ft_pwd,
+									  &ft_export, &ft_unset, &ft_env, &ft_exit};
+	int			n;
+	int			i;
+
+	n = sizeof(built_in) / sizeof(built_in[0]);
 	if (*args == NULL)
 		return (1);
+	i = 0;
+	while (i < n)
+	{
+		if (ft_strncmp(args[0], built_in[i], ft_strlen(built_in[i]) + 1) == 0)
+			return (func[i](args));
+		i++;
+	}
 	return (ft_fork_exec(args));
 }
 
