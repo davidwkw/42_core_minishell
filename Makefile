@@ -1,8 +1,8 @@
 # define variables used by implicit rule
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
-LDFLAGS	= -L$(LIBFT_PATH) -L.
-LDLIBS	= -lft -lminishell -lreadline
+LDFLAGS	= -L. -L$(LIBFT_PATH)
+LDLIBS	= -lminishell -lft -lreadline
 
 # define source and object files
 SRCS	=	builtin_cd.c \
