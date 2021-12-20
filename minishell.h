@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2021/12/16 14:58:46 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/20 16:31:41 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,23 @@
 # include <unistd.h>
 # include "libft/libft.h"
 
+// environment variables
+extern char	**environ;
+extern char	**g_environ;
+
+// environment variable functions
+size_t	ft_memsize(const char **arr);
+char	**ft_memdup(const char **arr);
+char	**ft_memresize(char **arr, size_t size);
+void	ft_memdel(char **arr);
+
 // built-in functions
-int	ft_cd(char **args);
-int	ft_echo(char **args);
-int	ft_env(char **args);
-int	ft_exit(char **args);
-int	ft_export(char **args);
-int	ft_pwd(char **args);
-int	ft_unset(char **args);
+int		ft_cd(char **args);
+int		ft_echo(char **args);
+int		ft_env(char **args);
+int		ft_exit(char **args);
+int		ft_export(char **args);
+int		ft_pwd(char **args);
+int		ft_unset(char **args);
 
 #endif

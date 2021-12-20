@@ -11,7 +11,8 @@ SRCS	=	builtin_cd.c \
 			builtin_exit.c \
 			builtin_export.c \
 			builtin_pwd.c \
-			builtin_unset.c
+			builtin_unset.c \
+			environment.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
 

@@ -6,11 +6,13 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2021/12/15 17:07:54 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/20 17:28:17 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**g_environ;
 
 /*
 Forks the process, and the child executes the command. Parent returns 
@@ -90,6 +92,8 @@ static void	ft_loop(void)
 
 int	main(void)
 {
+	g_environ = ft_memdup((const char **) environ);
 	ft_loop();
+	ft_memdel(g_environ);
 	return (EXIT_SUCCESS);
 }
