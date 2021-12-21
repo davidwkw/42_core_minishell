@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/16 14:08:09 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/21 14:10:22 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,23 @@ non-numeric argument is given, n = 2 is used instead.
 int	ft_exit(char **args)
 {
 	long long	n;
+	char		*input;
 	char		*str;
 
 	if (args[1] != NULL)
-	{
-		n = ft_atoll(args[1]);
-		str = ft_lltoa_base(n, "0123456789");
-		if (ft_strncmp(str, args[1], ft_strlen(args[1]) + 1) == 0)
-			n = ((n % 256) + 256) % 256;
-		else
-		{
-			n = 2;
-			ft_putstr_fd("exit: ", 2);
-			ft_putstr_fd(args[1], 2);
-			ft_putendl_fd(" : numeric argument required", 2);
-		}
-		exit(n);
-	}
+		input = args[1];
 	else
-		exit(EXIT_SUCCESS);
+		input = ft_getenv("?");
+	n = ft_atoll(input);
+	str = ft_lltoa_base(n, "0123456789");
+	if (ft_strncmp(str, input, ft_strlen(input) + 1) == 0)
+		n = ((n % 256) + 256) % 256;
+	else
+	{
+		n = 2;
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(input, 2);
+		ft_putendl_fd(" : numeric argument required", 2);
+	}
+	exit(n);
 }

@@ -6,13 +6,20 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2021/12/20 17:28:17 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/21 13:50:49 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 char	**g_environ;
+
+/* Initialise environment variable array g_environ and ? variable. */
+static void	ft_init_environment(void)
+{
+	g_environ = ft_memdup((const char **) environ);
+	ft_putenv("?=0");
+}
 
 /*
 Forks the process, and the child executes the command. Parent returns 
@@ -92,7 +99,7 @@ static void	ft_loop(void)
 
 int	main(void)
 {
-	g_environ = ft_memdup((const char **) environ);
+	ft_init_environment();
 	ft_loop();
 	ft_memdel(g_environ);
 	return (EXIT_SUCCESS);

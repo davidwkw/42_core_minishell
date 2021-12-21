@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2021/12/21 11:04:09 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/21 14:00:40 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,16 @@
 extern char	**environ;
 extern char	**g_environ;
 
-// environment variable functions
+// char pointer array (string array) functions
 size_t	ft_memsize(const char **arr);
 char	**ft_memdup(const char **arr);
 char	**ft_memresize(char **arr, size_t size);
 void	ft_memdel(char **arr);
+void	ft_memsort(char **arr);
+
+// environment variable functions
 char	*ft_getenv(const char *name);
+int		ft_putenv(char *string);
 
 // built-in functions
 int		ft_cd(char **args);

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/20 14:54:32 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/21 14:00:51 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ Since this program does not accept any option or argument, it simplifies
 to printing all the environment variables.
 
 An entry is considered as an environment variable if it is in the form
-of NAME=VALUE pair.
+of NAME=VALUE pair. However ?=value is not considered an environment
+variable when called via this function.
 */
 int	ft_env(char **args)
 {
@@ -35,7 +36,7 @@ int	ft_env(char **args)
 	env = g_environ;
 	while (*env != NULL)
 	{
-		if (ft_strchr(*env, '=') != NULL)
+		if (ft_strchr(*env, '=') != NULL && **env != '?')
 			printf("%s\n", *env);
 		env++;
 	}
