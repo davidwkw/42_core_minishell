@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:42:03 by weng              #+#    #+#             */
-/*   Updated: 2021/12/20 17:31:26 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/21 11:08:40 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,24 @@ void	ft_memdel(char **arr)
 	while (*arr != NULL)
 		free(*arr++);
 	free(cpy);
+}
+
+/*
+Get an environment variable from the g_environ global variable. Returns
+a pointer to the value, or NULL if there is no match.
+*/
+char	*ft_getenv(const char *name)
+{
+	char	**env;
+	int		len;
+
+	env = g_environ;
+	len = ft_strlen(name);
+	while (*env != NULL)
+	{
+		if (ft_strncmp(*env, name, len) == 0 && (*env)[len] == '=')
+			return (&(*env)[len + 1]);
+		env++;
+	}
+	return (NULL);
 }

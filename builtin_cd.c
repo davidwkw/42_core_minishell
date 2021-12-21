@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/15 23:31:31 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/21 11:04:01 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,12 @@ static char	*ft_parse_dir(char *path)
 	char	*retval;
 	char	*home;
 
-	home = getenv("HOME");
+	home = ft_getenv("HOME");
+	if (home == NULL)
+	{
+		ft_putendl_fd("cd: HOME not set", 2);
+		exit(EXIT_FAILURE);
+	}
 	if (path == NULL || ft_strncmp(path, "~", 2) == 0)
 		retval = ft_strdup(home);
 	else if (ft_strncmp(path, "~/", 2) == 0)
