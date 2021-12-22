@@ -6,11 +6,36 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/21 13:59:22 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/22 09:51:13 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* Sort a null-terminated array of strings using insertion sort. */
+static void	ft_memsort(char **arr)
+{
+	char	*key;
+	int		len;
+	int		i;
+	int		j;
+
+	len = ft_memsize((const char **) arr);
+	j = 1;
+	while (j < len)
+	{
+		key = arr[j];
+		i = j - 1;
+		while (i >= 0
+			&& ft_strncmp(arr[i], key, ft_strlen(arr[i] + 1)) > 0)
+		{
+			arr[i + 1] = arr[i];
+			i--;
+		}
+		arr[i + 1] = key;
+		j++;
+	}
+}
 
 /*
 Display a list of all exported variables and functions.

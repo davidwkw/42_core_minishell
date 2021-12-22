@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment.c                                      :+:      :+:    :+:   */
+/*   string_array.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:42:03 by weng              #+#    #+#             */
-/*   Updated: 2021/12/21 13:54:10 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/22 17:12:30 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ char	**ft_memresize(char **arr, size_t size)
 	}
 	else
 	{
-		printf("size = %ld, size_o = %ld\n", size, size_o);
 		i = size;
 		while (i < size_o)
 			free(arr[i++]);
@@ -84,27 +83,33 @@ void	ft_memdel(char **arr)
 	free(cpy);
 }
 
-/* Sort a null-terminated array of strings using insertion sort. */
-void	ft_memsort(char **arr)
+/*
+Insert a string at the back of a null-terminated array of strings.
+'dest' is the address of the array, while 'str' is the string to be
+inserted. Returns 0 upon success, or non-zero upon failure.
+*/
+int	ft_meminsert(char ***dest, char *str)
 {
-	char	*key;
-	int		len;
-	int		i;
-	int		j;
+	extern int	errno;
+	char		**arr;
+	ssize_t		size;
 
-	len = ft_memsize((const char **) arr);
-	j = 1;
-	while (j < len)
+	arr = *dest;
+	size = ft_memsize((const char **) arr);
+	arr = ft_memresize(arr, size + 1);
+	if (arr == NULL)
 	{
-		key = arr[j];
-		i = j - 1;
-		while (i >= 0
-			&& ft_strncmp(arr[i], key, ft_strlen(arr[i] + 1)) > 0)
-		{
-			arr[i + 1] = arr[i];
-			i--;
-		}
-		arr[i + 1] = key;
-		j++;
+		errno = ENOMEM;
+		perror("memeresize");
+		return (EXIT_FAILURE);
 	}
+	arr[size] = ft_strdup(str);
+	if (arr[size] == NULL)
+	{
+		errno = ENOMEM;
+		perror("ft_meminsert");
+		return (EXIT_FAILURE);
+	}
+	*dest = arr;
+	return (EXIT_SUCCESS);
 }

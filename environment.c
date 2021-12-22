@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2021/12/21 14:00:58 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/22 10:13:44 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,6 @@ static int	ft_replace_environ(char *args)
 	return (0);
 }
 
-/* Insert a new line in g_environ */
-static int	ft_insert_environ(char *args)
-{
-	extern int	errno;
-	ssize_t		size;
-
-	size = ft_memsize((const char **) g_environ);
-	g_environ = ft_memresize(g_environ, size + 1);
-	if (g_environ == NULL)
-	{
-		errno = ENOMEM;
-		perror("memeresize");
-		return (EXIT_FAILURE);
-	}
-	g_environ[size] = ft_strdup(args);
-	if (g_environ[size] == NULL)
-	{
-		errno = ENOMEM;
-		perror("ft_insert_environ");
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
 /*
 Change or add an environment variable. Argument 'string' is of the form
 name=value. If 'name' does not already exist in the environment, then
@@ -101,7 +77,7 @@ only considered marked for export.
 int	ft_putenv(char *string)
 {
 	if (ft_replace_environ(string) == 0)
-		return (ft_insert_environ(string));
+		return (ft_meminsert(&g_environ, string));
 	else
 		return (0);
 }

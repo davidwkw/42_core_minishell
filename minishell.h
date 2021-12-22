@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2021/12/21 14:00:40 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/22 10:14:53 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ size_t	ft_memsize(const char **arr);
 char	**ft_memdup(const char **arr);
 char	**ft_memresize(char **arr, size_t size);
 void	ft_memdel(char **arr);
-void	ft_memsort(char **arr);
+int		ft_meminsert(char ***dest, char *str);
 
 // environment variable functions
 char	*ft_getenv(const char *name);
