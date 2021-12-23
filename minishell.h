@@ -19,7 +19,13 @@
 # include <stdio.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include "libft/libft.h"
+
+# define HISTORY_FILE ".history"
+
+int	save_history(char *cmd);
 
 #endif

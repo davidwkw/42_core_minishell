@@ -5,7 +5,7 @@ LDFLAGS	= -L$(LIBFT_PATH)
 LDLIBS	= -lft -lreadline
 
 # define source and object files
-SRCS	=	
+SRCS	=	history.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
 
@@ -16,14 +16,18 @@ NAME		=	minishell
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(MAIN)
+$(NAME): $(LIBFT) $(LIBRARY) $(MAIN)
 	$(CC) $(CFLAGS) -o $(NAME) $(MAIN) $(LDFLAGS) $(LDLIBS)
+
+$(LIBRARY): $(OBJS)
+	$(AR) -crs $(LIBRARY) $(OBJS)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_PATH)
 
 clean:
 	$(RM) $(OBJS)
+	$(RM) $(LIBRARY)
 	$(MAKE) clean -C $(LIBFT_PATH)
 
 fclean: clean
@@ -32,4 +36,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: clean
+.PHONY: clean fclean all

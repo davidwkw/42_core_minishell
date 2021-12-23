@@ -67,6 +67,7 @@ static void	ft_loop(void)
 		else if (!ft_strlen(line))
 			continue ;
 		add_history(line);
+		save_history(line);
 		args = ft_split(line, ' ');
 		status = ft_builtin_or_execute(args);
 		free(line);
