@@ -49,6 +49,7 @@ static int	ft_builtin_or_execute(char **args)
 /*
 Runs an infinite loop, during which, user input is read, split and
 executed. The loop exits if return value from execution is not 1.
+If user returns a bare newline, loop is skipped without splitting the string.
 */
 static void	ft_loop(void)
 {
@@ -63,6 +64,9 @@ static void	ft_loop(void)
 		line = readline("$ ");
 		if (line == NULL)
 			break ;
+		else if (!ft_strlen(line))
+			continue ;
+		add_history(line);
 		args = ft_split(line, ' ');
 		status = ft_builtin_or_execute(args);
 		free(line);
