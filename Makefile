@@ -1,6 +1,6 @@
 # define variables used by implicit rule
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
 LDFLAGS	= -L. -L$(LIBFT_PATH)
 LDLIBS	= -lminishell -lft -lreadline
 
@@ -13,6 +13,8 @@ SRCS	=	builtin_cd.c \
 			builtin_pwd.c \
 			builtin_unset.c \
 			environment.c \
+			ft_lst.c \
+			lexer.c \
 			string_array.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
