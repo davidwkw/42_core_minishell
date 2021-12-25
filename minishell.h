@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2021/12/26 01:07:50 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/26 01:13:03 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_list	*ft_hdlr_space(t_list *lst);
 t_list	*ft_hdlr_less(t_list *lst);
 t_list	*ft_hdlr_greater(t_list *lst);
 t_list	*ft_hdlr_pipe(t_list *lst);
+t_list	*ft_hdlr_ampersand(t_list *lst);
 
 // environment variable functions
 char	*ft_getenv(const char *name);

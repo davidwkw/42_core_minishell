@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   lexer_0.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2021/12/26 01:08:09 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/26 01:18:15 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_list	*ft_tokenise(char *input)
 	lst = ft_hdlr_less(lst);
 	lst = ft_hdlr_greater(lst);
 	lst = ft_hdlr_pipe(lst);
+	lst = ft_hdlr_ampersand(lst);
 	return (lst);
 }
 
