@@ -1,8 +1,8 @@
 # define variables used by implicit rule
 CC		= gcc
 CFLAGS	= -Wall -Wextra -Werror
-LDFLAGS	= -L$(LIBFT_PATH)
-LDLIBS	= -lft -lreadline
+LDFLAGS	= -L. -L$(LIBFT_PATH)
+LDLIBS	= -lminishell -lft -lreadline
 
 # define source and object files
 SRCS	=	history.c
@@ -12,6 +12,7 @@ MAIN	=	minishell.c
 # other variables
 LIBFT_PATH	=	./libft
 LIBFT		=	$(LIBFT_PATH)/libft.a
+LIBRARY		=	libminishell.a
 NAME		=	minishell
 
 all: $(NAME)
