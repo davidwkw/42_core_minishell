@@ -27,5 +27,6 @@
 # define HISTORY_FILE ".history"
 
 int	save_history(char *cmd);
+int	list_history(int start_num);
 
 #endif
