@@ -3,6 +3,7 @@
 /*
 Creates .history file (if does not exist) 
 and appends cmd with newline before writing to file.
+Returns 0 on success and -1 on failure.
 */
 int	save_history(char *cmd)
 {
@@ -17,5 +18,30 @@ int	save_history(char *cmd)
 		return (-1);
 	close(fd);
 	free(temp);
+	return (0);
+}
+
+/*
+Lists logged history commands from start_num until EOF.
+*/
+int	list_history(int start_num)
+{
+	int		fd;
+	char	*line;
+	int		i;
+
+	fd = open(HISTORY_FILE, O_RDONLY);
+	if (fd == -1)
+		return (-1);
+	i = 0;
+	while (line != NULL)
+	{
+		line = get_next_line(fd);
+		if (i >= start_num)
+			printf("%d %s\n", i, line);
+		free(line);
+		i++;
+	}
+	free(line);
 	return (0);
 }
