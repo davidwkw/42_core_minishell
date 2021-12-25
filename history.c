@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include <errno.h>
 
 /*
 Creates .history file (if does not exist) 
