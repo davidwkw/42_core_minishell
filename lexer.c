@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2021/12/25 23:43:58 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/26 00:47:31 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ t_list	*ft_tokenise(char *input)
 	t_list	*lst;
 
 	lst = ft_lstnew(ft_strdup(input));
-	ft_hdlr_space(lst);
+	lst = ft_hdlr_space(lst);
+	lst = ft_hdlr_less(lst);
 	return (lst);
 }
 
@@ -55,11 +56,13 @@ t_list	*ft_tokenise(char *input)
 Split the content of lst at space characters. Preceeding spaces are
 ignored, and consecutive space are considered as only one space.
 */
-void	ft_hdlr_space(t_list *lst)
+t_list	*ft_hdlr_space(t_list *lst)
 {
+	t_list	*start;
 	char	*str;
 	char	*target;
 
+	start = lst;
 	while (lst != NULL)
 	{
 		str = lst->content;
@@ -76,4 +79,40 @@ void	ft_hdlr_space(t_list *lst)
 		}
 		lst = lst->next;
 	}
+	return (ft_lstdelempty(&start));
+}
+
+/*
+Split the content of lst at '<' characters. If the next character is
+also a '<', add the '<<<>' token to lst, else add the '<<>' token.
+
+Note: the character '<' and '>' are used to enclose special token.
+*/
+t_list	*ft_hdlr_less(t_list *lst)
+{
+	t_list	*start;
+	char	*content;
+	char	*str;
+	char	*target;
+
+	start = lst;
+	while (lst != NULL)
+	{
+		content = lst->content;
+		target = ft_strchr_unquoted(content, '<');
+		if (target != NULL)
+		{
+			str = ft_substr(content, 0, target - content);
+			if (target[1] == '<')
+				ft_lstinsert(lst, ft_lstnew(ft_strdup("<<<>")));
+			else
+				ft_lstinsert(lst, ft_lstnew(ft_strdup("<<>")));
+			ft_lstinsert(lst->next,
+				ft_lstnew(ft_strdup(target + 1 + (target[1] == '<'))));
+			ft_lst_replace_content(lst, str);
+			lst = lst->next;
+		}
+		lst = lst->next;
+	}
+	return (ft_lstdelempty(&start));
 }
