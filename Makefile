@@ -14,8 +14,7 @@ SRCS	=	builtin_cd.c \
 			builtin_unset.c \
 			environment.c \
 			ft_lst.c \
-			lexer_0.c \
-			lexer_1.c \
+			lexer.c \
 			string_array.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
