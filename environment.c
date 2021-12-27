@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 11:58:57 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/27 13:57:11 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,14 @@ static int	ft_replace_environ(char *args)
 /*
 Returns 1 'name' is a valid name for an environment variable, else 0.
 
-The first character of the name must be one of '?', '_' or alphabet. The
-rest of the name must be '_' or alphanumeric.
+The name must be "?", or the first character of the name must be one of
+'_' or alphabet. The rest of the name must be '_' or alphanumeric.
 */
-static int	ft_name_valid(char *name)
+static int	ft_name_valid(const char *name)
 {
-	if (*name == '?' || *name == '_' || ft_isalpha(*name) == 1)
+	if (ft_strncmp(name, "?", 2) == 0)
+		return (1);
+	else if (*name == '_' || ft_isalpha(*name) == 1)
 		name++;
 	else
 		return (0);
