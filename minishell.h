@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 16:15:10 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/27 23:37:16 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,11 @@ t_list	*ft_lstdelempty(t_list **lst);
 // lexer functions
 int		ft_istoken(const char *str, char **token);
 t_list	*ft_tokenise(char *input);
-t_list	*ft_expand_var(t_list *lst);
+char	*ft_expand_var(char *str);
+
+// quotation functions
+char	*ft_is_properly_quoted(char *str);
+char	*ft_remove_quote(char *str);
 
 // environment variable functions
 char	*ft_getenv(const char *name);

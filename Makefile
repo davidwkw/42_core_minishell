@@ -16,6 +16,7 @@ SRCS	=	builtin_cd.c \
 			expand_var.c \
 			ft_lst.c \
 			lexer.c \
+			quote.c \
 			string_array.c \
 			string.c
 OBJS	=	$(SRCS:.c=.o)

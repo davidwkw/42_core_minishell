@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 16:18:37 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/27 23:29:14 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,23 @@ static char	*ft_next_token(const char *str)
 	}
 }
 
+/* Trim space & remove quotations from the tokens, then remove empty node. */
+static t_list	*ft_tokenise_post_process(t_list *lst)
+{
+	t_list	*node;
+
+	node = lst;
+	while (node != NULL)
+	{
+		ft_lst_replace_content(node, ft_strtrim(node->content, " "));
+		ft_lst_replace_content(node, ft_expand_var(node->content));
+		ft_lst_replace_content(node, ft_remove_quote(node->content));
+		node = node->next;
+	}
+	lst = ft_lstdelempty(&lst);
+	return (lst);
+}
+
 /*
 Tokenize the input and return a linked list. If any of the content
 of a node is "" or " ", the node will the removed from the list.
@@ -78,7 +95,7 @@ t_list	*ft_tokenise(char *input)
 	char	*target;
 	char	*token;
 
-	lst = ft_lstnew(ft_strtrim(input, " "));
+	lst = ft_lstnew(ft_is_properly_quoted(ft_strtrim(input, " ")));
 	node = lst;
 	while (node != NULL)
 	{
@@ -96,5 +113,5 @@ t_list	*ft_tokenise(char *input)
 		}
 		node = node->next;
 	}
-	return (ft_lstdelempty(&lst));
+	return (ft_tokenise_post_process(lst));
 }

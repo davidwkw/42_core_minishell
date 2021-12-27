@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 13:34:04 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 15:33:40 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/27 23:31:58 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,23 +68,8 @@ char	*ft_expand_var_aux(char *prev, char *s)
 	return (ft_expand_var_aux(prev, s));
 }
 
-/*
-Expand environment variables for all contents in linked list lst.
-If a token == "" or token == " ", the corresponding node will be removed
-from the linked list.
-*/
-t_list	*ft_expand_var(t_list *lst)
+/* Expand environment variables for in a string */
+char	*ft_expand_var(char *str)
 {
-	t_list	*node;
-	char	*content;
-
-	node = lst;
-	while (node != NULL)
-	{
-		content = node->content;
-		node->content = ft_expand_var_aux(ft_strdup(""), content);
-		free(content);
-		node = node->next;
-	}
-	return (ft_lstdelempty(&lst));
+	return (ft_expand_var_aux(ft_strdup(""), str));
 }
