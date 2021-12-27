@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 10:48:49 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/27 15:27:08 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ char	**ft_memresize(char **arr, size_t size);
 void	ft_memdel(char **arr);
 int		ft_meminsert(char ***dest, char *str);
 
+// string functions
+char	*ft_strchr_unquoted(const char *str, int c);
+char	*ft_strappend(char *ptr, char *str);
+
 // list related functions that are not included in libft
 void	ft_lst_replace_content(t_list *lst, void *content);
 void	ft_lstinsert(t_list *lst, t_list *new);
@@ -42,6 +46,7 @@ t_list	*ft_lstdelempty(t_list **lst);
 // lexer functions
 int		ft_istoken(const char *str, char **token);
 t_list	*ft_tokenise(char *input);
+t_list	*ft_expand_var(t_list *lst);
 
 // environment variable functions
 char	*ft_getenv(const char *name);

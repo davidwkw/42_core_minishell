@@ -13,9 +13,11 @@ SRCS	=	builtin_cd.c \
 			builtin_pwd.c \
 			builtin_unset.c \
 			environment.c \
+			expand_var.c \
 			ft_lst.c \
 			lexer.c \
-			string_array.c
+			string_array.c \
+			string.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
 
