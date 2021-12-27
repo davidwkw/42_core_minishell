@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 23:14:33 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 10:27:52 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/27 16:14:08 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ t_list	*ft_lstdelempty(t_list **lst)
 	t_list	*next;
 
 	node = *lst;
-	while (node != NULL
-		&& (*((char *) node->content) == '\0'
-			|| *((char *) node->content) == ' '))
+	ft_strreplace((char **) &node->content, ft_strtrim(node->content, " "));
+	while (node != NULL && *((char *) node->content) == '\0')
 	{
 		node = (*lst)->next;
 		ft_lstdelone(*lst, free);
@@ -44,8 +43,8 @@ t_list	*ft_lstdelempty(t_list **lst)
 	while (node->next != NULL)
 	{
 		next = node->next;
-		if (*((char *) next->content) == '\0'
-			|| *((char *) next->content) == ' ')
+		ft_strreplace((char **) &next->content, ft_strtrim(next->content, " "));
+		if (*((char *) next->content) == '\0')
 		{
 			node->next = next->next;
 			ft_lstdelone(next, free);

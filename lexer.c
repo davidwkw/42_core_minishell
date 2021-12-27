@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 13:34:49 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/27 16:18:37 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_list	*ft_tokenise(char *input)
 	char	*target;
 	char	*token;
 
-	lst = ft_lstnew(ft_strdup(input));
+	lst = ft_lstnew(ft_strtrim(input, " "));
 	node = lst;
 	while (node != NULL)
 	{
