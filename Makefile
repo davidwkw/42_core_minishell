@@ -12,11 +12,13 @@ SRCS	=	builtin_cd.c \
 			builtin_export.c \
 			builtin_pwd.c \
 			builtin_unset.c \
+			cmd.c \
 			environment.c \
 			expand_var.c \
 			ft_lst.c \
 			lexer.c \
 			quote.c \
+			scmd.c \
 			string_array.c \
 			string.c
 OBJS	=	$(SRCS:.c=.o)

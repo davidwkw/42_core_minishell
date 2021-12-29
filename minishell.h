@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 23:37:16 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/29 16:01:51 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,22 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include "libft/libft.h"
+
+// data structure for simple command
+typedef struct s_scmd
+{
+	int		count;
+	t_list	*argv;
+}	t_scmd;
+
+// data structure for command
+typedef struct s_cmd
+{
+	int		count;
+	t_list	*scmd_lst;
+	char	*infile;
+	char	*outfile;
+}	t_cmd;
 
 // environment variables
 extern char	**environ;
@@ -43,11 +59,24 @@ void	ft_strreplace(char **ptr, char *new);
 void	ft_lst_replace_content(t_list *lst, void *content);
 void	ft_lstinsert(t_list *lst, t_list *new);
 t_list	*ft_lstdelempty(t_list **lst);
+char	**ft_lst_to_arr(t_list *lst);
 
 // lexer functions
 int		ft_istoken(const char *str, char **token);
 t_list	*ft_tokenise(char *input);
 char	*ft_expand_var(char *str);
+
+// simple command functions
+t_scmd	*ft_scmd_new(void);
+void	ft_scmd_del(void *scmd);
+void	ft_scmd_add_arg(t_scmd *scmd, t_list *node);
+char	**ft_scmd_to_arr(t_scmd *scmd);
+
+// command functions
+t_cmd	*ft_cmd_new(void);
+void	ft_cmd_del(t_cmd *cmd);
+void	ft_cmd_add_scmd(t_cmd *cmd);
+void	ft_cmd_add_arg(t_cmd *cmd, t_list *node);
 
 // quotation functions
 char	*ft_is_properly_quoted(char *str);

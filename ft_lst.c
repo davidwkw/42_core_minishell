@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 23:14:33 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 23:19:55 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/29 12:04:34 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,25 @@ t_list	*ft_lstdelempty(t_list **lst)
 			node = node->next;
 	}
 	return (*lst);
+}
+
+/*
+Convert a linked list to an array of strings. The contents from the
+linked list are duplicated into the array.
+*/
+char	**ft_lst_to_arr(t_list *lst)
+{
+	int		size;
+	int		i;
+	char	**arr;
+
+	size = ft_lstsize(lst);
+	arr = ft_calloc(sizeof(char *), size + 1);
+	i = -1;
+	while (++i < size)
+	{
+		arr[i] = ft_strdup(lst->content);
+		lst = lst->next;
+	}
+	return (arr);
 }
