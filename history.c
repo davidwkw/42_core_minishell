@@ -29,7 +29,6 @@ int	list_history(int start_num)
 	int		fd;
 	char	*line;
 	int		i;
-	int		err;
 
 	fd = open(HISTORY_FILE, O_RDONLY);
 	if (fd == -1)

@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 /*
-Forks the process, and the child executes the command. Parent returns 
+Forks the process, and the child executes the command. Parent returns
 1 if successful, or 0 if not.
 */
 static int	ft_fork_exec(char **args)
@@ -27,7 +27,7 @@ static int	ft_fork_exec(char **args)
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
-	{	
+	{
 		(void) args;
 		return (EXIT_SUCCESS);
 	}
