@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/30 15:33:20 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/30 15:44:12 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ Returns NULL if HOME environment variable is not set, else the amended
 */
 static char	*ft_parse_dir(char *path)
 {
-	char	*retval;
 	char	*home;
 
+	if (path != NULL && *path != '~')
+		return (ft_strdup(path));
 	home = ft_getenv("HOME");
 	if (home == NULL)
 	{
@@ -32,12 +33,9 @@ static char	*ft_parse_dir(char *path)
 		return (NULL);
 	}
 	if (path == NULL || ft_strncmp(path, "~", 2) == 0)
-		retval = ft_strdup(home);
-	else if (ft_strncmp(path, "~/", 2) == 0)
-		retval = ft_strjoin(home, path + 1);
+		return (ft_strdup(home));
 	else
-		retval = ft_strdup(path);
-	return (retval);
+		return (ft_strjoin(home, path + 1));
 }
 
 /*
