@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 12:24:17 by weng              #+#    #+#             */
-/*   Updated: 2021/12/29 15:50:22 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/30 10:51:16 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_cmd	*ft_cmd_new(void)
 	t_cmd	*cmd;
 
 	cmd = ft_calloc(sizeof(t_cmd), 1);
+	ft_cmd_add_scmd(cmd);
 	return (cmd);
 }
 
@@ -34,6 +35,7 @@ void	ft_cmd_del(t_cmd *cmd)
 void	ft_cmd_add_scmd(t_cmd *cmd)
 {
 	ft_lstadd_back(&cmd->scmd_lst, ft_lstnew(ft_scmd_new()));
+	cmd->count++;
 }
 
 /* Add an argument to the last node in linked list. */

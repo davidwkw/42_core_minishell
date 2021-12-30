@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2021/12/29 16:01:51 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/30 13:22:28 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ typedef struct s_cmd
 	int		count;
 	t_list	*scmd_lst;
 	char	*infile;
+	int		heredoc;
 	char	*outfile;
+	int		append;
 }	t_cmd;
 
 // environment variables
@@ -77,6 +79,11 @@ t_cmd	*ft_cmd_new(void);
 void	ft_cmd_del(t_cmd *cmd);
 void	ft_cmd_add_scmd(t_cmd *cmd);
 void	ft_cmd_add_arg(t_cmd *cmd, t_list *node);
+
+// parser functions
+t_cmd	*ft_parse(t_list *lst);
+int		ft_parse_error(t_cmd *cmd, t_list **lst);
+int		ft_hdlr_token(t_cmd *cmd, t_list **lst);
 
 // quotation functions
 char	*ft_is_properly_quoted(char *str);

@@ -17,6 +17,8 @@ SRCS	=	builtin_cd.c \
 			expand_var.c \
 			ft_lst.c \
 			lexer.c \
+			parser.c \
+			parser_handler.c \
 			quote.c \
 			scmd.c \
 			string_array.c \
