@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2021/12/21 13:50:49 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/30 15:38:39 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_fork_exec(char **args)
 	if (pid == -1)
 	{
 		perror("fork");
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{	
@@ -43,11 +43,14 @@ static int	ft_fork_exec(char **args)
 	else
 	{
 		waitpid(pid, NULL, 0);
-		return (1);
+		return (EXIT_SUCCESS);
 	}
 }
 
-/* Execute a built-in commands, or an external program. */
+/*
+Execute a built-in commands, or an external program. Returns 0 upon
+successful execution, or non-zero upon failure.
+*/
 static int	ft_builtin_or_execute(char **args)
 {
 	const char	*built_in[] = {"echo", "cd", "pwd",
@@ -81,8 +84,8 @@ static void	ft_loop(void)
 	int		status;
 	int		i;
 
-	status = 1;
-	while (status == 1)
+	status = EXIT_SUCCESS;
+	while (status == EXIT_SUCCESS)
 	{
 		line = readline("$ ");
 		if (line == NULL)
