@@ -6,15 +6,19 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/21 11:04:01 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/30 15:33:20 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-Parse the input directory, with support for '~' symbol. The default
-directory is the value of the HOME environment variable.
+If 'path' is NULL, returns the HOME directory; else if 'path' == "~" or
+'path' begins with "~/", ~ will be replace by the home directory; else
+return 'path' unaltered.
+
+Returns NULL if HOME environment variable is not set, else the amended
+'path'.
 */
 static char	*ft_parse_dir(char *path)
 {
@@ -25,7 +29,7 @@ static char	*ft_parse_dir(char *path)
 	if (home == NULL)
 	{
 		ft_putendl_fd("cd: HOME not set", 2);
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	if (path == NULL || ft_strncmp(path, "~", 2) == 0)
 		retval = ft_strdup(home);
@@ -38,7 +42,7 @@ static char	*ft_parse_dir(char *path)
 
 /*
 Change the working directory. The default directory is the value of the
-HOME environment variable.
+HOME environment variable. Returns 0 upon success, or 1 upon failure.
 */
 int	ft_cd(char **args)
 {
@@ -48,20 +52,22 @@ int	ft_cd(char **args)
 	if (args[1] != NULL && args[2] != NULL)
 	{
 		ft_putendl_fd("cd: too many arguments", 2);
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	path = ft_parse_dir(args[1]);
-	if (chdir(path) == -1)
+	if (path == NULL)
+		return (EXIT_FAILURE);
+	else if (chdir(path) == -1)
 	{
 		str = ft_strjoin("cd: ", path);
 		perror(str);
 		free(str);
 		free(path);
-		exit(EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	}
 	else
 	{
 		free(path);
-		return (1);
+		return (EXIT_SUCCESS);
 	}
 }

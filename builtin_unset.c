@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/21 14:22:17 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/30 15:17:35 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ entry from g_environ global variable for each NAME. However, this
 implementation is not thread safe, since no lock is used.
 
 It is not possible to unset the '?' variable.
+
+The exit status is always 0, since we are not implemanting 'readonly'
+feature.
 */
 int	ft_unset(char **args)
 {
@@ -55,5 +58,5 @@ int	ft_unset(char **args)
 			continue ;
 		ft_unset_one(*args);
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }

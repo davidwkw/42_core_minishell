@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 11:51:35 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/30 15:07:00 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ executed commands. If VALUE is supplied, assign VALUE before exporting.
 A variable without value is considered set by adding it to the
 g_environ with "NAME" only.
 
-Returns 1 upon success, or 0 upon failure.
+Returns 0 upon success, or 1 upon failure.
 */
 int	ft_export(char **args)
 {
@@ -96,9 +96,9 @@ int	ft_export(char **args)
 				ft_putstr_fd("minishell: export: `", 2);
 				ft_putstr_fd(*args, 2);
 				ft_putendl_fd("': not a valid identifier", 2);
-				return (0);
+				return (EXIT_FAILURE);
 			}
 		}
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }

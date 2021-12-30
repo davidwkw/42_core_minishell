@@ -6,13 +6,17 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/15 23:55:46 by weng             ###   ########.fr       */
+/*   Updated: 2021/12/30 15:11:40 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Display a line of text. */
+/*.
+Display a line of text.
+
+The return code is always 0 unless a write error occurs.
+*/
 int	ft_echo(char **args)
 {
 	int	has_newline;
@@ -34,5 +38,5 @@ int	ft_echo(char **args)
 	}
 	if (has_newline == 1)
 		printf("\n");
-	return (1);
+	return (EXIT_SUCCESS);
 }
