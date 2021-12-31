@@ -109,5 +109,6 @@ int	main(void)
 	ft_init_environment();
 	ft_loop();
 	ft_memdel(g_environ);
+	unlink(HISTORY_FILE);
 	return (EXIT_SUCCESS);
 }
