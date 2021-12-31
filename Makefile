@@ -1,11 +1,29 @@
 # define variables used by implicit rule
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
 LDFLAGS	= -L. -L$(LIBFT_PATH)
 LDLIBS	= -lminishell -lft -lreadline
 
 # define source and object files
-SRCS	=	history.c
+SRCS	=	builtin_cd.c \
+			builtin_echo.c \
+			builtin_env.c \
+			builtin_exit.c \
+			builtin_export.c \
+			builtin_pwd.c \
+			builtin_unset.c \
+			cmd.c \
+			environment.c \
+			expand_var.c \
+			ft_lst.c \
+			lexer.c \
+			parser.c \
+			parser_handler.c \
+			quote.c \
+			scmd.c \
+			string_array.c \
+			string.c \
+			history.c \
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
 
