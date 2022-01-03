@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 23:29:14 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/03 17:17:51 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,17 @@ t_list	*ft_tokenise(char *input)
 		node = node->next;
 	}
 	return (ft_tokenise_post_process(lst));
+}
+
+/* Print the length and content of the individual token. */
+void	ft_token_print(t_list *token)
+{
+	char	*content;
+
+	while (token != NULL)
+	{
+		content = token->content;
+		printf("len = %ld: %s\n", ft_strlen(content), content);
+		token = token->next;
+	}
 }
