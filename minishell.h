@@ -26,6 +26,7 @@
 # include "libft/libft.h"
 
 # define HISTORY_FILE ".history"
+# define HISTORY_COUNT 35
 
 // data structure for simple command
 typedef struct s_scmd
@@ -106,8 +107,8 @@ int		ft_export(char **args);
 int		ft_pwd(char **args);
 int		ft_unset(char **args);
 
-// history functions
-int	save_history(char *cmd);
-int	list_history(int start_num);
+// history function
+int		save_history(char *cmd);
+int		ft_history(char **args);
 
 #endif

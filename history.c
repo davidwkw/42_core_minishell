@@ -23,8 +23,11 @@ int	save_history(char *cmd)
 
 /*
 Lists logged history commands from start_num until EOF.
+Returns number of lines printed. If number of lines returned is less than
+actual total number of history lines, an error in getting next line has occured.
+Returns -1 if there is an error opening the file.
 */
-int	list_history(int start_num)
+static int	list_history(int start_num)
 {
 	int		fd;
 	char	*line;
@@ -33,14 +36,14 @@ int	list_history(int start_num)
 	fd = open(HISTORY_FILE, O_RDONLY);
 	if (fd == -1)
 		return (-1);
-	i = 0;
+	i = 1;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break;
 		if (i >= start_num)
-			printf("%d %s\n", i, line);
+			printf("%d %s", i, line);
 		free(line);
 		i++;
 	}
@@ -50,9 +53,10 @@ int	list_history(int start_num)
 
 /*
 Helper function for list_history. Counts total list of lines
-in history file. Returns number of lines in the history file or -1 if failure.
+in history file. Returns number of lines in the history file.
+Returns -1 if there is an error opening the file.
 */
-int	count_history(void)
+static int	count_history(void)
 {
 	int		fd;
 	char	*line;
@@ -72,4 +76,55 @@ int	count_history(void)
 	}
 	close(fd);
 	return (i);
+}
+
+/*
+Helper function to check if string contains only digits
+*/
+static int	is_strdigit(char *string)
+{
+	while (*string)
+	{
+		if (!ft_isdigit(*string))
+			return (0);
+		string++;
+	}
+	return (1);
+}
+
+/*
+Primary function for history. Takes the command 'history <option>'.
+history command without an options lists the last <HISTORY_COUNT> amount of commands.
+history -c clears the history file.
+history <num> list the last <num> amount of commands
+*/
+int	ft_history(char **args)
+{
+	int	fd;
+	int	total_hist_count;
+	int	min_hist_count;
+	int	num_input;
+
+	total_hist_count = count_history();
+	min_hist_count = total_hist_count - HISTORY_COUNT;
+	if (min_hist_count < 1)
+		min_hist_count = 1;
+	if (args[1] == NULL)
+		list_history(min_hist_count);
+	else if (!ft_strncmp(args[1], "-c", 2))
+	{
+		printf("do i reach here?\n");
+		unlink(HISTORY_FILE);
+		rl_clear_history();
+		fd = open(HISTORY_FILE, O_CREAT | O_WRONLY, S_IWUSR);
+		close(fd);
+	}
+	else if (is_strdigit(args[1]))
+	{
+		num_input = atoi(args[1]);
+		if (num_input < total_hist_count)
+			min_hist_count = total_hist_count - num_input;
+		list_history(min_hist_count);
+	}
+	return (0);
 }

@@ -54,9 +54,9 @@ successful execution, or non-zero upon failure.
 static int	ft_builtin_or_execute(char **args)
 {
 	const char	*built_in[] = {"echo", "cd", "pwd",
-							   "export", "unset", "env", "exit"};
+							   "export", "unset", "env", "exit", "history"};
 	static int	(*func[])(char **) = {&ft_echo, &ft_cd, &ft_pwd,
-									  &ft_export, &ft_unset, &ft_env, &ft_exit};
+									  &ft_export, &ft_unset, &ft_env, &ft_exit, &ft_history};
 	int			n;
 	int			i;
 
@@ -94,6 +94,7 @@ static void	ft_loop(void)
 		else if (!ft_strlen(line))
 			continue ;
 		add_history(line);
+		save_history(line);
 		args = ft_split(line, ' ');
 		status = ft_builtin_or_execute(args);
 		free(line);
