@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/03 17:14:32 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/03 22:30:50 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,12 @@ void	ft_cmd_print(t_cmd *cmd);
 t_cmd	*ft_parse(t_list *lst);
 int		ft_parse_error(t_cmd *cmd, t_list **lst);
 int		ft_hdlr_token(t_cmd *cmd, t_list **lst);
+
+// file descriptor functions
+int		ft_pipe_create(int fd[2]);
+int		ft_pipe_dup_close(int oldfd, int newfd);
+int		ft_open(const char *pathname, int flags, mode_t mode);
+int		ft_close(int fd);
 
 // quotation functions
 char	*ft_is_properly_quoted(char *str);
