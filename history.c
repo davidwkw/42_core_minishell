@@ -9,13 +9,20 @@ int	save_history(char *cmd)
 {
 	int		fd;
 	char	*temp;
+	int		hist_count;
 
 	fd = open(HISTORY_FILE, O_WRONLY | O_CREAT | O_APPEND, S_IWUSR);
 	if (fd == -1)
 		return (-1);
-	temp = ft_strjoin(cmd, "\n");
-	if (write(fd, temp, ft_strlen(temp)) == -1)
-		return (-1);
+	hist_count = count_history();
+	temp = get_line_num(fd, hist_count);
+	if (strncmp(cmd, temp, ft_strlen(cmd)))
+	{
+		free(temp);
+		temp = ft_strjoin(cmd, "\n");
+		if (write(fd, temp, ft_strlen(temp)) == -1)
+			return (-1);
+	}
 	close(fd);
 	free(temp);
 	return (0);
@@ -49,47 +56,6 @@ static int	list_history(int start_num)
 	}
 	close(fd);
 	return (i);
-}
-
-/*
-Helper function for list_history. Counts total list of lines
-in history file. Returns number of lines in the history file.
-Returns -1 if there is an error opening the file.
-*/
-static int	count_history(void)
-{
-	int		fd;
-	char	*line;
-	int		i;
-
-	fd = open(HISTORY_FILE, O_RDONLY);
-	if (fd == -1)
-		return (-1);
-	i = 0;
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break;
-		free(line);
-		i++;
-	}
-	close(fd);
-	return (i);
-}
-
-/*
-Helper function to check if string contains only digits
-*/
-static int	is_strdigit(char *string)
-{
-	while (*string)
-	{
-		if (!ft_isdigit(*string))
-			return (0);
-		string++;
-	}
-	return (1);
 }
 
 /*

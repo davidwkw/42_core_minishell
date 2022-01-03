@@ -108,6 +108,9 @@ int		ft_pwd(char **args);
 int		ft_unset(char **args);
 
 // history function
+int		is_strdigit(char *string);
+char	*get_line_num(int fd, int num);
+int		count_history(void);
 int		save_history(char *cmd);
 int		ft_history(char **args);
 
