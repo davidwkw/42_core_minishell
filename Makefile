@@ -17,6 +17,7 @@ SRCS	=	builtin_cd.c \
 			expand_var.c \
 			filedes.c \
 			ft_lst.c \
+			io.c \
 			lexer.c \
 			parser.c \
 			parser_handler.c \

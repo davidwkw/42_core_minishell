@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/03 22:30:50 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/03 22:33:06 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 # define MINISHELL_H
 
 # include <errno.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -92,6 +94,11 @@ int		ft_pipe_create(int fd[2]);
 int		ft_pipe_dup_close(int oldfd, int newfd);
 int		ft_open(const char *pathname, int flags, mode_t mode);
 int		ft_close(int fd);
+
+// here document, input and output file functions
+void	ft_write_heredoc(char *delimiter);
+int		open_infile(t_cmd *cmd);
+int		open_outfile(t_cmd *cmd);
 
 // quotation functions
 char	*ft_is_properly_quoted(char *str);
