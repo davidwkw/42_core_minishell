@@ -113,7 +113,6 @@ int	ft_history(char **args)
 		list_history(min_hist_count);
 	else if (!ft_strncmp(args[1], "-c", 2))
 	{
-		printf("do i reach here?\n");
 		unlink(HISTORY_FILE);
 		rl_clear_history();
 		fd = open(HISTORY_FILE, O_CREAT | O_WRONLY, S_IWUSR);
