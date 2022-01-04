@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 13:40:26 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/04 16:21:16 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	ft_external(char **args)
 			execve(pathname, args, NULL);
 		free(pathname);
 	}
+	if (access(args[0], F_OK) == 0)
+		execve(args[0], args, NULL);
 	ft_putstr_fd("cannot access '", 2);
 	ft_putstr_fd(args[0], 2);
 	perror("'");
