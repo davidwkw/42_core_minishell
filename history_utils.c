@@ -50,7 +50,7 @@ char	*get_line_num(int fd, int num)
 	char	*line;
 
 	i = -1;
-	while (++i < num)
+	while (++i < num - 1)
 	{
 		line = get_next_line(fd);
 		if (!line)

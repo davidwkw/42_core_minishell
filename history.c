@@ -16,7 +16,7 @@ int	save_history(char *cmd)
 		return (-1);
 	hist_count = count_history();
 	temp = get_line_num(fd, hist_count);
-	if (strncmp(cmd, temp, ft_strlen(cmd)))
+	if (ft_strncmp(cmd, temp, ft_strlen(cmd)))
 	{
 		free(temp);
 		temp = ft_strjoin(cmd, "\n");
@@ -49,7 +49,7 @@ static int	list_history(int start_num)
 		line = get_next_line(fd);
 		if (line == NULL)
 			break;
-		if (i >= start_num)
+		if (i > start_num)
 			printf("%d %s", i, line);
 		free(line);
 		i++;
@@ -88,7 +88,7 @@ int	ft_history(char **args)
 	{
 		num_input = atoi(args[1]);
 		if (num_input < total_hist_count)
-			min_hist_count = total_hist_count - num_input;
+			min_hist_count = total_hist_count - num_input ;
 		list_history(min_hist_count);
 	}
 	return (0);

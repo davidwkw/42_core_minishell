@@ -89,9 +89,7 @@ static void	ft_loop(void)
 	while (status == EXIT_SUCCESS)
 	{
 		line = readline("$ ");
-		if (line == NULL)
-			break ;
-		else if (line && *line)
+		if (!(line && *line))
 			continue ;
 		add_history(line);
 		save_history(line);
