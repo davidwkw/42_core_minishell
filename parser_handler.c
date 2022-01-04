@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2021/12/30 13:22:07 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/04 17:17:56 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 
 	node = *lst;
 	content = node->content;
-	if (node->next == NULL)
-		return (ft_parse_error(cmd, lst));
-	else if (ft_istoken(node->next->content, NULL) == 1)
+	if (node->next == NULL || ft_istoken(node->next->content, NULL) == 1)
 		return (ft_parse_error(cmd, &(node->next)));
 	node = node->next;
 	if (*(content) == '<')
@@ -57,24 +55,13 @@ static int	ft_hdlr_pipe(t_cmd *cmd, t_list **lst)
 	return (0);
 }
 
-/*
-Terminate a command. If the newline token is not the last in the list,
-error is raised.
-*/
-static int	ft_hdlr_newline(t_cmd *cmd, t_list **lst)
-{
-	if ((*lst)->next != NULL)
-		return (ft_parse_error(cmd, lst));
-	return (0);
-}
-
 /* Identify and run the correct token handler function */
 int	ft_hdlr_token(t_cmd *cmd, t_list **lst)
 {
-	const char	*substr[] = {"<<", ">>", "<", ">", "|", "&", "\n"};
+	const char	*substr[] = {"<<", ">>", "<", ">", "|"};
 	static int	(*hdlr[])(t_cmd *, t_list **) = {
 		&ft_hdlr_redirect, &ft_hdlr_redirect, &ft_hdlr_redirect,
-		&ft_hdlr_redirect, &ft_hdlr_pipe, &ft_parse_error, &ft_hdlr_newline};
+		&ft_hdlr_redirect, &ft_hdlr_pipe};
 	int			i;
 	char		*token;
 

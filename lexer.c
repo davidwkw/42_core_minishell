@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/03 17:17:51 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/04 17:08:31 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ identified token if it is found, else it will be set to NULL.
 */
 int	ft_istoken(const char *str, char **token)
 {
-	const char	*substr[] = {"<<", ">>", "||", "&&", " ", "<", ">", "|", "&",
-							 "(", ")", "\n"};
+	const char	*substr[] = {"<<", ">>", "||", "&&", " ", "<", ">", "|",
+							 "(", ")"};
 	const int	n = sizeof(substr) / sizeof(substr[0]);
 	int			i;
 	int			len;
