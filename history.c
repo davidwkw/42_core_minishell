@@ -11,7 +11,7 @@ int	save_history(char *cmd)
 	char	*temp;
 	int		hist_count;
 
-	fd = open(HISTORY_FILE, O_WRONLY | O_CREAT | O_APPEND, S_IWUSR);
+	fd = open(HISTORY_FILE, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
 	if (fd == -1)
 		return (-1);
 	hist_count = count_history();
