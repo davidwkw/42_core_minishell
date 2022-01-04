@@ -91,7 +91,7 @@ static void	ft_loop(void)
 		line = readline("$ ");
 		if (line == NULL)
 			break ;
-		else if (!ft_strlen(line))
+		else if (line && *line)
 			continue ;
 		add_history(line);
 		save_history(line);
