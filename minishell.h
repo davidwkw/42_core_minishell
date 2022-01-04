@@ -100,6 +100,9 @@ void	ft_write_heredoc(char *delimiter);
 int		open_infile(t_cmd *cmd);
 int		open_outfile(t_cmd *cmd);
 
+// executor functions
+pid_t	ft_execute_scmd(t_cmd *cmd, int i);
+
 // quotation functions
 char	*ft_is_properly_quoted(char *str);
 char	*ft_remove_quote(char *str);

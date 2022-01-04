@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2021/12/30 15:38:39 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/04 09:55:09 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,56 +21,9 @@ static void	ft_init_environment(void)
 	ft_putenv("?=0");
 }
 
-/*
-Forks the process, and the child executes the command. Parent returns 
-1 if successful, or 0 if not.
-*/
-static int	ft_fork_exec(char **args)
+static void	lst_wait(void *content)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		return (EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{	
-		(void) args;
-		return (EXIT_SUCCESS);
-	}
-	else
-	{
-		waitpid(pid, NULL, 0);
-		return (EXIT_SUCCESS);
-	}
-}
-
-/*
-Execute a built-in commands, or an external program. Returns 0 upon
-successful execution, or non-zero upon failure.
-*/
-static int	ft_builtin_or_execute(char **args)
-{
-	const char	*built_in[] = {"echo", "cd", "pwd",
-							   "export", "unset", "env", "exit"};
-	static int	(*func[])(char **) = {&ft_echo, &ft_cd, &ft_pwd,
-									  &ft_export, &ft_unset, &ft_env, &ft_exit};
-	int			n;
-	int			i;
-
-	n = sizeof(built_in) / sizeof(built_in[0]);
-	if (*args == NULL)
-		return (1);
-	i = 0;
-	while (i < n)
-	{
-		if (ft_strncmp(args[0], built_in[i], ft_strlen(built_in[i]) + 1) == 0)
-			return (func[i](args));
-		i++;
-	}
-	return (ft_fork_exec(args));
+	waitpid(*((pid_t *) content), NULL, 0);
 }
 
 /*
@@ -80,23 +33,27 @@ executed. The loop exits if return value from execution is not 1.
 static void	ft_loop(void)
 {
 	char	*line;
-	char	**args;
-	int		status;
+	t_list	*lst;
+	t_cmd	*cmd;
+	pid_t	pid;
 	int		i;
 
-	status = EXIT_SUCCESS;
-	while (status == EXIT_SUCCESS)
+	lst = NULL;
+	while (1)
 	{
 		line = readline("$ ");
-		if (line == NULL)
-			break ;
-		args = ft_split(line, ' ');
-		status = ft_builtin_or_execute(args);
-		free(line);
+		cmd = ft_parse(ft_tokenise(line));
 		i = -1;
-		while (args[++i] != NULL)
-			free(args[i]);
-		free(args);
+		while (++i < cmd->count)
+		{
+			pid = ft_execute_scmd(cmd, i);
+			ft_lstadd_back(&lst, ft_lstnew(&pid));
+		}
+		ft_lstiter(lst, lst_wait);
+		ft_lstclear(&lst, NULL);
+		ft_cmd_del(cmd);
+		free(line);
+		unlink(".heredoc");
 	}
 }
 
