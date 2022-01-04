@@ -26,7 +26,9 @@ SRCS	=	builtin_cd.c \
 			quote.c \
 			scmd.c \
 			string_array.c \
-			string.c
+			string.c \
+			history.c \
+			history_utils.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
 
@@ -58,4 +60,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: clean
+.PHONY: clean fclean all

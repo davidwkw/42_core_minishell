@@ -22,8 +22,13 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include "libft/libft.h"
+
+# define HISTORY_FILE ".history"
+# define HISTORY_COUNT 35
 
 // data structure for simple command
 typedef struct s_scmd
@@ -127,5 +132,12 @@ int		ft_unset(char **args);
 t_bif	ft_builtin(char *name);
 void	ft_external(char **args);
 void	ft_run(char **arg, int nofork);
+
+// history function
+int		is_strdigit(char *string);
+char	*get_line_num(int fd, int num);
+int		count_history(void);
+int		save_history(char *cmd);
+int		ft_history(char **args);
 
 #endif

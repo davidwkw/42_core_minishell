@@ -16,9 +16,9 @@
 t_bif	ft_builtin(char *name)
 {
 	const char	*cmd[] = {"echo", "cd", "pwd", "export", "unset",
-		"env", "exit"};
+		"env", "exit", "history"};
 	const t_bif	func[] = {&ft_echo, &ft_cd, &ft_pwd, &ft_export,
-		&ft_unset, &ft_env, &ft_exit};
+		&ft_unset, &ft_env, &ft_exit, &ft_history};
 	const int	n = sizeof(cmd) / sizeof(cmd[0]);
 	int			i;
 

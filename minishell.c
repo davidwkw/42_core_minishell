@@ -72,6 +72,9 @@ static void	ft_read_execute(void)
 	lst = NULL;
 	ft_save_restore_fd();
 	line = readline("$ ");
+	if (!(line && *line))
+		return ;
+	save_history(line);
 	cmd = ft_parse(ft_tokenise(line));
 	i = -1;
 	while (++i < cmd->count
@@ -94,5 +97,6 @@ int	main(void)
 	while (1)
 		ft_read_execute();
 	ft_memdel(g_environ);
+	unlink(HISTORY_FILE);
 	return (EXIT_SUCCESS);
 }
