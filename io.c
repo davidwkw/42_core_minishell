@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/03 17:32:39 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/04 13:29:59 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,24 @@ int	open_outfile(t_cmd *cmd)
 		return (ft_open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, S_IWUSR));
 	else
 		return (ft_open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR));
+}
+
+/* Saves or restores the stdin and stdout file numbers. */
+void	ft_save_restore_fd(void)
+{
+	static int	in = -1;
+	static int	out = -1;
+
+	if (in == -1)
+	{
+		in = ft_dup(STDIN_FILENO);
+		out = ft_dup(STDOUT_FILENO);
+	}
+	else
+	{
+		ft_pipe_dup_close(in, STDIN_FILENO);
+		ft_pipe_dup_close(out, STDOUT_FILENO);
+		in = -1;
+		out = -1;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/03 22:33:06 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/04 13:40:36 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ typedef struct s_cmd
 	char	*outfile;
 	int		append;
 }	t_cmd;
+
+// built-in function pointer definition
+typedef int	(*t_bif)(char **);
 
 // environment variables
 extern char	**environ;
@@ -90,6 +93,7 @@ int		ft_parse_error(t_cmd *cmd, t_list **lst);
 int		ft_hdlr_token(t_cmd *cmd, t_list **lst);
 
 // file descriptor functions
+int		ft_dup(int oldfd);
 int		ft_pipe_create(int fd[2]);
 int		ft_pipe_dup_close(int oldfd, int newfd);
 int		ft_open(const char *pathname, int flags, mode_t mode);
@@ -99,6 +103,7 @@ int		ft_close(int fd);
 void	ft_write_heredoc(char *delimiter);
 int		open_infile(t_cmd *cmd);
 int		open_outfile(t_cmd *cmd);
+void	ft_save_restore_fd(void);
 
 // executor functions
 pid_t	ft_execute_scmd(t_cmd *cmd, int i);
@@ -111,7 +116,7 @@ char	*ft_remove_quote(char *str);
 char	*ft_getenv(const char *name);
 int		ft_putenv(char *string);
 
-// built-in functions
+// built-in / external functions
 int		ft_cd(char **args);
 int		ft_echo(char **args);
 int		ft_env(char **args);
@@ -119,5 +124,8 @@ int		ft_exit(char **args);
 int		ft_export(char **args);
 int		ft_pwd(char **args);
 int		ft_unset(char **args);
+t_bif	ft_builtin(char *name);
+void	ft_external(char **args);
+void	ft_run(char **arg, int nofork);
 
 #endif

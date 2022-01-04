@@ -6,11 +6,25 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:45:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/03 14:52:38 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/04 11:06:06 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+Returns a copy of the file descriptor 'oldfd', using the lowest-numbered
+unused file descriptor for the new descriptor. Raises error upon failure.
+*/
+int	ft_dup(int oldfd)
+{
+	int	fd;
+
+	fd = dup(oldfd);
+	if (fd == -1)
+		perror("dup");
+	return (fd);
+}
 
 /* Create pipe. Returns 0 upon failure or -1 upon success. */
 int	ft_pipe_create(int fd[2])

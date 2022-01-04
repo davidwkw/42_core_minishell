@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 16:06:28 by weng              #+#    #+#             */
-/*   Updated: 2022/01/03 22:51:27 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/04 13:33:51 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ t_cmd	*ft_parse(t_list *lst)
 	cmd = ft_cmd_new();
 	if (lst == NULL)
 		return (cmd);
-	ft_cmd_add_scmd(cmd);
 	node = lst;
 	while (node != NULL)
 	{
