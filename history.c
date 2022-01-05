@@ -23,19 +23,17 @@ void	save_history(char *cmd)
 	char	*last_line;
 
 	fd = ft_open(HISTORY_FILE, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
-	if (fd == -1)
+	if (fd == -1 || *cmd == ' ')
 		return ;
 	hist_count = count_history();
 	if (hist_count == 0)
 		last_line = NULL;
 	else
 		last_line = get_line_num(fd, hist_count);
-	if (last_line == NULL || (is_strwhitespace(cmd) != 1
-			&& ft_strncmp(last_line, cmd, ft_strlen(cmd) + 1) != 0))
+	if (last_line == NULL || ft_strncmp(last_line, cmd, ft_strlen(cmd) + 1) != 0)
 	{
 		add_history(cmd);
-		ft_putstr_fd(cmd, fd);
-		ft_putchar_fd('\n', fd);
+		ft_putendl_fd(cmd, fd);
 	}
 	free(last_line);
 	ft_close(fd);
