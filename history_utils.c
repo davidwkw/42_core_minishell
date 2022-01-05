@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   history_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/05 14:17:38 by kwang             #+#    #+#             */
+/*   Updated: 2022/01/05 17:44:40 by weng             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -41,7 +53,7 @@ int	count_history(void)
 	char	*line;
 	int		i;
 
-	fd = open(HISTORY_FILE, O_RDONLY);
+	fd = ft_open(HISTORY_FILE, O_RDONLY, 0);
 	if (fd == -1)
 		return (-1);
 	i = 0;
@@ -49,21 +61,24 @@ int	count_history(void)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-			break;
+			break ;
 		free(line);
 		i++;
 	}
-	close(fd);
+	ft_close(fd);
 	return (i);
 }
 
 /*
 Helper function to retrieve line specified by the num parameter.
+The trailing '\n' character is removed from the return value.
 */
 char	*get_line_num(int fd, int num)
 {
 	int		i;
+	int		len;
 	char	*line;
+	char	*retval;
 
 	i = -1;
 	while (++i < num - 1)
@@ -74,5 +89,13 @@ char	*get_line_num(int fd, int num)
 		free(line);
 	}
 	line = get_next_line(fd);
-	return (line);
+	len = ft_strlen(line);
+	if (line[len - 1] == '\n')
+	{
+		retval = ft_substr(line, 0, len - 1);
+		free(line);
+		return (retval);
+	}
+	else
+		return (line);
 }

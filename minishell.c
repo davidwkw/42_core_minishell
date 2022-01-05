@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/05 13:59:55 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/05 17:08:09 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,25 +66,20 @@ static void	ft_read_execute(void)
 	char	*line;
 	t_list	*lst;
 	t_cmd	*cmd;
-	pid_t	pid;
 	int		i;
 
+	line = readline("$ ");
+	if (line == NULL || *line == '\0')
+		return ;
 	lst = NULL;
 	ft_save_restore_fd();
-	line = readline("$ ");
-	if (!(line && *line))
-		return ;
 	save_history(line);
 	cmd = ft_parse(ft_tokenise(line));
-	i = -1;
 	if (cmd->heredoc == 1)
 		ft_write_heredoc(cmd->infile);
-	while (++i < cmd->count
-		&& (cmd->count > 0 || cmd->infile != NULL || cmd->outfile != NULL))
-	{
-		pid = ft_execute_scmd(cmd, i);
-		ft_record_pid(&lst, pid);
-	}
+	i = -1;
+	while (++i < cmd->count)
+		ft_record_pid(&lst, ft_execute_scmd(cmd, i));
 	ft_set_exit_value(cmd, lst);
 	ft_lstclear(&lst, free);
 	ft_cmd_del(cmd);

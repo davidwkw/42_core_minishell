@@ -11,3 +11,7 @@ test*.c
 
 # executables
 minishell
+
+# minishell temporary / hidden files
+.history
+.heredoc

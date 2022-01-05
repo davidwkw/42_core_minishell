@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 13:40:36 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/05 17:14:30 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int		is_strdigit(char *string);
 int		is_strwhitespace(char *string);
 char	*get_line_num(int fd, int num);
 int		count_history(void);
-int		save_history(char *cmd);
+void	save_history(char *cmd);
 int		ft_history(char **args);
 
 #endif
