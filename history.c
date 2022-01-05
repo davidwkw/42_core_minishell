@@ -103,3 +103,23 @@ int	ft_history(char **args)
 	}
 	return (0);
 }
+
+/*
+Initializes history from HISTORY_FILE.
+*/
+void	ft_init_history(void)
+{
+	int		fd;
+	char	*line;
+
+	fd = ft_open(HISTORY_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break;
+		add_history(line);
+		free(line);
+	}
+	ft_close(fd);
+}
