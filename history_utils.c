@@ -28,21 +28,6 @@ int	is_strdigit(char *string)
 }
 
 /*
-Helper function to check if string contains only whitespace.
-Returns 1 if str only contains whitespace, 0 otherwise.
-*/
-int	is_strwhitespace(char *string)
-{
-	while (*string)
-	{
-		if (!ft_isspace(*string))
-			return (0);
-		string++;
-	}
-	return (1);
-}
-
-/*
 Helper function for list_history. Counts total list of lines
 in history file. Returns number of lines in the history file.
 Returns -1 if there is an error opening the file.
