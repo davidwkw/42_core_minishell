@@ -25,6 +25,7 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <signal.h>
 # include "libft/libft.h"
 
 # define HISTORY_FILE ".history"
@@ -139,5 +140,8 @@ char	*get_line_num(int fd, int num);
 int		count_history(void);
 int		save_history(char *cmd);
 int		ft_history(char **args);
+
+// signal function
+void	init_signals(void);
 
 #endif

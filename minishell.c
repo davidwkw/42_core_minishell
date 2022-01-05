@@ -61,7 +61,7 @@ static void	ft_set_exit_value(t_cmd *cmd, t_list *lst)
 }
 
 /* Read and execute one line from user input. */
-static void	ft_read_execute(void)
+static int	ft_read_execute(void)
 {
 	char	*line;
 	t_list	*lst;
@@ -72,8 +72,10 @@ static void	ft_read_execute(void)
 	lst = NULL;
 	ft_save_restore_fd();
 	line = readline("$ ");
-	if (!(line && *line))
-		return ;
+	if (line == NULL)
+		return (0);
+	else if (!(*line))
+		return (1);
 	save_history(line);
 	cmd = ft_parse(ft_tokenise(line));
 	i = -1;
@@ -89,13 +91,15 @@ static void	ft_read_execute(void)
 	free(line);
 	unlink(".heredoc");
 	ft_save_restore_fd();
+	return (1);
 }
 
 int	main(void)
 {
 	ft_init_environment();
-	while (1)
-		ft_read_execute();
+	init_signals();
+	while (ft_read_execute())
+		;
 	ft_memdel(g_environ);
 	unlink(HISTORY_FILE);
 	return (EXIT_SUCCESS);
