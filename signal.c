@@ -12,5 +12,5 @@ static void	reprompt(int signum)
 void	init_signals(void)
 {
 	signal(SIGINT, reprompt);
-	signed(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
