@@ -111,7 +111,7 @@ void	ft_init_history(void)
 	int		fd;
 	char	*line;
 
-	fd = open(HISTORY_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+	fd = ft_open(HISTORY_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -120,5 +120,5 @@ void	ft_init_history(void)
 		add_history(line);
 		free(line);
 	}
-	close(fd);
+	ft_close(fd);
 }
