@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/05 17:14:30 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 00:08:02 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <fcntl.h>
 # include "libft/libft.h"
 
+# define HEREDOC_FILE ".heredoc"
 # define HISTORY_FILE ".history"
 # define HISTORY_COUNT 35
 

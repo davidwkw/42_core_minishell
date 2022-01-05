@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 13:29:59 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 00:08:57 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	ft_eof_warning(char *delimiter)
 }
 
 /*
-Opens the ".heredoc" file and writes the content from stdin to it, line
+Opens the HEREDOC_FILE and writes the content from stdin to it, line
 by line.
 
 A warning is raised if the EOF is detected.
@@ -31,9 +31,8 @@ void	ft_write_heredoc(char *delimiter)
 {
 	int			fd;
 	char		*line;
-	const char	*heredoc = ".heredoc";
 
-	fd = ft_open(heredoc, O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR);
+	fd = ft_open(HEREDOC_FILE, O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR);
 	line = get_next_line(STDIN_FILENO);
 	while (line != NULL && (ft_strlen(line) - 1 != ft_strlen(delimiter)
 			|| ft_strncmp(line, delimiter, ft_strlen(delimiter)) != 0))
@@ -54,7 +53,7 @@ int	open_infile(t_cmd *cmd)
 	char	*infile;
 
 	if (cmd->heredoc == 1)
-		infile = ".heredoc";
+		infile = HEREDOC_FILE;
 	else
 		infile = cmd->infile;
 	return (ft_open(infile, O_RDONLY, 0));
@@ -62,7 +61,7 @@ int	open_infile(t_cmd *cmd)
 
 /*
 Opens the 'outfile', if exists; or creates the output file, if not.
-If infile == ".heredoc", newlines are appended to the end of the file
+If infile == HEREDOC_FILE, newlines are appended to the end of the file
 rather than overwriting the original content.
 */
 int	open_outfile(t_cmd *cmd)
