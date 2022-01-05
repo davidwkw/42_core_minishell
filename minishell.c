@@ -15,9 +15,9 @@
 char	**g_environ;
 
 /* Initialise environment variable array g_environ and ? variable. */
-static void	ft_init_environment(void)
+static void	ft_init_environment(char **env)
 {
-	g_environ = ft_memdup((const char **) environ);
+	g_environ = ft_memdup((const char **) env);
 	ft_putenv("?=0");
 }
 
@@ -93,9 +93,11 @@ static void	ft_read_execute(void)
 	ft_save_restore_fd();
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
-	ft_init_environment();
+	(void)argc;
+	(void)argv;
+	ft_init_environment(env);
 	while (1)
 		ft_read_execute();
 	ft_memdel(g_environ);

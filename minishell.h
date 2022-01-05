@@ -52,7 +52,6 @@ typedef struct s_cmd
 typedef int	(*t_bif)(char **);
 
 // environment variables
-extern char	**environ;
 extern char	**g_environ;
 
 // char pointer array (string array) functions
