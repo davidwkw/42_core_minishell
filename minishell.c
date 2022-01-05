@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 15:54:36 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/05 13:59:55 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static void	ft_read_execute(void)
 	line = readline("$ ");
 	cmd = ft_parse(ft_tokenise(line));
 	i = -1;
+	if (cmd->heredoc == 1)
+		ft_write_heredoc(cmd->infile);
 	while (++i < cmd->count
 		&& (cmd->count > 0 || cmd->infile != NULL || cmd->outfile != NULL))
 	{
