@@ -1,13 +1,29 @@
 #include "minishell.h"
 
 /*
-Helper function to check if string contains only digits
+Helper function to check if string contains only digits.
+Returns 1 if str only contains digits, 0 otherwise.
 */
 int	is_strdigit(char *string)
 {
 	while (*string)
 	{
 		if (!ft_isdigit(*string))
+			return (0);
+		string++;
+	}
+	return (1);
+}
+
+/*
+Helper function to check if string contains only whitespace.
+Returns 1 if str only contains whitespace, 0 otherwise.
+*/
+int	is_strwhitespace(char *string)
+{
+	while (*string)
+	{
+		if (!ft_isspace(*string))
 			return (0);
 		string++;
 	}

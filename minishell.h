@@ -135,6 +135,7 @@ void	ft_run(char **arg, int nofork);
 
 // history function
 int		is_strdigit(char *string);
+int		is_strwhitespace(char *string);
 char	*get_line_num(int fd, int num);
 int		count_history(void);
 int		save_history(char *cmd);

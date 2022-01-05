@@ -25,7 +25,7 @@ int	save_history(char *cmd)
 		if (ft_strlen(cmd) > cmp_num)
 			cmp_num = ft_strlen(cmd);
 	}
-	if (!hist_count || ft_strncmp(cmd, temp, cmp_num))
+	if (!is_strwhitespace(cmd) && (!hist_count || ft_strncmp(cmd, temp, cmp_num)))
 	{
 		free(temp);
 		temp = ft_strjoin(cmd, "\n");
@@ -81,7 +81,7 @@ int	ft_history(char **args)
 	int	num_input;
 
 	total_hist_count = count_history();
-	min_hist_count = total_hist_count - HISTORY_COUNT;
+	min_hist_count = total_hist_count - HISTORY_COUNT + 1;
 	if (min_hist_count < 1)
 		min_hist_count = 1;
 	if (args[1] == NULL)
