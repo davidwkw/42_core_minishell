@@ -138,6 +138,7 @@ int		is_strwhitespace(char *string);
 char	*get_line_num(int fd, int num);
 int		count_history(void);
 int		save_history(char *cmd);
+void	ft_init_history(void);
 int		ft_history(char **args);
 
 #endif

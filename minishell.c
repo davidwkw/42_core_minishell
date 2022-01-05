@@ -98,9 +98,9 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	ft_init_environment(env);
+	ft_init_history();
 	while (1)
 		ft_read_execute();
 	ft_memdel(g_environ);
-	unlink(HISTORY_FILE);
 	return (EXIT_SUCCESS);
 }

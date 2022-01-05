@@ -13,7 +13,7 @@ int	save_history(char *cmd)
 	size_t	cmp_num;
 
 	add_history(cmd);
-	fd = open(HISTORY_FILE, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	fd = open(HISTORY_FILE, O_RDWR | O_APPEND);
 	if (fd == -1)
 		return (-1);
 	hist_count = count_history();
@@ -90,7 +90,7 @@ int	ft_history(char **args)
 	{
 		unlink(HISTORY_FILE);
 		rl_clear_history();
-		fd = open(HISTORY_FILE, O_CREAT | O_WRONLY, S_IWUSR);
+		fd = open(HISTORY_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
 		close(fd);
 	}
 	else if (is_strdigit(args[1]))
@@ -101,4 +101,24 @@ int	ft_history(char **args)
 		list_history(min_hist_count);
 	}
 	return (0);
+}
+
+/*
+Initializes history from HISTORY_FILE.
+*/
+void	ft_init_history(void)
+{
+	int		fd;
+	char	*line;
+
+	fd = open(HISTORY_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line == NULL)
+			break;
+		add_history(line);
+		free(line);
+	}
+	close(fd);
 }
