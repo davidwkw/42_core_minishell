@@ -31,7 +31,7 @@ void	save_history(char *cmd)
 	else
 		last_line = get_line_num(fd, hist_count);
 	if (last_line == NULL || (is_strwhitespace(cmd) != 1
-			&& ft_strncmp(last_line, cmd, ft_strlen(cmd)) != 0))
+			&& ft_strncmp(last_line, cmd, ft_strlen(cmd) + 1) != 0))
 	{
 		add_history(cmd);
 		ft_putstr_fd(cmd, fd);
