@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 12:24:17 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 10:26:59 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 11:13:40 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_cmd_print(t_cmd *cmd)
 	printf("cmd->count = %d\n", cmd->count);
 	printf("cmd->infile = %s\n", cmd->infile);
 	printf("cmd->outfile = %s\n", cmd->outfile);
-	printf("cmd->append = %d\n", cmd->append);
+	printf("cmd->outfile_flag = %d\n", cmd->outfile_flag);
 	scmd_lst = cmd->scmd_lst;
 	i = 0;
 	while (scmd_lst != NULL)

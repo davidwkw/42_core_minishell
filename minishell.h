@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 10:20:10 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 11:19:26 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_cmd
 	t_list	*scmd_lst;
 	char	*infile;
 	char	*outfile;
-	int		append;
+	int		outfile_flag;
 }	t_cmd;
 
 // built-in function pointer definition

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 10:20:06 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 11:13:41 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,12 @@ void	ft_write_heredoc(char *delimiter)
 	ft_close(fd);
 }
 
-/*
-Opens the 'outfile', if exists; or creates the output file, if not.
-If infile == HEREDOC_FILE, newlines are appended to the end of the file
-rather than overwriting the original content.
-*/
+/* Opens the output file for writing. */
 int	open_outfile(t_cmd *cmd)
 {
 	if (cmd->outfile == NULL)
 		return (-1);
-	if (cmd->append == 1)
-		return (ft_open(cmd->outfile, O_WRONLY | O_CREAT | O_APPEND, S_IWUSR));
-	else
-		return (ft_open(cmd->outfile, O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR));
+	return (ft_open(cmd->outfile, O_WRONLY | cmd->outfile_flag, 0));
 }
 
 /* Saves or restores the stdin and stdout file numbers. */
