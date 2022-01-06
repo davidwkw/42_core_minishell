@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/05 13:52:38 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 12:01:54 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,34 @@ t_bif	ft_builtin(char *name)
 	return (NULL);
 }
 
+/*
+Checks whether args[0] is a directory or whether it exists. Exit upon error.
+*/
+static void	ft_external_error(char **args)
+{
+	struct stat	statbuf;
+
+	if (stat(args[0], &statbuf) == 0 && S_ISDIR(statbuf.st_mode) == 1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(args[0], 2);
+		ft_putendl_fd(": Is a directory", 2);
+		exit(126);
+	}
+	else if (access(args[0], F_OK) != 0)
+	{
+		ft_putstr_fd(args[0], 2);
+		ft_putendl_fd(": command not found", 2);
+		exit(127);
+	}
+}
+
 /* Execute an external program, or raises error if program is not found. */
 void	ft_external(char **args)
 {
-	char		**dirs;
-	char		*pathname;
-	int			i;
+	char	**dirs;
+	char	*pathname;
+	int		i;
 
 	dirs = ft_split(ft_getenv("PATH"), ':');
 	i = -1;
@@ -48,12 +70,8 @@ void	ft_external(char **args)
 			execve(pathname, args, g_environ);
 		free(pathname);
 	}
-	if (access(args[0], F_OK) == 0)
-		execve(args[0], args, g_environ);
-	ft_putstr_fd("cannot access '", 2);
-	ft_putstr_fd(args[0], 2);
-	perror("'");
-	exit(EXIT_FAILURE);
+	ft_external_error(args);
+	execve(args[0], args, g_environ);
 }
 
 /* Run a built_in program or an external program. */
