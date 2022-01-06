@@ -21,19 +21,20 @@ void	save_history(char *cmd)
 	int		fd;
 	int		hist_count;
 	char	*last_line;
+	char	*temp;
 
 	fd = ft_open(HISTORY_FILE, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
 	if (fd == -1 || *cmd == ' ')
 		return ;
 	hist_count = count_history();
-	if (hist_count == 0)
-		last_line = NULL;
-	else
+	last_line = NULL;
+	if (hist_count > 0)
 		last_line = get_line_num(fd, hist_count);
 	if (last_line == NULL || ft_strncmp(last_line, cmd, ft_strlen(cmd) + 1) != 0)
 	{
-		add_history(cmd);
-		ft_putendl_fd(cmd, fd);
+		temp = ft_strtrim(cmd, " ");
+		add_history(temp);
+		ft_putendl_fd(temp, fd);
 	}
 	free(last_line);
 	ft_close(fd);
