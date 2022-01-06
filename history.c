@@ -35,6 +35,7 @@ void	save_history(char *cmd)
 		temp = ft_strtrim(cmd, " ");
 		add_history(temp);
 		ft_putendl_fd(temp, fd);
+		free(temp);
 	}
 	free(last_line);
 	ft_close(fd);
