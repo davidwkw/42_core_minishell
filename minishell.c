@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 15:54:36 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/05 17:08:09 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 char	**g_environ;
 
 /* Initialise environment variable array g_environ and ? variable. */
-static void	ft_init_environment(void)
+static void	ft_init_environment(char **env)
 {
-	g_environ = ft_memdup((const char **) environ);
+	g_environ = ft_memdup((const char **) env);
 	ft_putenv("?=0");
 }
 
@@ -66,25 +66,20 @@ static int	ft_read_execute(void)
 	char	*line;
 	t_list	*lst;
 	t_cmd	*cmd;
-	pid_t	pid;
 	int		i;
 
+	line = readline("$ ");
+	if (line == NULL || *line == '\0')
+		return ;
 	lst = NULL;
 	ft_save_restore_fd();
-	line = readline("$ ");
-	if (line == NULL)
-		return (0);
-	else if (!(*line))
-		return (1);
 	save_history(line);
 	cmd = ft_parse(ft_tokenise(line));
+	if (cmd->heredoc == 1)
+		ft_write_heredoc(cmd->infile);
 	i = -1;
-	while (++i < cmd->count
-		&& (cmd->count > 0 || cmd->infile != NULL || cmd->outfile != NULL))
-	{
-		pid = ft_execute_scmd(cmd, i);
-		ft_record_pid(&lst, pid);
-	}
+	while (++i < cmd->count)
+		ft_record_pid(&lst, ft_execute_scmd(cmd, i));
 	ft_set_exit_value(cmd, lst);
 	ft_lstclear(&lst, free);
 	ft_cmd_del(cmd);
@@ -94,13 +89,15 @@ static int	ft_read_execute(void)
 	return (1);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
-	ft_init_environment();
-	init_signals();
+	(void)argc;
+	(void)argv;
+	ft_init_environment(envp);
+	ft_init_history();
+	ft_init_signals();
 	while (ft_read_execute())
 		;
 	ft_memdel(g_environ);
-	unlink(HISTORY_FILE);
 	return (EXIT_SUCCESS);
 }

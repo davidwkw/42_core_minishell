@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 13:40:36 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/05 17:14:30 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_cmd
 typedef int	(*t_bif)(char **);
 
 // environment variables
-extern char	**environ;
 extern char	**g_environ;
 
 // char pointer array (string array) functions
@@ -136,12 +135,14 @@ void	ft_run(char **arg, int nofork);
 
 // history function
 int		is_strdigit(char *string);
+int		is_strwhitespace(char *string);
 char	*get_line_num(int fd, int num);
 int		count_history(void);
-int		save_history(char *cmd);
+void	save_history(char *cmd);
+void	ft_init_history(void);
 int		ft_history(char **args);
 
 // signal function
-void	init_signals(void);
+void	ft_init_signals(void);
 
 #endif
