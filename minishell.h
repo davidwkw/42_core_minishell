@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/05 17:14:30 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 13:57:15 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <signal.h>
 # include "libft/libft.h"
 
+# define HEREDOC_FILE ".heredoc"
 # define HISTORY_FILE ".history"
 # define HISTORY_COUNT 35
 
@@ -44,9 +45,8 @@ typedef struct s_cmd
 	int		count;
 	t_list	*scmd_lst;
 	char	*infile;
-	int		heredoc;
 	char	*outfile;
-	int		append;
+	int		outfile_flag;
 }	t_cmd;
 
 // built-in function pointer definition
@@ -106,12 +106,12 @@ int		ft_close(int fd);
 
 // here document, input and output file functions
 void	ft_write_heredoc(char *delimiter);
-int		open_infile(t_cmd *cmd);
 int		open_outfile(t_cmd *cmd);
 void	ft_save_restore_fd(void);
 
 // executor functions
 pid_t	ft_execute_scmd(t_cmd *cmd, int i);
+int		ft_execute_cmd(t_cmd *cmd);
 
 // quotation functions
 char	*ft_is_properly_quoted(char *str);
@@ -120,6 +120,7 @@ char	*ft_remove_quote(char *str);
 // environment variable functions
 char	*ft_getenv(const char *name);
 int		ft_putenv(char *string);
+int		ft_set_exit_value(t_list *lst);
 
 // built-in / external functions
 int		ft_cd(char **args);

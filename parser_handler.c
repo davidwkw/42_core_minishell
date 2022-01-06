@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 17:17:56 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 11:18:08 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,27 @@ static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 	t_list	*node;
 	char	*content;
 
-	node = *lst;
-	content = node->content;
-	if (node->next == NULL || ft_istoken(node->next->content, NULL) == 1)
-		return (ft_parse_error(cmd, &(node->next)));
-	node = node->next;
-	if (*(content) == '<')
+	node = (*lst)->next;
+	content = (*lst)->content;
+	if (node == NULL || ft_istoken(node->content, NULL) == 1)
+		return (ft_parse_error(cmd, &(node)));
+	*lst = node;
+	if (ft_strncmp(content, "<<", 2) == 0)
 	{
-		ft_strreplace(&(cmd->infile), ft_strdup(node->content));
-		cmd->heredoc = content[1] == '<';
+		ft_strreplace(&(cmd->infile), ft_strdup(HEREDOC_FILE));
+		ft_write_heredoc(node->content);
 	}
+	else if (ft_strncmp(content, "<", 1) == 0)
+		ft_strreplace(&(cmd->infile), ft_strdup(node->content));
 	else
 	{
 		ft_strreplace(&(cmd->outfile), ft_strdup(node->content));
-		cmd->append = content[1] == '>';
+		if (ft_strncmp(content, ">>", 2) == 0)
+			cmd->outfile_flag = O_APPEND;
+		else
+			cmd->outfile_flag = O_TRUNC;
+		ft_close(ft_open(node->content, O_CREAT | cmd->outfile_flag, S_IWUSR));
 	}
-	*lst = node;
 	return (0);
 }
 

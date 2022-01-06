@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 14:54:58 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 14:01:09 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ pid_t	ft_execute_scmd(t_cmd *cmd, int i)
 	pid_t		pid;
 
 	if (fd_in == -1 && cmd->infile != NULL)
-		fd_in = open_infile(cmd);
+		fd_in = ft_open(cmd->infile, O_RDONLY, 0);
 	if (fd_in == -1 && cmd->infile != NULL)
 		return (-1);
 	fd_pipe[0] = -1;
@@ -92,4 +92,36 @@ pid_t	ft_execute_scmd(t_cmd *cmd, int i)
 		ft_run(args, nofork);
 	ft_memdel(args);
 	return (pid);
+}
+
+/* Put the non-zero pid into a linked list */
+static void	ft_record_pid(t_list **lst, pid_t pid)
+{
+	int	*ptr;
+
+	if (pid == 0)
+		return ;
+	ptr = malloc(sizeof(int));
+	if (ptr != NULL)
+		*ptr = pid;
+	ft_lstadd_back(lst, ft_lstnew(ptr));
+}
+
+/* Execute a command / pipeline and return the exit value. */
+int	ft_execute_cmd(t_cmd *cmd)
+{
+	t_list	*lst;
+	int		i;
+	int		retval;
+
+	lst = NULL;
+	ft_save_restore_fd();
+	i = -1;
+	while (++i < cmd->count)
+		ft_record_pid(&lst, ft_execute_scmd(cmd, i));
+	retval = ft_set_exit_value(lst);
+	ft_lstclear(&lst, free);
+	ft_cmd_del(cmd);
+	ft_save_restore_fd();
+	return (retval);
 }
