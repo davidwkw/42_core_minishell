@@ -6,11 +6,37 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 13:34:04 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 23:31:58 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/05 23:49:48 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+Finds the pointer to location of the dollar '$' that is not enclosed by
+quotes, or is enclosed by double quotes. If none is found, return NULL.
+*/
+static char	*ft_next_dollar(char *str)
+{
+	static char	quote = '\0';
+
+	while (*str != '\0')
+	{
+		if (quote == '\'')
+		{
+			str = ft_strchr(str, '\'');
+			quote = '\0';
+		}
+		else if (quote == '\"' && *str == quote)
+			quote = '\0';
+		else if (quote == '\0' && (*str == '\'' || *str == '\"'))
+			quote = *str;
+		else if (*str == '$')
+			return (str);
+		str++;
+	}
+	return (NULL);
+}
 
 /*
 Returns pointer to the first occurence of an environment variable in
@@ -25,7 +51,7 @@ char	*ft_findenv(char *s, char **name)
 	char	*end;
 	char	*label;
 
-	start = ft_strchr_unquoted(s, '$');
+	start = ft_next_dollar(s);
 	if (*s == '\0' || start == NULL)
 		label = NULL;
 	else if (start[1] == '?')
