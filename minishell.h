@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 13:57:15 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 21:34:49 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ pid_t	ft_execute_scmd(t_cmd *cmd, int i);
 int		ft_execute_cmd(t_cmd *cmd);
 
 // quotation functions
-char	*ft_is_properly_quoted(char *str);
+int		ft_is_well_quoted(const char *s);
+int		ft_is_well_bracketed(const char *s);
 char	*ft_remove_quote(char *str);
 
 // environment variable functions

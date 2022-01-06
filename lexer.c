@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 17:08:31 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 21:35:01 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,24 +91,24 @@ t_list	*ft_tokenise(char *input)
 {
 	t_list	*lst;
 	t_list	*node;
-	char	*content;
 	char	*target;
 	char	*token;
 
-	lst = ft_lstnew(ft_is_properly_quoted(ft_strtrim(input, " ")));
+	if (ft_is_well_quoted(input) == 0 || ft_is_well_bracketed(input) == 0)
+		return (NULL);
+	lst = ft_lstnew(ft_strtrim(input, " "));
 	node = lst;
 	while (node != NULL)
 	{
-		content = node->content;
-		target = ft_next_token(content);
+		target = ft_next_token(node->content);
 		if (target != NULL)
 		{
 			ft_istoken(target, &token);
 			ft_lstinsert(node, ft_lstnew(token));
 			ft_lstinsert(
 				node->next, ft_lstnew(ft_strdup(target + ft_strlen(token))));
-			ft_lst_replace_content(
-				node, ft_substr(node->content, 0, target - content));
+			ft_lst_replace_content(node,
+				ft_substr(node->content, 0, target - (char *) node->content));
 			node = node->next;
 		}
 		node = node->next;
