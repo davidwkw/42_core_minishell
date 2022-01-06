@@ -60,7 +60,6 @@ typedef struct s_global
 }	t_global;
 
 // environment variables
-// extern char	**g_global.environ_vars;
 extern t_global	g_global;
 
 // char pointer array (string array) functions
