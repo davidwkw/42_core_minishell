@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-char	**g_environ;
+t_global	g_global;
 
-/* Initialise environment variable array g_environ and ? variable. */
+/* Initialise environment variable array g_global.environ_vars and ? variable. */
 static void	ft_init_environment(char **env)
 {
-	g_environ = ft_memdup((const char **) env);
+	g_global.environ_vars = ft_memdup((const char **) env);
 	ft_putenv("?=0");
 }
 
@@ -28,13 +28,16 @@ static int	ft_read_execute(void)
 	t_cmd	*cmd;
 
 	line = readline("$ ");
-	if (line == NULL || *line == '\0')
-		return ;
+	if (line == NULL)
+		return (0);
+	else if (*line == '\0')
+		return (1);
 	save_history(line);
 	cmd = ft_parse(ft_tokenise(line));
 	ft_execute_cmd(cmd);
 	free(line);
 	unlink(HEREDOC_FILE);
+	return (1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -46,6 +49,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_signals();
 	while (ft_read_execute())
 		;
-	ft_memdel(g_environ);
+	ft_memdel(g_global.environ_vars);
 	return (EXIT_SUCCESS);
 }

@@ -52,8 +52,16 @@ typedef struct s_cmd
 // built-in function pointer definition
 typedef int	(*t_bif)(char **);
 
+// data stuct for global variables
+typedef struct s_global
+{
+	char	**environ_vars;
+	t_list	*pid_lst;
+}	t_global;
+
 // environment variables
-extern char	**g_environ;
+// extern char	**g_global.environ_vars;
+extern t_global	g_global;
 
 // char pointer array (string array) functions
 size_t	ft_memsize(const char **arr);

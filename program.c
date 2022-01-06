@@ -67,11 +67,13 @@ void	ft_external(char **args)
 		pathname = ft_strjoin(dirs[i], "/");
 		pathname = ft_strappend(pathname, args[0]);
 		if (access(pathname, F_OK) == 0)
-			execve(pathname, args, g_environ);
+			// execve(pathname, args, g_global.environ_vars);
+			execve(pathname, args, g_global.environ_vars);
 		free(pathname);
 	}
 	ft_external_error(args);
-	execve(args[0], args, g_environ);
+	execve(args[0], args, g_global.environ_vars);
+	// execve(args[0], args, g_global.environ_vars);
 }
 
 /* Run a built_in program or an external program. */

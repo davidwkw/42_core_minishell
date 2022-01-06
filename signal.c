@@ -9,7 +9,7 @@ static void	reprompt(int signum)
 	rl_redisplay();
 }
 
-void	init_signals(void)
+void	ft_init_signals(void)
 {
 	signal(SIGINT, reprompt);
 	signal(SIGQUIT, SIG_IGN);
