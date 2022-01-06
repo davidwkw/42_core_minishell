@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/05 17:08:09 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 10:21:42 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ static void	ft_read_execute(void)
 	ft_save_restore_fd();
 	save_history(line);
 	cmd = ft_parse(ft_tokenise(line));
-	if (cmd->heredoc == 1)
-		ft_write_heredoc(cmd->infile);
 	i = -1;
 	while (++i < cmd->count)
 		ft_record_pid(&lst, ft_execute_scmd(cmd, i));
@@ -84,7 +82,7 @@ static void	ft_read_execute(void)
 	ft_lstclear(&lst, free);
 	ft_cmd_del(cmd);
 	free(line);
-	unlink(".heredoc");
+	unlink(HEREDOC_FILE);
 	ft_save_restore_fd();
 }
 

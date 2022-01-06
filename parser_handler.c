@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 17:17:56 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 09:53:41 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 	if (node->next == NULL || ft_istoken(node->next->content, NULL) == 1)
 		return (ft_parse_error(cmd, &(node->next)));
 	node = node->next;
-	if (*(content) == '<')
+	if (ft_strncmp(content, "<<", 2) == 0)
 	{
-		ft_strreplace(&(cmd->infile), ft_strdup(node->content));
-		cmd->heredoc = content[1] == '<';
+		ft_strreplace(&(cmd->infile), ft_strdup(HEREDOC_FILE));
+		ft_write_heredoc(node->content);
 	}
+	else if (*(content) == '<')
+		ft_strreplace(&(cmd->infile), ft_strdup(node->content));
 	else
 	{
 		ft_strreplace(&(cmd->outfile), ft_strdup(node->content));

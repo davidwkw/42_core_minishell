@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 00:08:02 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 10:20:10 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ typedef struct s_cmd
 	int		count;
 	t_list	*scmd_lst;
 	char	*infile;
-	int		heredoc;
 	char	*outfile;
 	int		append;
 }	t_cmd;
@@ -106,7 +105,6 @@ int		ft_close(int fd);
 
 // here document, input and output file functions
 void	ft_write_heredoc(char *delimiter);
-int		open_infile(t_cmd *cmd);
 int		open_outfile(t_cmd *cmd);
 void	ft_save_restore_fd(void);
 

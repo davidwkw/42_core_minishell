@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 00:08:57 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 10:20:06 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,34 +29,22 @@ A warning is raised if the EOF is detected.
 */
 void	ft_write_heredoc(char *delimiter)
 {
-	int			fd;
-	char		*line;
+	int		fd;
+	char	*line;
 
-	fd = ft_open(HEREDOC_FILE, O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR);
-	line = get_next_line(STDIN_FILENO);
-	while (line != NULL && (ft_strlen(line) - 1 != ft_strlen(delimiter)
-			|| ft_strncmp(line, delimiter, ft_strlen(delimiter)) != 0))
+	fd = ft_open(HEREDOC_FILE, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+	line = readline("> ");
+	while (line != NULL
+		&& ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) != 0)
 	{
-		ft_putstr_fd(line, fd);
+		ft_putendl_fd(line, fd);
 		free(line);
-		line = get_next_line(STDIN_FILENO);
+		line = readline("> ");
 	}
 	if (line == NULL)
 		ft_eof_warning(delimiter);
 	free(line);
 	ft_close(fd);
-}
-
-/* Opens the input file and returns the file descriptor. */
-int	open_infile(t_cmd *cmd)
-{
-	char	*infile;
-
-	if (cmd->heredoc == 1)
-		infile = HEREDOC_FILE;
-	else
-		infile = cmd->infile;
-	return (ft_open(infile, O_RDONLY, 0));
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/04 14:54:58 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 10:20:02 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ pid_t	ft_execute_scmd(t_cmd *cmd, int i)
 	pid_t		pid;
 
 	if (fd_in == -1 && cmd->infile != NULL)
-		fd_in = open_infile(cmd);
+		fd_in = ft_open(cmd->infile, O_RDONLY, 0);
 	if (fd_in == -1 && cmd->infile != NULL)
 		return (-1);
 	fd_pipe[0] = -1;
