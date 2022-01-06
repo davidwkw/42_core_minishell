@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 11:19:26 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 13:57:15 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	ft_save_restore_fd(void);
 
 // executor functions
 pid_t	ft_execute_scmd(t_cmd *cmd, int i);
+int		ft_execute_cmd(t_cmd *cmd);
 
 // quotation functions
 char	*ft_is_properly_quoted(char *str);
@@ -118,6 +119,7 @@ char	*ft_remove_quote(char *str);
 // environment variable functions
 char	*ft_getenv(const char *name);
 int		ft_putenv(char *string);
+int		ft_set_exit_value(t_list *lst);
 
 // built-in / external functions
 int		ft_cd(char **args);

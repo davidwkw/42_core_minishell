@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 13:57:11 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 13:57:08 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,29 @@ int	ft_putenv(char *string)
 		return (ft_meminsert(&g_environ, string));
 	else
 		return (EXIT_SUCCESS);
+}
+
+/* Wait for the end each child process and put the exit value in environment */
+int	ft_set_exit_value(t_list *lst)
+{
+	pid_t	*pid;
+	int		wstatus;
+	int		value;
+	char	*val_str;
+	char	*str;
+
+	value = 0;
+	while (lst != NULL)
+	{
+		pid = lst->content;
+		waitpid(*pid, &wstatus, WUNTRACED);
+		value |= WEXITSTATUS(wstatus);
+		lst = lst->next;
+	}
+	val_str = ft_itoa(value);
+	str = ft_strjoin("?=", val_str);
+	ft_putenv(str);
+	free(val_str);
+	free(str);
+	return (value);
 }
