@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-t_global	g_global;
+char	**g_environ;
 
-/* Initialise environment variable array g_global.environ_vars and ? variable. */
+/* Initialise environment variable array g_environ and ? variable. */
 static void	ft_init_environment(char **env)
 {
-	g_global.environ_vars = ft_memdup((const char **) env);
+	g_environ = ft_memdup((const char **) env);
 	ft_putenv("?=0");
 }
 
@@ -49,6 +49,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_signals();
 	while (ft_read_execute())
 		;
-	ft_memdel(g_global.environ_vars);
+	ft_memdel(g_environ);
 	return (EXIT_SUCCESS);
 }

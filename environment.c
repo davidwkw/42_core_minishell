@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 /*
-Get an environment variable from the g_global.environ_vars global variable. Returns
+Get an environment variable from the g_environ global variable. Returns
 a pointer to the value, or NULL if there is no match.
 */
 char	*ft_getenv(const char *name)
@@ -21,7 +21,7 @@ char	*ft_getenv(const char *name)
 	char	**env;
 	int		len;
 
-	env = g_global.environ_vars;
+	env = g_environ;
 	len = ft_strlen(name);
 	while (*env != NULL)
 	{
@@ -47,7 +47,7 @@ static int	ft_replace_environ(char *args)
 		len = ft_strlen(args);
 	else
 		len = equal - args;
-	env = g_global.environ_vars;
+	env = g_environ;
 	while (*env != NULL)
 	{
 		if (ft_strncmp(*env, args, len) == 0
@@ -93,7 +93,7 @@ name=value. If 'name' does not already exist in the environment, then
 'string' is added to the environment. If 'name' does exist, then the
 value of 'name' in the environment is change to 'value'.
 
-if 'string' is of the form 'name', then it is added to g_global.environ_vars but
+if 'string' is of the form 'name', then it is added to g_environ but
 only considered marked for export.
 
 Returns zero upon success, or non-zero upon failure.
@@ -114,7 +114,7 @@ int	ft_putenv(char *string)
 	if (valid == 0)
 		return (EXIT_FAILURE);
 	if (ft_replace_environ(string) == 0)
-		return (ft_meminsert(&g_global.environ_vars, string));
+		return (ft_meminsert(&g_environ, string));
 	else
 		return (EXIT_SUCCESS);
 }

@@ -35,7 +35,7 @@ int	ft_env(char **args)
 		perror("env");
 		return (EXIT_FAILURE);
 	}
-	env = g_global.environ_vars;
+	env = g_environ;
 	while (*env != NULL)
 	{
 		if (ft_strchr(*env, '=') != NULL && **env != '?')

@@ -51,7 +51,7 @@ static void	ft_display_list(void)
 	char	*equal;
 	char	*name;
 
-	env = ft_memdup((const char **) g_global.environ_vars);
+	env = ft_memdup((const char **) g_environ);
 	ft_memsort(env);
 	cpy = env;
 	while (*env != NULL)
@@ -79,7 +79,7 @@ Marks each NAME for automatic export to the environment of subsequently
 executed commands. If VALUE is supplied, assign VALUE before exporting.
 
 A variable without value is considered set by adding it to the
-g_global.environ_vars with "NAME" only.
+g_environ with "NAME" only.
 
 Returns 0 upon success, or 1 upon failure.
 */

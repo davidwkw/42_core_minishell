@@ -19,7 +19,7 @@ static void	ft_unset_one(char *name)
 	char	**env;
 
 	len = ft_strlen(name);
-	env = g_global.environ_vars;
+	env = g_environ;
 	while (*env != NULL)
 	{
 		if (ft_strncmp(*env, name, len) == 0
@@ -42,7 +42,7 @@ static void	ft_unset_one(char *name)
 Removes the corresponding environment variable for each NAME given.
 
 The environment variables are removed by freeing the corresponding
-entry from g_global.environ_vars global variable for each NAME. However, this
+entry from g_environ global variable for each NAME. However, this
 implementation is not thread safe, since no lock is used.
 
 It is not possible to unset the '?' variable.
