@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 21:34:49 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 11:24:05 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,8 @@ int		count_history(void);
 void	save_history(char *cmd);
 void	ft_init_history(void);
 int		ft_history(char **args);
+
+// minishell initialisation related functions
+void	ft_init_environment(char **env);
 
 #endif
