@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 14:49:24 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 15:24:58 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,13 @@ typedef struct s_cmd
 }	t_cmd;
 
 // built-in function pointer definition
-typedef int	(*t_bif)(char **);
+typedef int		(*t_bif)(char **);
+
+// signal handler function pointer definition
+typedef void	(*t_sighandler)(int);
 
 // environment variables
-extern char	**g_environ;
+extern char		**g_environ;
 
 // char pointer array (string array) functions
 size_t	ft_memsize(const char **arr);
