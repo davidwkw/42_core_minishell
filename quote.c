@@ -6,20 +6,21 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:03:38 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 22:55:33 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/06 21:51:48 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Return string if it is properly closed, or and empty string if it is not. */
-char	*ft_is_properly_quoted(char *str)
+/*
+Return 1 if string 's' is properly quoted, or 0 if not. If the string is
+not properly quoted, an error message will be printed to stderr.
+*/
+int	ft_is_well_quoted(const char *s)
 {
 	char	quote;
-	char	*s;
 
 	quote = '\0';
-	s = str;
 	while (*s != '\0')
 	{
 		if (quote == '\0' && (*s == '\'' || *s == '\"'))
@@ -29,13 +30,45 @@ char	*ft_is_properly_quoted(char *str)
 		s++;
 	}
 	if (quote == '\0')
-		return (str);
+		return (1);
 	else
 	{
-		free(str);
 		ft_putendl_fd("minishell: unclosed quote detected.", 2);
-		return (ft_strdup(""));
+		return (0);
 	}
+}
+
+/*
+Return 1 if string 's' is properly parenthesised, or 0 if not. If the
+string is not properly parenthesised, an error message will be printed
+to stderr.
+*/
+int	ft_is_well_bracketed(const char *s)
+{
+	char	*opn;
+	char	*cls;
+	int		count;
+
+	count = 0;
+	while (*s != '\0' && count >= 0)
+	{
+		opn = ft_strchr_unquoted(s, '(');
+		cls = ft_strchr_unquoted(s, ')');
+		if (opn == NULL && cls == NULL)
+			break ;
+		else if (opn == NULL || (opn != NULL && cls != NULL && cls < opn))
+			s = cls + 1;
+		else
+			s = opn + 1;
+		count = count
+			 + (cls == NULL || (opn != NULL && cls != NULL && opn < cls))
+			 - (opn == NULL || (opn != NULL && cls != NULL && cls < opn));
+	}
+	if (count > 0)
+		ft_putendl_fd("minishell: unclosed bracket detected.", 2);
+	else if (count < 0)
+		ft_putendl_fd("minishell: syntax error near unexpected token `)'", 2);
+	return (count == 0);
 }
 
 /*

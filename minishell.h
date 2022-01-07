@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 12:38:56 by kwang            ###   ########.fr       */
+/*   Updated: 2022/01/07 14:49:24 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ pid_t	ft_execute_scmd(t_cmd *cmd, int i);
 int		ft_execute_cmd(t_cmd *cmd);
 
 // quotation functions
-char	*ft_is_properly_quoted(char *str);
+int		ft_is_well_quoted(const char *s);
+int		ft_is_well_bracketed(const char *s);
 char	*ft_remove_quote(char *str);
 
 // environment variable functions
@@ -137,14 +138,18 @@ void	ft_run(char **arg, int nofork);
 // history function
 int		is_strdigit(char *string);
 int		is_strwhitespace(char *string);
+char	*ft_strip_newline(char *str);
 char	*get_line_num(int fd, int num);
 int		count_history(void);
 void	save_history(char *cmd);
-void	ft_init_history(void);
 int		ft_history(char **args);
 
 // signal functions
 void	ft_init_proc_signals(void);
 void	ft_init_rl_signals(void);
+
+// minishell initialisation related functions
+void	ft_init_environment(char **env);
+void	ft_init_history(void);
 
 #endif

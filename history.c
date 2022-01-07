@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:19:12 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/05 22:04:00 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 11:53:24 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	save_history(char *cmd)
 	last_line = NULL;
 	if (hist_count > 0)
 		last_line = get_line_num(fd, hist_count);
-	if (last_line == NULL || ft_strncmp(last_line, cmd, ft_strlen(cmd) + 1) != 0)
+	if (last_line == NULL
+		|| ft_strncmp(last_line, cmd, ft_strlen(cmd) + 1) != 0)
 	{
 		temp = ft_strtrim(cmd, " ");
 		add_history(temp);
@@ -104,24 +105,4 @@ int	ft_history(char **args)
 		list_history(min_hist_count);
 	}
 	return (0);
-}
-
-/*
-Initializes history from HISTORY_FILE.
-*/
-void	ft_init_history(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = ft_open(HISTORY_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break;
-		add_history(line);
-		free(line);
-	}
-	ft_close(fd);
 }

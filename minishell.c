@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 13:55:47 by kwang            ###   ########.fr       */
+/*   Updated: 2022/01/07 14:50:03 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**g_environ;
-
-/* Initialise environment variable array g_environ and ? variable. */
-static void	ft_init_environment(char **env)
-{
-	g_environ = ft_memdup((const char **) env);
-	ft_putenv("?=0");
-}
 
 /* Read and execute one line from user input. */
 static int	ft_read_execute(void)
