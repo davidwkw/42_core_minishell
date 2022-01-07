@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 14:01:09 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 12:40:31 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int	ft_execute_cmd(t_cmd *cmd)
 
 	lst = NULL;
 	ft_save_restore_fd();
+	ft_init_proc_signals();
 	i = -1;
 	while (++i < cmd->count)
 		ft_record_pid(&lst, ft_execute_scmd(cmd, i));

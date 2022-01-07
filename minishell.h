@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 13:57:15 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 12:38:56 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,8 @@ void	save_history(char *cmd);
 void	ft_init_history(void);
 int		ft_history(char **args);
 
-// signal function
-void	ft_init_signals(void);
+// signal functions
+void	ft_init_proc_signals(void);
+void	ft_init_rl_signals(void);
 
 #endif

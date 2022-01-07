@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 14:01:06 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 13:55:47 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	ft_read_execute(void)
 	char	*line;
 	t_cmd	*cmd;
 
+	ft_init_rl_signals();
 	line = readline("$ ");
 	if (line == NULL)
 		return (0);
@@ -46,9 +47,9 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ft_init_environment(envp);
 	ft_init_history();
-	ft_init_signals();
 	while (ft_read_execute())
 		;
+	printf("\n");
 	ft_memdel(g_environ);
 	return (EXIT_SUCCESS);
 }

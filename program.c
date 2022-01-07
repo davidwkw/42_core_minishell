@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 12:01:54 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 14:15:32 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,12 @@ void	ft_external(char **args)
 		pathname = ft_strjoin(dirs[i], "/");
 		pathname = ft_strappend(pathname, args[0]);
 		if (access(pathname, F_OK) == 0)
-			// execve(pathname, args, g_environ);
 			execve(pathname, args, g_environ);
 		free(pathname);
 	}
 	ft_external_error(args);
 	execve(args[0], args, g_environ);
-	// execve(args[0], args, g_environ);
+	exit(0);
 }
 
 /* Run a built_in program or an external program. */
