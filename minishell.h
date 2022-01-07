@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 11:24:05 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 12:02:46 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,14 @@ void	ft_run(char **arg, int nofork);
 // history function
 int		is_strdigit(char *string);
 int		is_strwhitespace(char *string);
+char	*ft_strip_newline(char *str);
 char	*get_line_num(int fd, int num);
 int		count_history(void);
 void	save_history(char *cmd);
-void	ft_init_history(void);
 int		ft_history(char **args);
 
 // minishell initialisation related functions
 void	ft_init_environment(char **env);
+void	ft_init_history(void);
 
 #endif

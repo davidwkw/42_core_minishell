@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:17:38 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/05 17:44:40 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 12:00:33 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,23 @@ int	count_history(void)
 	return (i);
 }
 
+/* Remove the trailing '\'n' from 'str'. The original 'str' is free. */
+char	*ft_strip_newline(char *str)
+{
+	int		len;
+	char	*retval;
+
+	len = ft_strlen(str);
+	if (str[len - 1] == '\n')
+	{
+		retval = ft_substr(str, 0, len - 1);
+		free(str);
+		return (retval);
+	}
+	else
+		return (str);
+}
+
 /*
 Helper function to retrieve line specified by the num parameter.
 The trailing '\n' character is removed from the return value.
@@ -61,9 +78,7 @@ The trailing '\n' character is removed from the return value.
 char	*get_line_num(int fd, int num)
 {
 	int		i;
-	int		len;
 	char	*line;
-	char	*retval;
 
 	i = -1;
 	while (++i < num - 1)
@@ -74,13 +89,5 @@ char	*get_line_num(int fd, int num)
 		free(line);
 	}
 	line = get_next_line(fd);
-	len = ft_strlen(line);
-	if (line[len - 1] == '\n')
-	{
-		retval = ft_substr(line, 0, len - 1);
-		free(line);
-		return (retval);
-	}
-	else
-		return (line);
+	return (ft_strip_newline(line));
 }
