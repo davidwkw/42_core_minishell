@@ -24,6 +24,7 @@ SRCS	=	builtin_cd.c \
 			parser.c \
 			parser_handler.c \
 			program.c \
+			ptree.c \
 			quote.c \
 			scmd.c \
 			string_array.c \

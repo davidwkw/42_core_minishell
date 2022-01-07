@@ -48,6 +48,21 @@ typedef struct s_cmd
 	int		outfile_flag;
 }	t_cmd;
 
+typedef enum e_ptree_type
+{
+	TOKEN,
+	CMD
+}	t_ptree_type;
+
+// data structure for parse tree
+typedef struct s_ptree
+{
+	void			*content;
+	t_ptree_type	type;
+	struct s_ptree	*left;
+	struct s_ptree	*right;
+}	t_ptree;
+
 // built-in function pointer definition
 typedef int	(*t_bif)(char **);
 
@@ -94,6 +109,11 @@ t_scmd	*ft_cmd_get_scmd(t_cmd *cmd, int i);
 t_cmd	*ft_parse(t_list *lst);
 int		ft_parse_error(t_cmd *cmd, t_list **lst);
 int		ft_hdlr_token(t_cmd *cmd, t_list **lst);
+
+// ptree functions
+t_ptree	*ft_ptree_new(void *content, t_ptree_type type);
+void	ft_ptree_delone(t_ptree *node);
+void	ft_ptree_clear(t_ptree *node);
 
 // file descriptor functions
 int		ft_dup(int oldfd);
