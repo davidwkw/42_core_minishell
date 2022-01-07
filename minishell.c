@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 14:50:03 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 23:16:59 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_read_execute(void)
 	char	*line;
 	t_cmd	*cmd;
 
-	ft_init_rl_signals();
+	ft_sighandler_shell();
 	line = readline("$ ");
 	if (line == NULL)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 15:24:58 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 23:18:11 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_cmd
 typedef int		(*t_bif)(char **);
 
 // signal handler function pointer definition
-typedef void	(*t_sighandler)(int);
+typedef void	(*t_shdlr)(int);
 
 // environment variables
 extern char		**g_environ;
@@ -148,8 +148,10 @@ void	save_history(char *cmd);
 int		ft_history(char **args);
 
 // signal functions
-void	ft_init_proc_signals(void);
-void	ft_init_rl_signals(void);
+t_shdlr	ft_signal(int signum, t_shdlr handler);
+void	ft_sigquit_handler(int signum);
+void	ft_sighandler_default(void);
+void	ft_sighandler_shell(void);
 
 // minishell initialisation related functions
 void	ft_init_environment(char **env);

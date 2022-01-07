@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 14:15:32 by kwang            ###   ########.fr       */
+/*   Updated: 2022/01/07 23:12:53 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ft_external(char **args)
 	char	*pathname;
 	int		i;
 
+	ft_sighandler_default();
 	dirs = ft_split(ft_getenv("PATH"), ':');
 	i = -1;
 	while (dirs[++i] != NULL)
