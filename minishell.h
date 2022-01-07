@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 12:02:46 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 17:49:35 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	**ft_lst_to_arr(t_list *lst);
 // lexer functions
 int		ft_istoken(const char *str, char **token);
 t_list	*ft_tokenise(char *input);
-void	ft_token_print(t_list *token);
 char	*ft_expand_var(char *str);
 
 // simple command functions
@@ -89,7 +88,7 @@ t_cmd	*ft_cmd_new(void);
 void	ft_cmd_del(t_cmd *cmd);
 void	ft_cmd_add_scmd(t_cmd *cmd);
 void	ft_cmd_add_arg(t_cmd *cmd, t_list *node);
-void	ft_cmd_print(t_cmd *cmd);
+t_scmd	*ft_cmd_get_scmd(t_cmd *cmd, int i);
 
 // parser functions
 t_cmd	*ft_parse(t_list *lst);
@@ -146,5 +145,9 @@ int		ft_history(char **args);
 // minishell initialisation related functions
 void	ft_init_environment(char **env);
 void	ft_init_history(void);
+
+// printing related functions used during development / debugging
+void	ft_token_print(t_list *token);
+void	ft_cmd_print(t_cmd *cmd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 13:57:08 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 17:38:13 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	ft_replace_environ(char *args)
 			if (equal != NULL)
 			{
 				free(*env);
-				*env = strdup(args);
+				*env = ft_strdup(args);
 			}
 			return (len);
 		}

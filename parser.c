@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 16:06:28 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 11:13:39 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 17:44:49 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,30 +49,4 @@ t_cmd	*ft_parse(t_list *lst)
 	}
 	ft_lstclear(&lst, free);
 	return (cmd);
-}
-
-void	ft_parser_print(t_cmd *cmd)
-{
-	t_list	*scmd_lst;
-	t_list	*argv;
-	int		i;
-
-	printf("cmd->count = %d\n", cmd->count);
-	printf("cmd->infile = %s\n", cmd->infile);
-	printf("cmd->outfile = %s\n", cmd->outfile);
-	printf("cmd->outfile_flag = %d\n", cmd->outfile_flag);
-	scmd_lst = cmd->scmd_lst;
-	i = 0;
-	while (scmd_lst != NULL)
-	{
-		argv = ((t_scmd *) scmd_lst->content)->argv;
-		printf("scmd %d: ", i);
-		while (argv != NULL)
-		{
-			printf("%s ", (char *) argv->content);
-			argv = argv->next;
-		}
-		printf("\n");
-		scmd_lst = scmd_lst->next;
-	}
 }
