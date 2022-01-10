@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 23:14:33 by weng              #+#    #+#             */
-/*   Updated: 2021/12/29 12:04:34 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/10 12:24:44 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,30 @@ char	**ft_lst_to_arr(t_list *lst)
 		lst = lst->next;
 	}
 	return (arr);
+}
+
+void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *))
+{
+	t_list	*curr;
+	t_list	*next;
+	t_list	*prev;
+
+	curr = *begin_list;
+	prev = NULL;
+	while (curr)
+	{
+		next = curr->next;
+		if ((*cmp)(curr->content, data_ref) == 0)
+		{
+			(*free_fct)(curr->content);
+			free(curr);
+			if (prev)
+				prev->next = next;
+			else
+				*begin_list = next;
+		}
+		else
+			prev = curr;
+		curr = next;
+	}
 }

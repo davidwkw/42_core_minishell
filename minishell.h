@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
+/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 13:57:15 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/10 15:41:55 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,15 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <dirent.h>
 # include "libft/libft.h"
 
 # define HEREDOC_FILE ".heredoc"
 # define HISTORY_FILE ".history"
 # define HISTORY_COUNT 35
+
+// typedef for dirent
+typedef struct dirent t_dirent;
 
 // data structure for simple command
 typedef struct s_scmd
@@ -71,6 +75,7 @@ void	ft_lst_replace_content(t_list *lst, void *content);
 void	ft_lstinsert(t_list *lst, t_list *new);
 t_list	*ft_lstdelempty(t_list **lst);
 char	**ft_lst_to_arr(t_list *lst);
+void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
 
 // lexer functions
 int		ft_istoken(const char *str, char **token);
@@ -141,5 +146,8 @@ int		count_history(void);
 void	save_history(char *cmd);
 void	ft_init_history(void);
 int		ft_history(char **args);
+
+// expansion function
+char	**ft_expand_star(char *search, char *dir);
 
 #endif
