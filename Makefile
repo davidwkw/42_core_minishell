@@ -23,6 +23,7 @@ SRCS	=	builtin_cd.c \
 			lexer.c \
 			parser.c \
 			parser_handler.c \
+			print.c \
 			program.c \
 			ptree.c \
 			quote.c \

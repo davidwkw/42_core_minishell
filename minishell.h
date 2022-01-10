@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 17:49:35 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/10 16:48:48 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ int		ft_hdlr_token(t_cmd *cmd, t_list **lst);
 t_ptree	*ft_ptree_new(void *content, t_ptree_type type);
 void	ft_ptree_delone(t_ptree *node);
 void	ft_ptree_clear(t_ptree *node);
+int		ft_ptree_height(t_ptree	*node);
+void	ft_ptree_apply_prefix(t_ptree *node, void (*func)(t_ptree *));
 
 // file descriptor functions
 int		ft_dup(int oldfd);
@@ -169,5 +171,6 @@ void	ft_init_history(void);
 // printing related functions used during development / debugging
 void	ft_token_print(t_list *token);
 void	ft_cmd_print(t_cmd *cmd);
+void	ft_ptree_print(t_ptree *ptree);
 
 #endif

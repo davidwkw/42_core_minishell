@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:43:37 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 17:47:06 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/10 16:49:18 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,23 @@ void	ft_cmd_print(t_cmd *cmd)
 		scmd_lst = scmd_lst->next;
 		i++;
 	}
+}
+
+/* Prints the content of a 'ptree' node. */
+static void	ft_ptree_print_aux(t_ptree *ptree)
+{
+	printf("\n");
+	if (ptree->type == TOKEN)
+		printf("%s\n", (char *) ptree->content);
+	else if (ptree->type == CMD)
+		ft_cmd_print(ptree->content);
+	else
+		printf("Error: Unexpected ptree node type.\n");
+	printf("\n");
+}
+
+/* Print the content of 'ptree' using prefix traversal. */
+void	ft_ptree_print(t_ptree *ptree)
+{
+	ft_ptree_apply_prefix(ptree, ft_ptree_print_aux);
 }
