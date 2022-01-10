@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 12:24:17 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 17:43:56 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/10 17:08:33 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_cmd	*ft_cmd_new(void)
 /* Deletes a command structure, as well as the linked list 'scmd'. */
 void	ft_cmd_del(t_cmd *cmd)
 {
+	if (cmd == NULL)
+		return ;
 	ft_lstclear(&cmd->scmd_lst, ft_scmd_del);
 	free(cmd->infile);
 	free(cmd->outfile);

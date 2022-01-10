@@ -106,8 +106,8 @@ void	ft_cmd_add_arg(t_cmd *cmd, t_list *node);
 t_scmd	*ft_cmd_get_scmd(t_cmd *cmd, int i);
 
 // parser functions
-t_cmd	*ft_parse(t_list *lst);
-int		ft_parse_error(t_cmd *cmd, t_list **lst);
+t_cmd	*ft_parse(t_list **lst);
+int		ft_parse_error(t_list *lst);
 int		ft_hdlr_token(t_cmd *cmd, t_list **lst);
 
 // ptree functions

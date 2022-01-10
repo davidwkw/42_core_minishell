@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:43:37 by weng              #+#    #+#             */
-/*   Updated: 2022/01/10 16:49:18 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/10 17:06:44 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	ft_cmd_print(t_cmd *cmd)
 	t_list	*argv;
 	int		i;
 
+	if (cmd == NULL)
+		return ;
 	printf("cmd->count = %d\n", cmd->count);
 	printf("cmd->infile = %s\n", cmd->infile);
 	printf("cmd->outfile = %s\n", cmd->outfile);
