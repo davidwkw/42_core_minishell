@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/10 15:41:55 by kwang            ###   ########.fr       */
+/*   Updated: 2022/01/11 15:25:51 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define HISTORY_COUNT 35
 
 // typedef for dirent
-typedef struct dirent t_dirent;
+typedef struct dirent	t_dirent;
 
 // data structure for simple command
 typedef struct s_scmd
@@ -53,10 +53,10 @@ typedef struct s_cmd
 }	t_cmd;
 
 // built-in function pointer definition
-typedef int	(*t_bif)(char **);
+typedef int				(*t_bif)(char **);
 
 // environment variables
-extern char	**g_environ;
+extern char				**g_environ;
 
 // char pointer array (string array) functions
 size_t	ft_memsize(const char **arr);
@@ -75,7 +75,6 @@ void	ft_lst_replace_content(t_list *lst, void *content);
 void	ft_lstinsert(t_list *lst, t_list *new);
 t_list	*ft_lstdelempty(t_list **lst);
 char	**ft_lst_to_arr(t_list *lst);
-void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
 
 // lexer functions
 int		ft_istoken(const char *str, char **token);

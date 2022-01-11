@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_star.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/11 15:06:04 by kwang            ###   ########.fr       */
+/*   Updated: 2022/01/11 15:23:45 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_list	*ft_list_files(char *dir)
 	{
 		dir_entry = readdir(dir_stream);
 		if (dir_entry == NULL)
-			break;
+			break ;
 		ft_lstadd_back(&filenames, ft_lstnew(ft_strdup(dir_entry->d_name)));
 	}
 	return (filenames);
@@ -65,7 +65,7 @@ char	**ft_expand_star(char *search, char *dir)
 {
 	char	**segments;
 	char	**filtered_filenames;
-	t_list 	*filenames;
+	t_list	*filenames;
 	t_list	*temp;
 	t_list	*filter_buff;
 
