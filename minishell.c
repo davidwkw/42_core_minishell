@@ -6,7 +6,7 @@
 /*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/10 15:42:19 by kwang            ###   ########.fr       */
+/*   Updated: 2022/01/11 14:44:57 by kwang            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	ft_init_environment(env);
 	ft_init_history();
-
 	while (1)
 		ft_read_execute();
 	ft_memdel(g_environ);

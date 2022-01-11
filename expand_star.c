@@ -1,5 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_star.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
+/*   Updated: 2022/01/11 15:06:04 by kwang            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
+/*
+Lists all files within directory provided as string.
+*/
 static t_list	*ft_list_files(char *dir)
 {
 	DIR			*dir_stream;
@@ -18,30 +33,59 @@ static t_list	*ft_list_files(char *dir)
 	return (filenames);
 }
 
-static int	ft_cmp_char(char *str, char c)
+/*
+Accepts a reference string and a nested array of characters
+to match the reference.
+Returns 1 if reference string matchs the nested array of characters,
+0 if it doesn't.
+*/
+static int	ft_str_match(char *string, char **match)
 {
-	if (ft_strchr(str, c) == NULL)
-		return (0);
+	int		i;
+	char	*addr;
+
+	i = -1;
+	while (match[++i])
+	{
+		addr = ft_strnstr(string, match[i], ft_strlen(string));
+		if (addr)
+			string = addr + strlen(match[i]);
+		else
+			return (0);
+	}
 	return (1);
 }
 
+/*
+Accepts a string pattern to be searched and a directory string.
+Returns a filtered nested array of
+filenames that match the search string.
+*/
 char	**ft_expand_star(char *search, char *dir)
 {
 	char	**segments;
+	char	**filtered_filenames;
 	t_list 	*filenames;
-	char	filtered_filenames;
-	int		i;
+	t_list	*temp;
+	t_list	*filter_buff;
 
 	segments = ft_split(search, '*');
 	filenames = ft_list_files(dir);
-	while (*segments)
+	filter_buff = NULL;
+	temp = filenames;
+	while (temp)
 	{
-		i = -1;
-		while (*segments[++i])
-			ft_list_remove_if(&filenames, &(*segments[i]), ft_cmp_char, ft_lstdelone);
-		*segments++;
+		if (ft_str_match(temp->content, segments))
+		{
+			ft_lstadd_back(&filter_buff, ft_lstnew(temp->content));
+			temp->content = NULL;
+		}
+		temp = temp->next;
 	}
-	filtered_filenames = ft_lst_to_arr(filenames);
-	ft_lstclear(&filenames, ft_lstdelone);
+	ft_lstclear(&filenames, free);
+	filenames = NULL;
+	filtered_filenames = ft_lst_to_arr(filter_buff);
+	ft_lstclear(&filter_buff, free);
+	filter_buff = NULL;
 	return (filtered_filenames);
 }
