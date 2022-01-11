@@ -6,13 +6,16 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 14:14:52 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 14:26:08 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Read and execute one line from user input. */
+/*
+Read and execute one line from user input. Return 1 if line is not NULL,
+0 otherwise.
+*/
 static int	ft_read_execute(void)
 {
 	char	*line;
@@ -23,13 +26,14 @@ static int	ft_read_execute(void)
 	line = readline("$ ");
 	if (line == NULL)
 		return (0);
-	else if (*line == '\0')
-		return (1);
-	save_history(line);
-	token = ft_tokenise(line);
-	ptree = ft_treeify(token);
-	ft_execute_ptree(ptree);
-	ft_ptree_clear(ptree);
+	if (*line != '\0')
+	{
+		save_history(line);
+		token = ft_tokenise(line);
+		ptree = ft_treeify(token);
+		ft_execute_ptree(ptree);
+		ft_ptree_clear(ptree);
+	}
 	free(line);
 	unlink(HEREDOC_FILE);
 	return (1);
