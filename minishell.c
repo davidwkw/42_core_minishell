@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/10 10:54:10 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 13:00:06 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ static int	ft_read_execute(void)
 {
 	char	*line;
 	t_list	*token;
-	t_list	*token_cpy;
-	t_cmd	*cmd;
+	t_ptree	*ptree;
 
 	ft_sighandler_shell();
 	line = readline("$ ");
@@ -28,10 +27,9 @@ static int	ft_read_execute(void)
 		return (1);
 	save_history(line);
 	token = ft_tokenise(line);
-	token_cpy = token;
-	cmd = ft_parse(&token);
-	ft_execute_cmd(cmd);
-	ft_lstclear(&token_cpy, free);
+	ptree = ft_treeify(token);
+	ft_execute_ptree(ptree);
+	ft_ptree_clear(ptree);
 	free(line);
 	unlink(HEREDOC_FILE);
 	return (1);

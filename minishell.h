@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 09:30:02 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 11:43:03 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void	ft_save_restore_fd(void);
 // executor functions
 pid_t	ft_execute_scmd(t_cmd *cmd, int i);
 int		ft_execute_cmd(t_cmd *cmd);
+int		ft_execute_ptree(t_ptree *ptree);
 
 // quotation functions
 int		ft_is_well_quoted(const char *s);

@@ -15,6 +15,7 @@ SRCS	=	builtin_cd.c \
 			cmd.c \
 			environment.c \
 			executor.c \
+			executor_tree.c \
 			expand_var.c \
 			filedes.c \
 			ft_lst.c \
