@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/10 16:48:48 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 09:30:02 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_ptree	*ft_ptree_new(void *content, t_ptree_type type);
 void	ft_ptree_delone(t_ptree *node);
 void	ft_ptree_clear(t_ptree *node);
 int		ft_ptree_height(t_ptree	*node);
-void	ft_ptree_apply_prefix(t_ptree *node, void (*func)(t_ptree *));
+void	ft_ptree_apply_postfix(t_ptree *node, void (*func)(t_ptree *));
 
 // file descriptor functions
 int		ft_dup(int oldfd);

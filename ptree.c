@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 10:48:47 by weng              #+#    #+#             */
-/*   Updated: 2022/01/10 16:49:23 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 09:30:27 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ int	ft_ptree_height(t_ptree	*node)
 		return (height_r + 1);
 }
 
-/* Apply function 'func' to each node using prefix traversal */
-void	ft_ptree_apply_prefix(t_ptree *node, void (*func)(t_ptree *))
+/* Apply function 'func' to each node using postfix traversal */
+void	ft_ptree_apply_postfix(t_ptree *node, void (*func)(t_ptree *))
 {
 	if (node == NULL || func == NULL)
 		return ;
+	ft_ptree_apply_postfix(node->left, func);
+	ft_ptree_apply_postfix(node->right, func);
 	func(node);
-	ft_ptree_apply_prefix(node->left, func);
-	ft_ptree_apply_prefix(node->right, func);
 }

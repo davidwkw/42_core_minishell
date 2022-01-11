@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:43:37 by weng              #+#    #+#             */
-/*   Updated: 2022/01/10 17:06:44 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 09:30:11 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static void	ft_ptree_print_aux(t_ptree *ptree)
 	printf("\n");
 }
 
-/* Print the content of 'ptree' using prefix traversal. */
+/* Print the content of 'ptree' using postfix traversal. */
 void	ft_ptree_print(t_ptree *ptree)
 {
-	ft_ptree_apply_prefix(ptree, ft_ptree_print_aux);
+	ft_ptree_apply_postfix(ptree, ft_ptree_print_aux);
 }
