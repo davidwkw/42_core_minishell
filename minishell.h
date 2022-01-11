@@ -116,6 +116,7 @@ void	ft_ptree_delone(t_ptree *node);
 void	ft_ptree_clear(t_ptree *node);
 int		ft_ptree_height(t_ptree	*node);
 void	ft_ptree_apply_postfix(t_ptree *node, void (*func)(t_ptree *));
+t_ptree	*ft_treeify(t_list *lst);
 
 // file descriptor functions
 int		ft_dup(int oldfd);
