@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 21:19:37 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 23:12:53 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ft_external(char **args)
 	char	*pathname;
 	int		i;
 
+	ft_sighandler_default();
 	dirs = ft_split(ft_getenv("PATH"), ':');
 	i = -1;
 	while (dirs[++i] != NULL
@@ -74,6 +75,7 @@ void	ft_external(char **args)
 	}
 	ft_external_error(args);
 	execve(args[0], args, g_environ);
+	exit(0);
 }
 
 /* Run a built_in program or an external program. */

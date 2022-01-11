@@ -29,7 +29,8 @@ SRCS	=	builtin_cd.c \
 			string_array.c \
 			string.c \
 			history.c \
-			history_utils.c
+			history_utils.c \
+			signal.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
 
