@@ -75,7 +75,7 @@ static int	ft_str_match(char *string, char **match)
 	{
 		addr = ft_strnstr(string, match[i], ft_strlen(string));
 		if (addr)
-			string = addr + strlen(match[i]);
+			string = addr + ft_strlen(match[i]);
 		else
 			return (0);
 	}
