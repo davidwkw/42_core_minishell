@@ -6,30 +6,56 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/11 15:23:45 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 15:55:33 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-Lists all files within directory provided as string.
-*/
+/* Opens a directory. Prints error message if error is encountered. */
+static DIR	*ft_opendir(const char *name)
+{
+	DIR	*dirp;
+
+	dirp = opendir(name);
+	if (dirp == NULL)
+		perror("opendir");
+	return (dirp);
+}
+
+/* Closes a directory. Prints error message if error is encountered. */
+static int	ft_closedir(DIR *dirp)
+{
+	int	retval;
+
+	retval = closedir(dirp);
+	if (retval == -1)
+		perror("closedir");
+	return (retval);
+}
+
+/* Lists all files within directory provided as string. */
 static t_list	*ft_list_files(char *dir)
 {
-	DIR			*dir_stream;
-	t_dirent	*dir_entry;
+	DIR			*dirp;
+	t_dirent	*dirent;
 	t_list		*filenames;
+	extern int	errno;
 
 	filenames = NULL;
-	dir_stream = opendir(dir);
-	while (1)
+	dirp = ft_opendir(dir);
+	if (dirp == NULL)
+		return (NULL);
+	errno = 0;
+	dirent = readdir(dirp);
+	while (dirent != NULL)
 	{
-		dir_entry = readdir(dir_stream);
-		if (dir_entry == NULL)
-			break ;
-		ft_lstadd_back(&filenames, ft_lstnew(ft_strdup(dir_entry->d_name)));
+		ft_lstadd_back(&filenames, ft_lstnew(ft_strdup(dirent->d_name)));
+		dirent = readdir(dirp);
 	}
+	if (errno != 0)
+		perror("readdir");
+	ft_closedir(dirp);
 	return (filenames);
 }
 
