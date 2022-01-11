@@ -25,6 +25,7 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <signal.h>
 # include "libft/libft.h"
 
 # define HEREDOC_FILE ".heredoc"
@@ -64,10 +65,13 @@ typedef struct s_ptree
 }	t_ptree;
 
 // built-in function pointer definition
-typedef int	(*t_bif)(char **);
+typedef int		(*t_bif)(char **);
+
+// signal handler function pointer definition
+typedef void	(*t_shdlr)(int);
 
 // environment variables
-extern char	**g_environ;
+extern char		**g_environ;
 
 // char pointer array (string array) functions
 size_t	ft_memsize(const char **arr);
@@ -164,6 +168,12 @@ char	*get_line_num(int fd, int num);
 int		count_history(void);
 void	save_history(char *cmd);
 int		ft_history(char **args);
+
+// signal functions
+t_shdlr	ft_signal(int signum, t_shdlr handler);
+void	ft_sigquit_handler(int signum);
+void	ft_sighandler_default(void);
+void	ft_sighandler_shell(void);
 
 // minishell initialisation related functions
 void	ft_init_environment(char **env);

@@ -13,16 +13,19 @@
 #include "minishell.h"
 
 /* Read and execute one line from user input. */
-static void	ft_read_execute(void)
+static int	ft_read_execute(void)
 {
 	char	*line;
 	t_list	*token;
 	t_list	*token_cpy;
 	t_cmd	*cmd;
 
+	ft_sighandler_shell();
 	line = readline("$ ");
-	if (line == NULL || *line == '\0')
-		return ;
+	if (line == NULL)
+		return (0);
+	else if (*line == '\0')
+		return (1);
 	save_history(line);
 	token = ft_tokenise(line);
 	token_cpy = token;
@@ -31,16 +34,18 @@ static void	ft_read_execute(void)
 	ft_lstclear(&token_cpy, free);
 	free(line);
 	unlink(HEREDOC_FILE);
+	return (1);
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	ft_init_environment(env);
+	ft_init_environment(envp);
 	ft_init_history();
-	while (1)
-		ft_read_execute();
+	while (ft_read_execute())
+		;
+	printf("\n");
 	ft_memdel(g_environ);
 	return (EXIT_SUCCESS);
 }
