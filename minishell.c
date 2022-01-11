@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 13:00:06 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 14:14:52 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,16 @@ static int	ft_read_execute(void)
 
 int	main(int argc, char **argv, char **envp)
 {
+	int	exit_value;
+
 	(void)argc;
 	(void)argv;
 	ft_init_environment(envp);
 	ft_init_history();
 	while (ft_read_execute())
 		;
-	printf("\n");
+	printf("exit\n");
+	exit_value = ft_atoi(ft_getenv("?"));
 	ft_memdel(g_environ);
-	return (EXIT_SUCCESS);
+	return (exit_value);
 }
