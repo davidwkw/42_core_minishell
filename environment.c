@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 13:40:55 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 13:53:23 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,10 @@ int	ft_set_exit_value(t_list *lst)
 	{
 		pid = lst->content;
 		waitpid(*pid, &wstatus, WUNTRACED);
-		value = WEXITSTATUS(wstatus);
+		if (WIFEXITED(wstatus) == 1)
+			value = WEXITSTATUS(wstatus);
+		else if (WIFSIGNALED(wstatus) == 1)
+			value = 128 + WTERMSIG(wstatus);
 		lst = lst->next;
 	}
 	str = ft_itoa(value);

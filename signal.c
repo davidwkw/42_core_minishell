@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:37:17 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/07 23:15:03 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 13:58:36 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	ft_sigint_handler(int signum)
 	printf("\n");
 	rl_on_new_line();
 	rl_redisplay();
+	ft_putenv("?=130");
 }
 
 /* Moves to a new line upon termination of a program. */
