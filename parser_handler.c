@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 11:18:08 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/10 17:17:34 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 	node = (*lst)->next;
 	content = (*lst)->content;
 	if (node == NULL || ft_istoken(node->content, NULL) == 1)
-		return (ft_parse_error(cmd, &(node)));
+		return (ft_parse_error(node));
 	*lst = node;
 	if (ft_strncmp(content, "<<", 2) == 0)
 	{
@@ -46,16 +46,18 @@ static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 }
 
 /*
-Instantiate a simple command in 'cmd'. If the current simple command is
-empty, error is raised.
+Instantiate a simple command in 'cmd'. If the cmd is empty, or if the
+current simple command is empty, error is raised.
 */
 static int	ft_hdlr_pipe(t_cmd *cmd, t_list **lst)
 {
 	t_scmd	*scmd;
 
-	scmd = cmd->scmd_lst->content;
+	if (cmd->count == 0 && cmd->infile == NULL && cmd->outfile == NULL)
+		return (ft_parse_error(*lst));
+	scmd = ft_cmd_get_scmd(cmd, cmd->count - 1);
 	if (scmd->count == 0)
-		return (ft_parse_error(cmd, lst));
+		return (ft_parse_error(*lst));
 	ft_cmd_add_scmd(cmd);
 	return (0);
 }
@@ -82,5 +84,5 @@ int	ft_hdlr_token(t_cmd *cmd, t_list **lst)
 		i++;
 	}
 	free(token);
-	return (ft_parse_error(cmd, lst));
+	return (ft_parse_error(*lst));
 }

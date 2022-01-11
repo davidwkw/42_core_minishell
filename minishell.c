@@ -12,39 +12,45 @@
 
 #include "minishell.h"
 
-char	**g_environ;
-
-/* Initialise environment variable array g_environ and ? variable. */
-static void	ft_init_environment(char **env)
-{
-	g_environ = ft_memdup((const char **) env);
-	ft_putenv("?=0");
-}
-
-/* Read and execute one line from user input. */
-static void	ft_read_execute(void)
+/*
+Read and execute one line from user input. Return 1 if line is not NULL,
+0 otherwise.
+*/
+static int	ft_read_execute(void)
 {
 	char	*line;
-	t_cmd	*cmd;
+	t_list	*token;
+	t_ptree	*ptree;
 
+	ft_sighandler_shell();
 	line = readline("$ ");
-	if (line == NULL || *line == '\0')
-		return ;
-	save_history(line);
-	cmd = ft_parse(ft_tokenise(line));
-	ft_execute_cmd(cmd);
+	if (line == NULL)
+		return (0);
+	if (*line != '\0')
+	{
+		save_history(line);
+		token = ft_tokenise(line);
+		ptree = ft_treeify(token);
+		ft_execute_ptree(ptree);
+		ft_ptree_clear(ptree);
+	}
 	free(line);
 	unlink(HEREDOC_FILE);
+	return (1);
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **envp)
 {
+	int	exit_value;
+
 	(void)argc;
 	(void)argv;
-	ft_init_environment(env);
+	ft_init_environment(envp);
 	ft_init_history();
-	while (1)
-		ft_read_execute();
+	while (ft_read_execute())
+		;
+	printf("exit\n");
+	exit_value = ft_atoi(ft_getenv("?"));
 	ft_memdel(g_environ);
-	return (EXIT_SUCCESS);
+	return (exit_value);
 }

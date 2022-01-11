@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 12:24:17 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 11:13:40 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/10 17:08:33 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_cmd	*ft_cmd_new(void)
 /* Deletes a command structure, as well as the linked list 'scmd'. */
 void	ft_cmd_del(t_cmd *cmd)
 {
+	if (cmd == NULL)
+		return ;
 	ft_lstclear(&cmd->scmd_lst, ft_scmd_del);
 	free(cmd->infile);
 	free(cmd->outfile);
@@ -51,30 +53,15 @@ void	ft_cmd_add_arg(t_cmd *cmd, t_list *node)
 	ft_scmd_add_arg(last->content, node);
 }
 
-/* Print the data of a t_cmd struct. */
-void	ft_cmd_print(t_cmd *cmd)
+/* Return the i-th scmd, or NULL if i >= cmd->count */
+t_scmd	*ft_cmd_get_scmd(t_cmd *cmd, int i)
 {
-	t_list	*scmd_lst;
-	t_list	*argv;
-	int		i;
+	t_list	*node;
 
-	printf("cmd->count = %d\n", cmd->count);
-	printf("cmd->infile = %s\n", cmd->infile);
-	printf("cmd->outfile = %s\n", cmd->outfile);
-	printf("cmd->outfile_flag = %d\n", cmd->outfile_flag);
-	scmd_lst = cmd->scmd_lst;
-	i = 0;
-	while (scmd_lst != NULL)
-	{
-		argv = ((t_scmd *) scmd_lst->content)->argv;
-		printf("scmd %d: ", i);
-		while (argv != NULL)
-		{
-			printf("%s ", (char *) argv->content);
-			argv = argv->next;
-		}
-		printf("\n");
-		scmd_lst = scmd_lst->next;
-		i++;
-	}
+	if (i >= cmd->count)
+		return (NULL);
+	node = cmd->scmd_lst;
+	while (i-- > 0)
+		node = node->next;
+	return (node->content);
 }

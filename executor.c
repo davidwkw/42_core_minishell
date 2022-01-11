@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 14:01:09 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 11:47:04 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ pid_t	ft_execute_scmd(t_cmd *cmd, int i)
 		ft_pipe_create(fd_pipe);
 	else
 		fd_pipe[1] = open_outfile(cmd);
-	args = ft_scmd_to_arr(cmd->scmd_lst->content);
+	args = ft_scmd_to_arr(ft_cmd_get_scmd(cmd, i));
 	nofork = (cmd->count == 1 && ft_builtin(args[0]) != NULL);
 	pid = 0;
 	if (nofork != 1)
@@ -115,13 +115,15 @@ int	ft_execute_cmd(t_cmd *cmd)
 	int		retval;
 
 	lst = NULL;
+	ft_signal(SIGINT, ft_sigquit_handler);
+	ft_signal(SIGQUIT, ft_sigquit_handler);
 	ft_save_restore_fd();
 	i = -1;
 	while (++i < cmd->count)
 		ft_record_pid(&lst, ft_execute_scmd(cmd, i));
 	retval = ft_set_exit_value(lst);
 	ft_lstclear(&lst, free);
-	ft_cmd_del(cmd);
 	ft_save_restore_fd();
+	ft_sighandler_shell();
 	return (retval);
 }

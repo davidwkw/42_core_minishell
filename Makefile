@@ -15,21 +15,27 @@ SRCS	=	builtin_cd.c \
 			cmd.c \
 			environment.c \
 			executor.c \
+			executor_tree.c \
+			expand_star.c \
 			expand_var.c \
 			filedes.c \
 			ft_lst.c \
+			history.c \
+			history_utils.c \
+			init.c \
 			io.c \
 			lexer.c \
 			parser.c \
 			parser_handler.c \
+			parser_tree.c \
+			print.c \
 			program.c \
+			ptree.c \
 			quote.c \
 			scmd.c \
+			signal.c \
 			string_array.c \
-			string.c \
-			history.c \
-			history_utils.c \
-			expand_star.c
+			string.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
 

@@ -6,17 +6,19 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 15:25:51 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 15:30:10 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/stat.h>
@@ -24,8 +26,6 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <unistd.h>
-# include <fcntl.h>
-# include <dirent.h>
 # include "libft/libft.h"
 
 # define HEREDOC_FILE ".heredoc"
@@ -52,8 +52,26 @@ typedef struct s_cmd
 	int		outfile_flag;
 }	t_cmd;
 
+typedef enum e_ptree_type
+{
+	TOKEN,
+	CMD
+}	t_ptree_type;
+
+// data structure for parse tree
+typedef struct s_ptree
+{
+	void			*content;
+	t_ptree_type	type;
+	struct s_ptree	*left;
+	struct s_ptree	*right;
+}	t_ptree;
+
 // built-in function pointer definition
 typedef int				(*t_bif)(char **);
+
+// signal handler function pointer definition
+typedef void			(*t_shdlr)(int);
 
 // environment variables
 extern char				**g_environ;
@@ -79,7 +97,6 @@ char	**ft_lst_to_arr(t_list *lst);
 // lexer functions
 int		ft_istoken(const char *str, char **token);
 t_list	*ft_tokenise(char *input);
-void	ft_token_print(t_list *token);
 char	*ft_expand_var(char *str);
 
 // simple command functions
@@ -93,12 +110,20 @@ t_cmd	*ft_cmd_new(void);
 void	ft_cmd_del(t_cmd *cmd);
 void	ft_cmd_add_scmd(t_cmd *cmd);
 void	ft_cmd_add_arg(t_cmd *cmd, t_list *node);
-void	ft_cmd_print(t_cmd *cmd);
+t_scmd	*ft_cmd_get_scmd(t_cmd *cmd, int i);
 
 // parser functions
-t_cmd	*ft_parse(t_list *lst);
-int		ft_parse_error(t_cmd *cmd, t_list **lst);
+t_cmd	*ft_parse(t_list **lst);
+int		ft_parse_error(t_list *lst);
 int		ft_hdlr_token(t_cmd *cmd, t_list **lst);
+
+// ptree functions
+t_ptree	*ft_ptree_new(void *content, t_ptree_type type);
+void	ft_ptree_delone(t_ptree *node);
+void	ft_ptree_clear(t_ptree *node);
+int		ft_ptree_height(t_ptree	*node);
+void	ft_ptree_apply_postfix(t_ptree *node, void (*func)(t_ptree *));
+t_ptree	*ft_treeify(t_list *lst);
 
 // file descriptor functions
 int		ft_dup(int oldfd);
@@ -115,9 +140,11 @@ void	ft_save_restore_fd(void);
 // executor functions
 pid_t	ft_execute_scmd(t_cmd *cmd, int i);
 int		ft_execute_cmd(t_cmd *cmd);
+int		ft_execute_ptree(t_ptree *ptree);
 
 // quotation functions
-char	*ft_is_properly_quoted(char *str);
+int		ft_is_well_quoted(const char *s);
+int		ft_is_well_bracketed(const char *s);
 char	*ft_remove_quote(char *str);
 
 // environment variable functions
@@ -140,13 +167,28 @@ void	ft_run(char **arg, int nofork);
 // history function
 int		is_strdigit(char *string);
 int		is_strwhitespace(char *string);
+char	*ft_strip_newline(char *str);
 char	*get_line_num(int fd, int num);
 int		count_history(void);
 void	save_history(char *cmd);
-void	ft_init_history(void);
 int		ft_history(char **args);
 
 // expansion function
 char	**ft_expand_star(char *search, char *dir);
+
+// signal functions
+t_shdlr	ft_signal(int signum, t_shdlr handler);
+void	ft_sigquit_handler(int signum);
+void	ft_sighandler_default(void);
+void	ft_sighandler_shell(void);
+
+// minishell initialisation related functions
+void	ft_init_environment(char **env);
+void	ft_init_history(void);
+
+// printing related functions used during development / debugging
+void	ft_token_print(t_list *token);
+void	ft_cmd_print(t_cmd *cmd);
+void	ft_ptree_print(t_ptree *ptree);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 12:01:54 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/07 23:12:53 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,12 @@ void	ft_external(char **args)
 	char	*pathname;
 	int		i;
 
+	ft_sighandler_default();
 	dirs = ft_split(ft_getenv("PATH"), ':');
 	i = -1;
-	while (dirs[++i] != NULL)
+	while (dirs[++i] != NULL
+		&& ft_strncmp(args[0], "./", 2) != 0
+		&& ft_strncmp(args[0], "../", 3) != 0)
 	{
 		pathname = ft_strjoin(dirs[i], "/");
 		pathname = ft_strappend(pathname, args[0]);
@@ -72,6 +75,7 @@ void	ft_external(char **args)
 	}
 	ft_external_error(args);
 	execve(args[0], args, g_environ);
+	exit(0);
 }
 
 /* Run a built_in program or an external program. */

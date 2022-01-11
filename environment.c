@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 13:57:08 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/11 13:53:23 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	ft_replace_environ(char *args)
 			if (equal != NULL)
 			{
 				free(*env);
-				*env = strdup(args);
+				*env = ft_strdup(args);
 			}
 			return (len);
 		}
@@ -119,13 +119,18 @@ int	ft_putenv(char *string)
 		return (EXIT_SUCCESS);
 }
 
-/* Wait for the end each child process and put the exit value in environment */
+/*
+Wait for the end each child process and put the exit value in the
+environment. Returns the exit value of the last simple command.
+
+By default, the return code of a pipeline is the return code of the last
+simple command.
+*/
 int	ft_set_exit_value(t_list *lst)
 {
 	pid_t	*pid;
 	int		wstatus;
 	int		value;
-	char	*val_str;
 	char	*str;
 
 	value = 0;
@@ -133,13 +138,15 @@ int	ft_set_exit_value(t_list *lst)
 	{
 		pid = lst->content;
 		waitpid(*pid, &wstatus, WUNTRACED);
-		value |= WEXITSTATUS(wstatus);
+		if (WIFEXITED(wstatus) == 1)
+			value = WEXITSTATUS(wstatus);
+		else if (WIFSIGNALED(wstatus) == 1)
+			value = 128 + WTERMSIG(wstatus);
 		lst = lst->next;
 	}
-	val_str = ft_itoa(value);
-	str = ft_strjoin("?=", val_str);
+	str = ft_itoa(value);
+	ft_strreplace(&str, ft_strjoin("?=", str));
 	ft_putenv(str);
-	free(val_str);
 	free(str);
 	return (value);
 }
