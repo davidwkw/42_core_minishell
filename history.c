@@ -6,103 +6,107 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:19:12 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/07 11:53:24 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 11:12:30 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-Appends 'cmd' as a new line into .history if it is different from the
-last line. The file '.history' will be created if it does not exist.
-*/
-void	save_history(char *cmd)
+/* Returns 1 if string 'str' only contains digits, 0 otherwise. */
+int	ft_isdigit_str(const char *str)
 {
-	int		fd;
-	int		hist_count;
-	char	*last_line;
-	char	*temp;
-
-	fd = ft_open(HISTORY_FILE, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
-	if (fd == -1 || *cmd == ' ')
-		return ;
-	hist_count = count_history();
-	last_line = NULL;
-	if (hist_count > 0)
-		last_line = get_line_num(fd, hist_count);
-	if (last_line == NULL
-		|| ft_strncmp(last_line, cmd, ft_strlen(cmd) + 1) != 0)
+	while (*str != '\0')
 	{
-		temp = ft_strtrim(cmd, " ");
-		add_history(temp);
-		ft_putendl_fd(temp, fd);
-		free(temp);
+		if (ft_isdigit(*str) == 0)
+			return (0);
+		str++;
 	}
-	free(last_line);
-	ft_close(fd);
+	return (1);
+}
+
+/* Clears the history file. */
+static int	ft_history_delete(void)
+{
+	unlink(HISTORY_FILE);
+	rl_clear_history();
+	ft_close(ft_open(HISTORY_FILE, O_CREAT | O_WRONLY, S_IWUSR));
+	return (EXIT_SUCCESS);
 }
 
 /*
-Lists logged history commands from start_num until EOF.
-Returns number of lines printed. If number of lines returned is less than
-actual total number of history lines, an error in getting next line has occured.
-Returns -1 if there is an error opening the file.
+Lists the last 'n' logged history commands from HISTORY_FILE. If 'n' is
+greater than the actual number of lines logged, only the lines logged
+will be printed. If 'n' is -1, the last HISTORY_COUNT lines of commands
+will be printed.
 */
-static int	list_history(int start_num)
+static int	ft_history_list(int n)
 {
+	int		count;
+	int		i;
 	int		fd;
 	char	*line;
-	int		i;
 
+	if (n == -1)
+		n = HISTORY_COUNT;
+	count = ft_count_line(HISTORY_FILE);
+	if (n > count)
+		n = count;
 	fd = ft_open(HISTORY_FILE, O_RDONLY, 0);
 	if (fd == -1)
-		return (-1);
-	i = 1;
-	while (1)
+		return (EXIT_FAILURE);
+	i = 0;
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
-		if (i >= start_num)
+		if (++i >= count - n + 1)
 			printf("%d %s", i, line);
 		free(line);
-		i++;
+		line = get_next_line(fd);
 	}
 	ft_close(fd);
-	return (i);
+	return (EXIT_SUCCESS);
+}
+
+/* Prints the history error message. */
+static int	ft_history_error(char *option)
+{
+	if (option != NULL)
+	{
+		ft_putstr_fd("minishell: history: ", 2);
+		ft_putstr_fd(option, 2);
+		ft_putendl_fd(": invalid option", 2);
+	}
+	ft_putendl_fd("history: usage history [-c] [n]", 2);
+	return (EXIT_FAILURE);
 }
 
 /*
-Primary function for history. Takes the command 'history <option>'.
-history command without an options lists the last <HISTORY_COUNT> amount
-of commands.
-history -c clears the history file.
-history <num> list the last <num> amount of commands
+List or clear minishell history.
+
+Take the parameters 'history [-c] [n]', such that
+	history:	list the last HISTORY_COUNT lines of commands.
+	history -c:	clears the history file.
+	history n:	list the last n lines of commands.
 */
 int	ft_history(char **args)
 {
-	int	total_hist_count;
-	int	min_hist_count;
-	int	num_input;
-
-	total_hist_count = count_history();
-	min_hist_count = total_hist_count - HISTORY_COUNT + 1;
-	if (min_hist_count < 1)
-		min_hist_count = 1;
 	if (args[1] == NULL)
-		list_history(min_hist_count);
-	else if (!ft_strncmp(args[1], "-c", 2))
+		return (ft_history_list(-1));
+	else if (ft_arrsize(args) > 3)
+		return (ft_history_error(NULL));
+	else if (ft_strncmp(args[1], "-c", 3) == 0)
 	{
-		unlink(HISTORY_FILE);
-		rl_clear_history();
-		ft_close(ft_open(HISTORY_FILE, O_CREAT | O_WRONLY, S_IWUSR));
+		if (args[2] == NULL || ft_isdigit_str(args[2]) == 1)
+			return (ft_history_delete());
+		else
+			return (ft_history_error(args[2]));
 	}
-	else if (is_strdigit(args[1]))
+	else if (ft_isdigit_str(args[1]) == 1)
 	{
-		num_input = atoi(args[1]);
-		if (num_input < total_hist_count)
-			min_hist_count = total_hist_count - num_input + 1;
-		list_history(min_hist_count);
+		if (args[2] == NULL)
+			return (ft_history_list(ft_atoi(args[1])));
+		else
+			return (ft_history_error(args[2]));
 	}
-	return (0);
+	return (ft_history_error(args[1]));
 }

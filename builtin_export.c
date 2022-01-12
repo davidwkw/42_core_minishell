@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/30 15:07:00 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 12:34:05 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_memsort(char **arr)
 	int		i;
 	int		j;
 
-	len = ft_memsize((const char **) arr);
+	len = ft_arrsize(arr);
 	j = 1;
 	while (j < len)
 	{
@@ -51,7 +51,7 @@ static void	ft_display_list(void)
 	char	*equal;
 	char	*name;
 
-	env = ft_memdup((const char **) g_environ);
+	env = ft_arrdup(g_environ, (void *(*)(const void *)) ft_strdup);
 	ft_memsort(env);
 	cpy = env;
 	while (*env != NULL)
@@ -68,7 +68,7 @@ static void	ft_display_list(void)
 		}
 		env++;
 	}
-	ft_memdel(cpy);
+	ft_arrclear(cpy, free);
 }
 
 /*

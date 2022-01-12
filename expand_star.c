@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/11 15:55:33 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 13:16:28 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	ft_str_match(char *string, char **match)
 	{
 		addr = string;
 		if (strncmp(match[i], "*", 2) == 0)
-			continue;
+			continue ;
 		if (i == 0)
 		{
 			if (*match[i] == '*')
@@ -78,9 +78,9 @@ it is reappended to the first element of the split list. If the string ends with
 a *, the list is expanded and a single element of "*" if added to the end of the
 list. Returns the formatted list.
 */
-static char	**ft_star_split(char *search, char c)
+static char	**ft_star_split(char *search)
 {
-	char	*segments;
+	char	**segments;
 	char	*temp;
 
 	segments = ft_split(search, '*');
@@ -91,10 +91,7 @@ static char	**ft_star_split(char *search, char c)
 		segments[0] = temp;
 	}
 	if (search[ft_strlen(search) - 1] == '*')
-	{
-		ft_memresize(segments, ft_memsize(segments) + 2);
-		segments[ft_memsize(segments) - 1] = ft_strdup("*");
-	}
+		ft_arradd_back(&segments, ft_strdup("*"));
 	return (segments);
 }
 
@@ -111,7 +108,7 @@ char	**ft_expand_star(char *search, char *dir)
 	t_list	*temp;
 	t_list	*filter_buff;
 
-	segments = ft_star_split(search, '*');
+	segments = ft_star_split(search);
 	filenames = ft_list_files(dir);
 	filter_buff = NULL;
 	temp = filenames;

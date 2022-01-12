@@ -5,7 +5,8 @@ LDFLAGS	= -L. -L$(LIBFT_PATH)
 LDLIBS	= -lminishell -lft -lreadline
 
 # define source and object files
-SRCS	=	builtin_cd.c \
+SRCS	=	array.c \
+			builtin_cd.c \
 			builtin_echo.c \
 			builtin_env.c \
 			builtin_exit.c \
@@ -13,6 +14,7 @@ SRCS	=	builtin_cd.c \
 			builtin_pwd.c \
 			builtin_unset.c \
 			cmd.c \
+			dir.c \
 			environment.c \
 			executor.c \
 			executor_tree.c \
@@ -20,8 +22,8 @@ SRCS	=	builtin_cd.c \
 			expand_var.c \
 			filedes.c \
 			ft_lst.c \
+			history_save.c \
 			history.c \
-			history_utils.c \
 			init.c \
 			io.c \
 			lexer.c \
@@ -34,9 +36,7 @@ SRCS	=	builtin_cd.c \
 			quote.c \
 			scmd.c \
 			signal.c \
-			string_array.c \
-			string.c \
-			dir.c
+			string.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
 

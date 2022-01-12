@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 15:30:10 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 12:49:46 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ typedef void			(*t_shdlr)(int);
 // environment variables
 extern char				**g_environ;
 
-// char pointer array (string array) functions
-size_t	ft_memsize(const char **arr);
-char	**ft_memdup(const char **arr);
-char	**ft_memresize(char **arr, size_t size);
-void	ft_memdel(char **arr);
-int		ft_meminsert(char ***dest, char *str);
+// array functions
+size_t	ft_arrsize(const void *arr);
+void	*ft_arrdup(const void *arr, void *(*func)(const void *));
+void	*ft_arr_resize(void *arr, size_t size, void (*del)(void *));
+void	ft_arrclear(void *arr, void (*del)(void *));
+int		ft_arradd_back(void *arr, void *ptr);
 
 // string functions
 char	*ft_strchr_unquoted(const char *str, int c);
@@ -165,12 +165,9 @@ void	ft_external(char **args);
 void	ft_run(char **arg, int nofork);
 
 // history function
-int		is_strdigit(char *string);
-int		is_strwhitespace(char *string);
 char	*ft_strip_newline(char *str);
-char	*get_line_num(int fd, int num);
-int		count_history(void);
-void	save_history(char *cmd);
+int		ft_count_line(const char *pathname);
+void	ft_history_save(char *cmd);
 int		ft_history(char **args);
 
 // expansion function
