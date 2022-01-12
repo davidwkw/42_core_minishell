@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/12 15:40:42 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 16:34:37 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,35 +89,30 @@ static char	**ft_star_split(char *search)
 }
 
 /*
-Accepts a string pattern to be searched and a directory string.
-Returns a filtered nested array of
-filenames that match the search string.
+Returns a linked list containing the failnames that match the 'pattern'
+within directory 'dir'. If there is no match at all, return a linked
+list containing the 'pattern'.
 */
-char	**ft_expand_star(char *search, char *dir)
+t_list	*ft_expand_star(const char *dir, char *pattern)
 {
 	char	**segments;
-	char	**filtered_filenames;
 	t_list	*filenames;
-	t_list	*temp;
-	t_list	*filter_buff;
+	t_list	*node;
 
-	segments = ft_star_split(search);
+	segments = ft_star_split(pattern);
 	filenames = ft_list_files(dir);
-	filter_buff = NULL;
-	temp = filenames;
-	while (temp)
+	node = filenames;
+	while (node != NULL)
 	{
-		if (ft_str_match(temp->content, segments))
-		{
-			ft_lstadd_back(&filter_buff, ft_lstnew(temp->content));
-			temp->content = NULL;
-		}
-		temp = temp->next;
+		if (ft_str_match(node->content, segments) == 0)
+			ft_lst_replace_content(node, ft_strdup(""));
+		node = node->next;
 	}
-	ft_lstclear(&filenames, free);
-	filenames = NULL;
-	filtered_filenames = ft_lst_to_arr(filter_buff);
-	ft_lstclear(&filter_buff, free);
-	filter_buff = NULL;
-	return (filtered_filenames);
+	if (filenames != NULL)
+		filenames = ft_lstdelempty(&filenames);
+	ft_arrclear(segments, free);
+	if (filenames != NULL)
+		return (filenames);
+	else
+		return (ft_lstnew(ft_strdup(pattern)));
 }
