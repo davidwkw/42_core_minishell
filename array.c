@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:42:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 11:24:49 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 12:04:12 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,25 @@ size_t	ft_arrsize(const void *arr)
 	return (retval);
 }
 
-/* Duplicates a null-terminated array of pointers. */
-char	**ft_memdup(const char **arr)
+/*
+Duplicates a null-terminated array of pointers 'arr' with function
+'func' to duplicate the content of each entry in the arary.
+*/
+void	*ft_arrdup(const void *arr, void *(*func)(const void *))
 {
+	void	**array;
+	void	**retval;
 	size_t	size;
-	char	**retval;
 
 	if (arr == NULL)
 		return (NULL);
-	size = ft_arrsize(arr);
+	array = (void **) arr;
+	size = ft_arrsize(array);
 	retval = ft_calloc(sizeof(char *), size + 1);
 	if (retval != NULL)
 	{
 		while (size-- > 0)
-			retval[size] = ft_strdup(arr[size]);
+			retval[size] = func(array[size]);
 	}
 	return (retval);
 }

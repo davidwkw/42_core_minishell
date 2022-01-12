@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 11:12:18 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 11:46:33 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	ft_display_list(void)
 	char	*equal;
 	char	*name;
 
-	env = ft_memdup((const char **) g_environ);
+	env = ft_arrdup(g_environ, (void *(*)(const void *)) ft_strdup);
 	ft_memsort(env);
 	cpy = env;
 	while (*env != NULL)

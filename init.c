@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 11:28:33 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 12:01:35 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 11:46:27 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**g_environ;
 /* Initialise environment variable array g_environ and ? variable. */
 void	ft_init_environment(char **env)
 {
-	g_environ = ft_memdup((const char **) env);
+	g_environ = ft_arrdup(env, (void *(*)(const void *)) ft_strdup);
 	ft_putenv("?=0");
 }
 
