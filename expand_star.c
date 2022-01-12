@@ -12,28 +12,6 @@
 
 #include "minishell.h"
 
-/* Opens a directory. Prints error message if error is encountered. */
-static DIR	*ft_opendir(const char *name)
-{
-	DIR	*dirp;
-
-	dirp = opendir(name);
-	if (dirp == NULL)
-		perror("opendir");
-	return (dirp);
-}
-
-/* Closes a directory. Prints error message if error is encountered. */
-static int	ft_closedir(DIR *dirp)
-{
-	int	retval;
-
-	retval = closedir(dirp);
-	if (retval == -1)
-		perror("closedir");
-	return (retval);
-}
-
 /* Lists all files within directory provided as string. */
 static t_list	*ft_list_files(char *dir)
 {
@@ -68,13 +46,20 @@ Returns 1 if reference string matchs the nested array of characters,
 static int	ft_str_match(char *string, char **match)
 {
 	int		i;
+	int		diff;
 	char	*addr;
 
 	i = -1;
 	while (match[++i])
 	{
-		addr = ft_strnstr(string, match[i], ft_strlen(string));
-		if (addr)
+		addr = string;
+		if (strncmp(match[i], "*", 2) == 0)
+			continue;
+		else if (match[i] == '*')
+			addr = ft_strnstr(string, match[i], ft_strlen(string));
+		else
+			diff = ft_strncmp(string, match[i], ft_strlen(match[i]));
+		if (addr || diff == 0)
 			string = addr + ft_strlen(match[i]);
 		else
 			return (0);
@@ -94,8 +79,20 @@ char	**ft_expand_star(char *search, char *dir)
 	t_list	*filenames;
 	t_list	*temp;
 	t_list	*filter_buff;
+	char	*temp;
 
 	segments = ft_split(search, '*');
+	if (*search == '*')
+	{
+		temp = ft_strjoin("*", segments[0]);
+		free(segments[0]);
+		segments[0] = temp;
+	}
+	if (search[ft_strlen(search) - 1] == '*')
+	{
+		ft_memresize(segments, ft_memsize(segments) + 2);
+		segments[ft_memsize(segments) - 1] = ft_strdup("*");
+	}
 	filenames = ft_list_files(dir);
 	filter_buff = NULL;
 	temp = filenames;

@@ -191,4 +191,8 @@ void	ft_token_print(t_list *token);
 void	ft_cmd_print(t_cmd *cmd);
 void	ft_ptree_print(t_ptree *ptree);
 
+// dir functions
+DIR		*ft_opendir(const char *name);
+int		ft_closedir(DIR *dirp);
+
 #endif
