@@ -55,10 +55,15 @@ static int	ft_str_match(char *string, char **match)
 		addr = string;
 		if (strncmp(match[i], "*", 2) == 0)
 			continue;
-		else if (match[i] == '*')
-			addr = ft_strnstr(string, match[i], ft_strlen(string));
+		if (i == 0)
+		{
+			if (match[i] == '*')
+				addr = ft_strnstr(string, match[i], ft_strlen(string));
+			else
+				diff = ft_strncmp(string, match[i], ft_strlen(match[i]));
+		}
 		else
-			diff = ft_strncmp(string, match[i], ft_strlen(match[i]));
+			addr = ft_strnstr(string, match[i], ft_strlen(string));
 		if (ft_strncmp(addr, string, ft_strlen(string)) != 0 || diff == 0)
 			string = addr + ft_strlen(match[i]);
 		else
