@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_array.c                                     :+:      :+:    :+:   */
+/*   array.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:42:03 by weng              #+#    #+#             */
-/*   Updated: 2021/12/22 17:12:30 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 11:24:49 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Returns the size of a null-terminated array of pointers. */
-size_t	ft_memsize(const char **arr)
+size_t	ft_arrsize(const void *arr)
 {
-	size_t	retval;
-	char	**cpy;
+	const void	**array;
+	size_t		retval;
 
-	cpy = (char **) arr;
+	array = (const void **) arr;
 	retval = 0;
-	while (*cpy++ != NULL)
+	while (array[retval] != NULL)
 		retval++;
 	return (retval);
 }
@@ -33,7 +33,7 @@ char	**ft_memdup(const char **arr)
 
 	if (arr == NULL)
 		return (NULL);
-	size = ft_memsize(arr);
+	size = ft_arrsize(arr);
 	retval = ft_calloc(sizeof(char *), size + 1);
 	if (retval != NULL)
 	{
@@ -52,7 +52,7 @@ char	**ft_memresize(char **arr, size_t size)
 
 	if (arr == NULL)
 		return (NULL);
-	size_o = ft_memsize((const char **) arr);
+	size_o = ft_arrsize(arr);
 	if (size_o < size)
 	{
 		retval = ft_calloc(sizeof(char *), size + 1);
@@ -95,7 +95,7 @@ int	ft_meminsert(char ***dest, char *str)
 	ssize_t		size;
 
 	arr = *dest;
-	size = ft_memsize((const char **) arr);
+	size = ft_arrsize(arr);
 	arr = ft_memresize(arr, size + 1);
 	if (arr == NULL)
 	{
