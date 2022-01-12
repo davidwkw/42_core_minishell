@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:42:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 12:04:12 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 12:11:55 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,14 @@ void	*ft_arrdup(const void *arr, void *(*func)(const void *))
 	return (retval);
 }
 
-/* Resize a null-terminated array of pointers. */
-char	**ft_memresize(char **arr, size_t size)
+/*
+Resize a null-terminated array of pointers 'arr' to the new size 'size'.
+If required, the memory of the element's content will be freed using the
+function 'del'.
+*/
+void	*ft_arr_resize(void *arr, size_t size, void (*del)(void *))
 {
-	char	**retval;
+	void	**retval;
 	size_t	size_o;
 	size_t	i;
 
@@ -60,9 +64,9 @@ char	**ft_memresize(char **arr, size_t size)
 	size_o = ft_arrsize(arr);
 	if (size_o < size)
 	{
-		retval = ft_calloc(sizeof(char *), size + 1);
+		retval = ft_calloc(sizeof(void *), size + 1);
 		if (retval != NULL)
-			ft_memcpy(retval, arr, sizeof(char *) * size_o);
+			ft_memcpy(retval, arr, sizeof(void *) * size_o);
 		free(arr);
 		return (retval);
 	}
@@ -70,7 +74,7 @@ char	**ft_memresize(char **arr, size_t size)
 	{
 		i = size;
 		while (i < size_o)
-			free(arr[i++]);
+			del(((void **) arr)[i++]);
 		return (arr);
 	}
 }
@@ -101,7 +105,7 @@ int	ft_meminsert(char ***dest, char *str)
 
 	arr = *dest;
 	size = ft_arrsize(arr);
-	arr = ft_memresize(arr, size + 1);
+	arr = ft_arr_resize(arr, size + 1, free);
 	if (arr == NULL)
 	{
 		errno = ENOMEM;

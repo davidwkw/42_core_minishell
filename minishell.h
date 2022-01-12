@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 11:55:22 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 12:13:41 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ extern char		**g_environ;
 // array functions
 size_t	ft_arrsize(const void *arr);
 void	*ft_arrdup(const void *arr, void *(*func)(const void *));
-char	**ft_memresize(char **arr, size_t size);
+void	*ft_arr_resize(void *arr, size_t size, void (*del)(void *));
 void	ft_memdel(char **arr);
 int		ft_meminsert(char ***dest, char *str);
 
