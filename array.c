@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:42:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 12:33:45 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 12:53:37 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ void	*ft_arr_resize(void *arr, size_t size, void (*del)(void *))
 	if (size_o < size)
 	{
 		retval = ft_calloc(sizeof(void *), size + 1);
-		if (retval != NULL)
+		if (retval == NULL)
+			perror("ft_arr_resize");
+		else if (retval != NULL)
 			ft_memcpy(retval, arr, sizeof(void *) * size_o);
 		free(arr);
 		return (retval);
@@ -96,32 +98,23 @@ void	ft_arrclear(void *arr, void (*del)(void *))
 }
 
 /*
-Insert a string at the back of a null-terminated array of strings.
-'dest' is the address of the array, while 'str' is the string to be
-inserted. Returns 0 upon success, or non-zero upon failure.
+Insert a pointer 'ptr' to the back of a null-terminated array of
+pointers 'arr'. Returns 0 upon success, or non-zero upon failure.
 */
-int	ft_meminsert(char ***dest, char *str)
+int	ft_arradd_back(void *arr, void *ptr)
 {
 	extern int	errno;
-	char		**arr;
-	ssize_t		size;
+	void		***source;
+	void		**array;
+	size_t		size;
 
-	arr = *dest;
-	size = ft_arrsize(arr);
-	arr = ft_arr_resize(arr, size + 1, free);
-	if (arr == NULL)
-	{
-		errno = ENOMEM;
-		perror("memeresize");
+	source = arr;
+	array = *source;
+	size = ft_arrsize(array);
+	array = ft_arr_resize(array, size + 1, NULL);
+	if (array == NULL)
 		return (EXIT_FAILURE);
-	}
-	arr[size] = ft_strdup(str);
-	if (arr[size] == NULL)
-	{
-		errno = ENOMEM;
-		perror("ft_meminsert");
-		return (EXIT_FAILURE);
-	}
-	*dest = arr;
+	array[size] = ptr;
+	*source = array;
 	return (EXIT_SUCCESS);
 }

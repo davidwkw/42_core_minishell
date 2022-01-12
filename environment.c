@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 13:53:23 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 12:51:33 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	ft_putenv(char *string)
 	if (valid == 0)
 		return (EXIT_FAILURE);
 	if (ft_replace_environ(string) == 0)
-		return (ft_meminsert(&g_environ, string));
+		return (ft_arradd_back(&g_environ, ft_strdup(string)));
 	else
 		return (EXIT_SUCCESS);
 }
