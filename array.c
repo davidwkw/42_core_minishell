@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:42:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 12:11:55 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 12:33:45 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,20 @@ void	*ft_arr_resize(void *arr, size_t size, void (*del)(void *))
 	}
 }
 
-/* Free memories associated with a null-terminated array of pointers. */
-void	ft_memdel(char **arr)
+/*
+Free memories associated with a null-terminated array of pointers. The
+memory of the element's content will be freed using the function 'del'.
+*/
+void	ft_arrclear(void *arr, void (*del)(void *))
 {
-	char	**cpy;
+	void	**array;
 
 	if (arr == NULL)
 		return ;
-	cpy = arr;
-	while (*arr != NULL)
-		free(*arr++);
-	free(cpy);
+	array = arr;
+	while (*array != NULL)
+		del(*array++);
+	free(arr);
 }
 
 /*

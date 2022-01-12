@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 11:47:04 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 12:34:22 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ pid_t	ft_execute_scmd(t_cmd *cmd, int i)
 	ft_fd_cleanup(pid, &fd_in, fd_pipe, nofork);
 	if (pid == 0)
 		ft_run(args, nofork);
-	ft_memdel(args);
+	ft_arrclear(args, free);
 	return (pid);
 }
 

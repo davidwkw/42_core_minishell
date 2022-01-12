@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 09:19:13 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 12:34:32 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ int	main(int argc, char **argv, char **envp)
 		;
 	printf("exit\n");
 	exit_value = ft_atoi(ft_getenv("?"));
-	ft_memdel(g_environ);
+	ft_arrclear(g_environ, free);
 	return (exit_value);
 }
