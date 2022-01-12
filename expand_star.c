@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/12 13:16:28 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 15:40:42 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,39 +37,32 @@ static t_list	*ft_list_files(char *dir)
 	return (filenames);
 }
 
-/*
-Accepts a reference string and a nested array of characters
-to match the reference.
-Returns 1 if reference string matchs the nested array of characters,
-0 if it doesn't.
-*/
-static int	ft_str_match(char *string, char **match)
+/* Returns 1 if 'str' matches the pattern given by 'pattern', or 0 otherwise. */
+static int	ft_str_match(char *str, char **pattern)
 {
 	int		i;
-	int		diff;
 	char	*addr;
 
 	i = -1;
-	while (match[++i])
+	addr = str;
+	while (pattern[++i] != NULL)
 	{
-		addr = string;
-		if (strncmp(match[i], "*", 2) == 0)
-			continue ;
-		if (i == 0)
+		if (ft_strncmp(pattern[i], "*", 2) == 0)
+			addr = ft_strchr(addr, '\0');
+		else if (i == 0)
 		{
-			if (*match[i] == '*')
-				addr = ft_strnstr(string, match[i], ft_strlen(string));
-			else
-				diff = ft_strncmp(string, match[i], ft_strlen(match[i]));
+			if (*pattern[i] == '*')
+				addr = ft_strnstr(addr, pattern[i] + 1, ft_strlen(addr));
+			else if (ft_strncmp(addr, pattern[i], ft_strlen(pattern[i])) != 0)
+				addr = NULL;
 		}
 		else
-			addr = ft_strnstr(string, match[i], ft_strlen(string));
-		if (ft_strncmp(addr, string, ft_strlen(string)) != 0 || diff == 0)
-			string = addr + ft_strlen(match[i]);
-		else
+			addr = ft_strnstr(addr, pattern[i], ft_strlen(addr));
+		if (addr == NULL)
 			return (0);
+		addr += ft_strlen(pattern[i] + (*pattern[i] == '*'));
 	}
-	return (1);
+	return (*addr == '\0');
 }
 
 /*
