@@ -68,17 +68,14 @@ static int	ft_str_match(char *string, char **match)
 }
 
 /*
-Accepts a string pattern to be searched and a directory string.
-Returns a filtered nested array of
-filenames that match the search string.
+Splits the search string by a given character. If the string begins with a *
+it is reappended to the first element of the split list. If the string ends with
+a *, the list is expanded and a single element of "*" if added to the end of the
+list. Returns the formatted list.
 */
-char	**ft_expand_star(char *search, char *dir)
+static char	**ft_star_split(char *search, char c)
 {
-	char	**segments;
-	char	**filtered_filenames;
-	t_list	*filenames;
-	t_list	*temp;
-	t_list	*filter_buff;
+	char	*segments;
 	char	*temp;
 
 	segments = ft_split(search, '*');
@@ -93,6 +90,23 @@ char	**ft_expand_star(char *search, char *dir)
 		ft_memresize(segments, ft_memsize(segments) + 2);
 		segments[ft_memsize(segments) - 1] = ft_strdup("*");
 	}
+	return (segments);
+}
+
+/*
+Accepts a string pattern to be searched and a directory string.
+Returns a filtered nested array of
+filenames that match the search string.
+*/
+char	**ft_expand_star(char *search, char *dir)
+{
+	char	**segments;
+	char	**filtered_filenames;
+	t_list	*filenames;
+	t_list	*temp;
+	t_list	*filter_buff;
+
+	segments = ft_star_split(search, '*');
 	filenames = ft_list_files(dir);
 	filter_buff = NULL;
 	temp = filenames;
