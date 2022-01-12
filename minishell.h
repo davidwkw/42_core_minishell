@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 16:29:31 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 16:44:51 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*ft_strappend(char *ptr, char *str);
 void	ft_strreplace(char **ptr, char *new);
 
 // list related functions that are not included in libft
-void	ft_lst_replace_content(t_list *lst, void *content);
+void	ft_lst_replace_content(t_list *lst, void *content, void (*del)(void *));
 void	ft_lstinsert(t_list *lst, t_list *new);
 t_list	*ft_lstdelempty(t_list **lst);
 char	**ft_lst_to_arr(t_list *lst);

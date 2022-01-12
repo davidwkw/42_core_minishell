@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lst.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 23:14:33 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 15:05:08 by kwang            ###   ########.fr       */
+/*   Updated: 2022/01/12 16:46:59 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Free and replace the content of lst with a new content. */
-void	ft_lst_replace_content(t_list *lst, void *content)
+/*
+Frees the memory of the element's content using the function 'del' and
+replaces the content of lst with a new content.
+*/
+void	ft_lst_replace_content(t_list *lst, void *content, void (*del)(void *))
 {
-	free(lst->content);
+	del(lst->content);
 	lst->content = content;
 }
 

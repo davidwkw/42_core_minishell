@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 17:46:22 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 16:53:26 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ static t_list	*ft_tokenise_post_process(t_list *lst)
 	node = lst;
 	while (node != NULL)
 	{
-		ft_lst_replace_content(node, ft_strtrim(node->content, " "));
-		ft_lst_replace_content(node, ft_expand_var(node->content));
-		ft_lst_replace_content(node, ft_remove_quote(node->content));
+		ft_lst_replace_content(node, ft_strtrim(node->content, " "), free);
+		ft_lst_replace_content(node, ft_expand_var(node->content), free);
+		ft_lst_replace_content(node, ft_remove_quote(node->content), free);
 		node = node->next;
 	}
 	lst = ft_lstdelempty(&lst);
@@ -91,7 +91,7 @@ t_list	*ft_tokenise(char *input)
 {
 	t_list	*lst;
 	t_list	*node;
-	char	*target;
+	char	*adr;
 	char	*token;
 
 	if (ft_is_well_quoted(input) == 0 || ft_is_well_bracketed(input) == 0)
@@ -100,15 +100,15 @@ t_list	*ft_tokenise(char *input)
 	node = lst;
 	while (node != NULL)
 	{
-		target = ft_next_token(node->content);
-		if (target != NULL)
+		adr = ft_next_token(node->content);
+		if (adr != NULL)
 		{
-			ft_istoken(target, &token);
+			ft_istoken(adr, &token);
 			ft_lstinsert(node, ft_lstnew(token));
 			ft_lstinsert(
-				node->next, ft_lstnew(ft_strdup(target + ft_strlen(token))));
+				node->next, ft_lstnew(ft_strdup(adr + ft_strlen(token))));
 			ft_lst_replace_content(node,
-				ft_substr(node->content, 0, target - (char *) node->content));
+				ft_substr(node->content, 0, adr - (char *)node->content), free);
 			node = node->next;
 		}
 		node = node->next;
