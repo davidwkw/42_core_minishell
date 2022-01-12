@@ -30,8 +30,8 @@ static t_list	*ft_list_files(const char *dir, char mode)
 	{
 		if ((ft_strncmp(dirent->d_name, ".", 2) != 0
 			|| ft_strncmp(dirent->d_name, "..", 3) != 0)
-				|| (mode == 0 && *(dirent->d_name) != '.') || mode == 1)
-		ft_lstadd_back(&filenames, ft_lstnew(ft_strdup(dirent->d_name)));
+			|| (mode == 0 && *(dirent->d_name) != '.') || mode == 1)
+			ft_lstadd_back(&filenames, ft_lstnew(ft_strdup(dirent->d_name)));
 		dirent = readdir(dirp);
 	}
 	if (errno != 0)
