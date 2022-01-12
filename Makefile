@@ -19,6 +19,8 @@ SRCS	=	builtin_cd.c \
 			expand_var.c \
 			filedes.c \
 			ft_lst.c \
+			history_save.c \
+			history.c \
 			init.c \
 			io.c \
 			lexer.c \
@@ -32,8 +34,6 @@ SRCS	=	builtin_cd.c \
 			scmd.c \
 			string_array.c \
 			string.c \
-			history.c \
-			history_utils.c \
 			signal.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c

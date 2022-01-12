@@ -6,26 +6,11 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:17:38 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/12 09:09:22 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 10:57:21 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-Helper function to check if string contains only digits.
-Returns 1 if str only contains digits, 0 otherwise.
-*/
-int	ft_isdigit_str(const char *str)
-{
-	while (*str != '\0')
-	{
-		if (ft_isdigit(*str) == 0)
-			return (0);
-		str++;
-	}
-	return (1);
-}
 
 /*
 Returns the number of lines in the file 'pathname', or -1 if there is an
@@ -98,4 +83,31 @@ char	*ft_get_last_line(const char *pathname)
 		return (ft_strip_newline(line));
 	else
 		return (NULL);
+}
+
+/*
+Appends 'cmd' as a new line into .history if it is different from the
+last line. The file '.history' will be created if it does not exist.
+*/
+void	ft_history_save(char *cmd)
+{
+	int		fd;
+	char	*last;
+	char	*new;
+
+	if (*cmd == ' ')
+		return ;
+	fd = ft_open(HISTORY_FILE, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	if (fd == -1)
+		return ;
+	last = ft_get_last_line(HISTORY_FILE);
+	if (last == NULL || ft_strncmp(last, cmd, ft_strlen(cmd) + 1) != 0)
+	{
+		new = ft_strtrim(cmd, " ");
+		add_history(new);
+		ft_putendl_fd(new, fd);
+		free(new);
+	}
+	free(last);
+	ft_close(fd);
 }
