@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 /* Lists all files within directory provided as string. */
-static t_list	*ft_list_files(const char *dir)
+static t_list	*ft_list_files(const char *dir, char mode)
 {
 	DIR			*dirp;
 	t_dirent	*dirent;
@@ -28,6 +28,9 @@ static t_list	*ft_list_files(const char *dir)
 	dirent = readdir(dirp);
 	while (dirent != NULL)
 	{
+		if ((ft_strncmp(dirent->d_name, ".", 2) != 0
+			|| ft_strncmp(dirent->d_name, "..", 3) != 0)
+				|| (mode == 0 && *(dirent->d_name) != '.') || mode == 1)
 		ft_lstadd_back(&filenames, ft_lstnew(ft_strdup(dirent->d_name)));
 		dirent = readdir(dirp);
 	}
@@ -100,7 +103,7 @@ t_list	*ft_expand_star(const char *dir, char *pattern)
 	t_list	*node;
 
 	segments = ft_star_split(pattern);
-	filenames = ft_list_files(dir);
+	filenames = ft_list_files(dir, *pattern == '.');
 	node = filenames;
 	while (node != NULL)
 	{
