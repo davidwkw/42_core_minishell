@@ -6,14 +6,14 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/12 16:44:14 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/12 17:08:10 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Lists all files within directory provided as string. */
-static t_list	*ft_list_files(char *dir)
+static t_list	*ft_list_files(const char *dir)
 {
 	DIR			*dirp;
 	t_dirent	*dirent;
