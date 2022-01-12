@@ -57,7 +57,7 @@ static int	ft_str_match(char *string, char **match)
 			continue;
 		if (i == 0)
 		{
-			if (match[i] == '*')
+			if (*match[i] == '*')
 				addr = ft_strnstr(string, match[i], ft_strlen(string));
 			else
 				diff = ft_strncmp(string, match[i], ft_strlen(match[i]));
