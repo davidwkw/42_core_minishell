@@ -59,7 +59,7 @@ static int	ft_str_match(char *string, char **match)
 			addr = ft_strnstr(string, match[i], ft_strlen(string));
 		else
 			diff = ft_strncmp(string, match[i], ft_strlen(match[i]));
-		if (addr || diff == 0)
+		if (ft_strncmp(addr, string, ft_strlen(string)) != 0 || diff == 0)
 			string = addr + ft_strlen(match[i]);
 		else
 			return (0);
