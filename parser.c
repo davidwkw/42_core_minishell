@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 16:06:28 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 15:21:21 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 15:26:42 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ t_cmd	*ft_parse(t_list **lst)
 			ft_cmd_add_arg(cmd, *lst);
 		*lst = (*lst)->next;
 	}
-	if (status != -1 && ft_cmd_get_scmd(cmd, cmd->count - 1)->count == 0)
+	if (status != -1
+		&& cmd->count > 0 && ft_cmd_get_scmd(cmd, cmd->count - 1)->count == 0)
 		status = ft_parse_error(*lst);
 	if (status == -1)
 	{
