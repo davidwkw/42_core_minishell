@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 23:14:33 by weng              #+#    #+#             */
-/*   Updated: 2021/12/29 12:04:34 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 12:56:29 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,26 @@ void	ft_lstinsert(t_list *lst, t_list *new)
 }
 
 /* Remove nodes where the content is an empty string */
-t_list	*ft_lstdelempty(t_list **lst)
+t_list	*ft_lstdel_if_equal(
+	t_list **lst, int (*cmp)(void *, void *), void *arg, void (*del)(void *))
 {
 	t_list	*node;
 	t_list	*next;
 
 	node = *lst;
-	while (node != NULL && *((char *) node->content) == '\0')
+	while (node != NULL && cmp(node->content, arg) == 0)
 	{
 		node = (*lst)->next;
-		ft_lstdelone(*lst, free);
+		ft_lstdelone(*lst, del);
 		*lst = node;
 	}
 	while (node != NULL && node->next != NULL)
 	{
 		next = node->next;
-		if (*((char *) next->content) == '\0')
+		if (cmp(next->content, arg) == 0)
 		{
 			node->next = next->next;
-			ft_lstdelone(next, free);
+			ft_lstdelone(next, del);
 		}
 		else
 			node = node->next;
