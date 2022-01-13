@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 12:34:05 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 17:07:49 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,23 @@ Returns 0 upon success, or 1 upon failure.
 */
 int	ft_export(char **args)
 {
+	int	retval;
+
+	retval = EXIT_SUCCESS;
 	if (args[1] == NULL)
 		ft_display_list();
 	else
 	{
 		while (*(++args) != NULL)
 		{
-			if (ft_putenv(*args) != 0)
+			if (**args == '?' || ft_putenv(*args) != 0)
 			{
 				ft_putstr_fd("minishell: export: `", 2);
 				ft_putstr_fd(*args, 2);
 				ft_putendl_fd("': not a valid identifier", 2);
-				return (EXIT_FAILURE);
+				retval = EXIT_FAILURE;
 			}
 		}
 	}
-	return (EXIT_SUCCESS);
+	return (retval);
 }
