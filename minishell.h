@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 15:15:56 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 15:41:02 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int		ft_open(const char *pathname, int flags, mode_t mode);
 int		ft_close(int fd);
 
 // here document, input and output file functions
-void	ft_write_heredoc(char *delimiter);
+int		ft_write_heredoc(char *delimiter);
 int		open_outfile(t_cmd *cmd);
 void	ft_save_restore_fd(void);
 
