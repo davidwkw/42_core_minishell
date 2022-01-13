@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 15:41:02 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 16:55:26 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ int		ft_is_well_bracketed(const char *s);
 char	*ft_remove_quote(char *str);
 
 // environment variable functions
+int		ft_is_valid_varname(const char *name, int include_question);
 char	*ft_getenv(const char *name);
 int		ft_putenv(char *string);
 int		ft_set_exit_value(t_list *lst);
