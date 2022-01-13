@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 12:56:10 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 15:15:56 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_list	*ft_lstdel_if_equal(t_list **lst, int (*cmp)(void *, void *),
 char	**ft_lst_to_arr(t_list *lst);
 
 // lexer functions
-int		ft_istoken(const char *str, char **token);
+int		ft_istoken(const char *str, char **token, int include_space);
 t_list	*ft_tokenise(char *input);
 char	*ft_expand_var(char *str);
 

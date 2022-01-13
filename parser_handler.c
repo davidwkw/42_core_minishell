@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/10 17:17:34 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 15:17:10 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 
 	node = (*lst)->next;
 	content = (*lst)->content;
-	if (node == NULL || ft_istoken(node->content, NULL) == 1)
+	if (node == NULL || ft_istoken(node->content, NULL, 0) == 1)
 		return (ft_parse_error(node));
 	*lst = node;
 	if (ft_strncmp(content, "<<", 2) == 0)
@@ -72,7 +72,7 @@ int	ft_hdlr_token(t_cmd *cmd, t_list **lst)
 	int			i;
 	char		*token;
 
-	ft_istoken((*lst)->content, &token);
+	ft_istoken((*lst)->content, &token, 0);
 	i = 0;
 	while (i < (long)(sizeof(substr) / sizeof(substr[0])))
 	{
