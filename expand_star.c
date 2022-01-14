@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/14 13:51:37 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 14:22:45 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,20 +104,11 @@ t_list	*ft_expand_star(const char *dir, char *pattern)
 {
 	t_list	*substr;
 	t_list	*filenames;
-	t_list	*node;
 
 	substr = ft_star_split(pattern);
 	filenames = ft_ls(dir, *pattern == '.');
-	node = filenames;
-	while (node != NULL)
-	{
-		if (ft_str_match(node->content, substr) == 0)
-			ft_lst_replace_content(node, ft_strdup(""), free);
-		node = node->next;
-	}
-	if (filenames != NULL)
-		filenames = ft_lstdel_if_equal(
-			&filenames, (int (*)(void *, void *)) ft_strcmp, "", free);
+	filenames = ft_lstdelif(
+			filenames, (int (*)(void *, void *)) ft_str_match, substr, free);
 	ft_lstclear(&substr, free);
 	if (filenames != NULL)
 		return (filenames);

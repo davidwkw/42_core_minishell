@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 13:30:43 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 14:16:35 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void	ft_strreplace(char **ptr, char *new);
 // list related functions that are not included in libft
 void	ft_lst_replace_content(t_list *lst, void *content, void (*del)(void *));
 void	ft_lstinsert(t_list *lst, t_list *new);
-t_list	*ft_lstdel_if_equal(t_list **lst, int (*cmp)(void *, void *),
-			void *arg, void (*del)(void *));
+t_list	*ft_lstdelif(t_list *lst, int (*cmp)(void *, void *), void *arg,
+			void (*del)(void *));
 char	**ft_lst_to_arr(t_list *lst);
 
 // lexer functions

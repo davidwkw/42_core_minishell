@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 23:14:33 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 12:56:29 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 14:16:00 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,22 @@ void	ft_lstinsert(t_list *lst, t_list *new)
 	lst->next = new;
 }
 
-/* Remove nodes where the content is an empty string */
-t_list	*ft_lstdel_if_equal(
-	t_list **lst, int (*cmp)(void *, void *), void *arg, void (*del)(void *))
+/*
+Remove nodes if cmp(lst->content, arg) evaluates to 0. The content of
+the removed nodes are deleted using the function 'del'.
+*/
+t_list	*ft_lstdelif(
+	t_list *lst, int (*cmp)(void *, void *), void *arg, void (*del)(void *))
 {
 	t_list	*node;
 	t_list	*next;
 
-	node = *lst;
+	node = lst;
 	while (node != NULL && cmp(node->content, arg) == 0)
 	{
-		node = (*lst)->next;
-		ft_lstdelone(*lst, del);
-		*lst = node;
+		node = lst->next;
+		ft_lstdelone(lst, del);
+		lst = node;
 	}
 	while (node != NULL && node->next != NULL)
 	{
@@ -54,7 +57,7 @@ t_list	*ft_lstdel_if_equal(
 		else
 			node = node->next;
 	}
-	return (*lst);
+	return (lst);
 }
 
 /*
