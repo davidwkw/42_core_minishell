@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/14 15:02:33 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 16:03:53 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,17 +99,22 @@ static int	ft_str_match(char *str, t_list *pattern)
 Returns a linked list containing the failnames that match the 'pattern'
 within directory 'dir'. If there is no match at all, return a linked
 list containing the 'pattern'.
+
+If 'dir' is NULL, it defaults to the current working directory.
 */
-t_list	*ft_expand_star(const char *dir, char *pattern)
+t_list	*ft_expand_star(char *dir, char *pattern)
 {
 	t_list	*substr;
 	t_list	*filenames;
 
+	if (dir == NULL)
+		dir = getcwd(NULL, 0);
 	substr = ft_star_split(pattern);
 	filenames = ft_ls(dir, *pattern == '.');
 	filenames = ft_lstdelif(
 			filenames, (int (*)(void *, void *)) ft_str_match, substr, free);
 	ft_lstclear(&substr, free);
+	free(dir);
 	if (filenames != NULL)
 		return (filenames);
 	else

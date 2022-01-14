@@ -6,11 +6,28 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 15:44:54 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 16:21:32 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*ft_redirect_file(char *content)
+{
+	t_list	*files;
+
+	files = ft_expand_star(NULL, content);
+	if (ft_lstsize(files) > 1)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(content, 2);
+		ft_putendl_fd(": ambiguous redirect", 2);
+		ft_lstclear(&files, free);
+		return (NULL);
+	}
+	else
+		return (ft_remove_quote(files->content));
+}
 
 /*
 Records to the input redirection information. Returns -1 upon error,
@@ -28,13 +45,13 @@ static int	ft_hdlr_input(t_cmd *cmd, t_list **lst)
 	if (node == NULL || ft_istoken(node->content, NULL, 0) == 1)
 		return (ft_parse_error(node));
 	*lst = node;
-	filename = ft_remove_quote(node->content);
-	if (ft_strcmp(content, "<<") == 0)
+	filename = ft_redirect_file(node->content);
+	if (filename != NULL && ft_strcmp(content, "<<") == 0)
 	{
 		ft_strreplace(&(cmd->infile), ft_strdup(HEREDOC_FILE));
 		return (ft_write_heredoc(filename));
 	}
-	else if (ft_strcmp(content, "<") == 0)
+	else if (filename != NULL && ft_strcmp(content, "<") == 0)
 	{
 		ft_strreplace(&(cmd->infile), filename);
 		fd = ft_open(filename, O_RDONLY, 0);
@@ -61,11 +78,11 @@ static int	ft_hdlr_output(t_cmd *cmd, t_list **lst)
 	if (node == NULL || ft_istoken(node->content, NULL, 0) == 1)
 		return (ft_parse_error(node));
 	*lst = node;
-	filename = ft_remove_quote(node->content);
+	filename = ft_redirect_file(node->content);
 	ft_strreplace(&(cmd->outfile), filename);
-	if (ft_strcmp(content, ">>") == 0)
+	if (filename != NULL && ft_strcmp(content, ">>") == 0)
 		cmd->outfile_flag = O_APPEND;
-	else if (ft_strcmp(content, ">") == 0)
+	else if (filename != NULL && ft_strcmp(content, ">") == 0)
 		cmd->outfile_flag = O_TRUNC;
 	else
 		return (-1);

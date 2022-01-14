@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 14:16:35 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 16:10:46 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void	ft_history_save(char *cmd);
 int		ft_history(char **args);
 
 // expansion function
-t_list	*ft_expand_star(const char *dir, char *pattern);
+t_list	*ft_expand_star(char *dir, char *pattern);
 
 // signal functions
 t_shdlr	ft_signal(int signum, t_shdlr handler);
