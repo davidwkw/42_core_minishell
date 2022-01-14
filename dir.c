@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 13:12:38 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 13:30:25 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 13:42:38 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,19 @@ int	ft_closedir(DIR *dirp)
 	return (retval);
 }
 
+/* Read a directory. Prints error message if error is encountered. */
+static t_dirent	*ft_readdir(DIR *dirp)
+{
+	extern int	errno;
+	t_dirent	*dirent;
+
+	errno = 0;
+	dirent = readdir(dirp);
+	if (errno != 0)
+		perror("readdir");
+	return (dirent);
+}
+
 /*
 Lists all content within the directory 'dir'. If 'hidden' is 0, only
 return non-hidden files, otherwise only return hidden files.
@@ -44,23 +57,19 @@ t_list	*ft_ls(const char *dir, char hidden)
 	t_dirent	*dirent;
 	t_list		*lst;
 	char		*name;
-	extern int	errno;
 
 	lst = NULL;
 	dirp = ft_opendir(dir);
 	if (dirp == NULL)
 		return (NULL);
-	errno = 0;
-	dirent = readdir(dirp);
+	dirent = ft_readdir(dirp);
 	while (dirent != NULL)
 	{
 		name = dirent->d_name;
 		if ((*name == '.') == (hidden != 0))
 			ft_lstadd_back(&lst, ft_lstnew(ft_strdup(name)));
-		dirent = readdir(dirp);
+		dirent = ft_readdir(dirp);
 	}
-	if (errno != 0)
-		perror("readdir");
 	ft_closedir(dirp);
 	return (lst);
 }
