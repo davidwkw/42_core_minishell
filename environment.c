@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 12:51:33 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 16:56:19 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,15 @@ Returns 1 'name' is a valid name for an environment variable, else 0.
 The name must be "?", or the first character of the name must be one of
 '_' or alphabet. The rest of the name must be '_' or alphanumeric.
 */
-static int	ft_name_valid(const char *name)
+int	ft_is_valid_varname(const char *name, int include_question)
 {
-	if (ft_strncmp(name, "?", 2) == 0)
+	if (ft_strncmp(name, "?", 2) == 0 && include_question == 1)
 		return (1);
-	else if (*name == '_' || ft_isalpha(*name) == 1)
+	if (*name == '_' || ft_isalpha(*name) == 1)
 		name++;
-	else
-		return (0);
 	while (*name == '_' || ft_isalnum(*name) == 1)
 		name++;
-	if (*name == '\0')
-		return (1);
-	else
-		return (0);
+	return (*name == '\0');
 }
 
 /*
@@ -109,7 +104,7 @@ int	ft_putenv(char *string)
 		name = ft_substr(string, 0, equal - string);
 	else
 		name = ft_strdup(string);
-	valid = ft_name_valid(name);
+	valid = ft_is_valid_varname(name, 1);
 	free(name);
 	if (valid == 0)
 		return (EXIT_FAILURE);

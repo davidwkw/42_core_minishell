@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 16:53:26 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 13:52:34 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ Return 1 if substring is one of the special tokens, else return 0.
 
 In the event 'token' is not NULL, *token will be set to the copy of the
 identified token if it is found, else it will be set to NULL.
+
+'include_space' should be set to 1 if space is to be considered a
+special token.
 */
-int	ft_istoken(const char *str, char **token)
+int	ft_istoken(const char *str, char **token, int include_space)
 {
 	const char	*substr[] = {"<<", ">>", "||", "&&", " ", "<", ">", "|",
 							 "(", ")"};
@@ -30,7 +33,8 @@ int	ft_istoken(const char *str, char **token)
 	while (++i < n)
 	{
 		len = ft_strlen(substr[i]);
-		if (ft_strncmp(str, substr[i], len) == 0)
+		if (ft_strncmp(str, substr[i], len) == 0
+			&& (*substr[i] != ' ' || include_space == 1))
 		{
 			if (token != NULL)
 				*token = ft_substr(str, 0, len);
@@ -44,8 +48,8 @@ int	ft_istoken(const char *str, char **token)
 
 /*
 Return the pointer to the first special token along a string, or NULL
-if no special token is found.Special token cannot occur at the part of a
-string which is enclosed within quote (') or double quote (");
+if no special token is found. Special token cannot occur at the part of
+a string which is enclosed within quote (') or double quote (");
 */
 static char	*ft_next_token(const char *str)
 {
@@ -54,7 +58,7 @@ static char	*ft_next_token(const char *str)
 	quote = '\0';
 	while (1)
 	{
-		if (quote == '\0' && ft_istoken(str, NULL) == 1)
+		if (quote == '\0' && ft_istoken(str, NULL, 1) == 1)
 			return ((char *) str);
 		if (quote == '\0' && (*str == '\'' || *str == '\"'))
 			quote = *str;
@@ -66,52 +70,44 @@ static char	*ft_next_token(const char *str)
 	}
 }
 
-/* Trim space & remove quotations from the tokens, then remove empty node. */
-static t_list	*ft_tokenise_post_process(t_list *lst)
+/* Auxiliary function that adds one token to 'lst' at each call. */
+static t_list	*ft_tokenise_aux(char *input, t_list *lst)
 {
-	t_list	*node;
+	int		len;
+	char	*token;
+	char	*end;
 
-	node = lst;
-	while (node != NULL)
-	{
-		ft_lst_replace_content(node, ft_strtrim(node->content, " "), free);
-		ft_lst_replace_content(node, ft_expand_var(node->content), free);
-		ft_lst_replace_content(node, ft_remove_quote(node->content), free);
-		node = node->next;
-	}
-	lst = ft_lstdelempty(&lst);
-	return (lst);
+	while (*input == ' ')
+		input++;
+	if (*input == '\0')
+		return (lst);
+	end = ft_next_token(input);
+	if (ft_istoken(input, &token, 1) == 0)
+		token = ft_substr(input, 0, end - input);
+	ft_lstadd_back(&lst, ft_lstnew(strdup(token)));
+	len = ft_strlen(token);
+	free(token);
+	return (ft_tokenise_aux(input + len, lst));
 }
 
 /*
-Tokenize the input and return a linked list. If any of the content
-of a node is "" or " ", the node will the removed from the list.
+Tokenize the input and return a linked list, with variable expansion and
+quote removal carried out.
 */
 t_list	*ft_tokenise(char *input)
 {
 	t_list	*lst;
 	t_list	*node;
-	char	*adr;
-	char	*token;
 
 	if (ft_is_well_quoted(input) == 0 || ft_is_well_bracketed(input) == 0)
 		return (NULL);
-	lst = ft_lstnew(ft_strtrim(input, " "));
+	lst = ft_tokenise_aux(input, NULL);
 	node = lst;
 	while (node != NULL)
 	{
-		adr = ft_next_token(node->content);
-		if (adr != NULL)
-		{
-			ft_istoken(adr, &token);
-			ft_lstinsert(node, ft_lstnew(token));
-			ft_lstinsert(
-				node->next, ft_lstnew(ft_strdup(adr + ft_strlen(token))));
-			ft_lst_replace_content(node,
-				ft_substr(node->content, 0, adr - (char *)node->content), free);
-			node = node->next;
-		}
+		ft_lst_replace_content(node, ft_expand_var(node->content), free);
+		ft_lst_replace_content(node, ft_remove_quote(node->content), free);
 		node = node->next;
 	}
-	return (ft_tokenise_post_process(lst));
+	return (lst);
 }

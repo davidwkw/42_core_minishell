@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/14 13:33:00 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 13:51:37 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ t_list	*ft_expand_star(const char *dir, char *pattern)
 		node = node->next;
 	}
 	if (filenames != NULL)
-		filenames = ft_lstdelempty(&filenames);
+		filenames = ft_lstdel_if_equal(
+			&filenames, (int (*)(void *, void *)) ft_strcmp, "", free);
 	ft_lstclear(&substr, free);
 	if (filenames != NULL)
 		return (filenames);

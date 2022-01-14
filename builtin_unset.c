@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/30 15:17:35 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 16:56:18 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,20 @@ feature.
 */
 int	ft_unset(char **args)
 {
+	int	retval;
+
+	retval = EXIT_SUCCESS;
 	while (*(++args) != NULL)
 	{
-		if (ft_strncmp(*args, "?", 2) == 0)
-			continue ;
-		ft_unset_one(*args);
+		if (ft_is_valid_varname(*args, 0) == 0)
+		{
+			ft_putstr_fd("minishell: unset: `", 2);
+			ft_putstr_fd(*args, 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+			retval |= EXIT_FAILURE;
+		}
+		else
+			ft_unset_one(*args);
 	}
-	return (EXIT_SUCCESS);
+	return (retval);
 }

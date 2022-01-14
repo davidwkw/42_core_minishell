@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/06 11:13:41 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 15:40:53 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ by line.
 
 A warning is raised if the EOF is detected.
 */
-void	ft_write_heredoc(char *delimiter)
+int	ft_write_heredoc(char *delimiter)
 {
 	int		fd;
 	char	*line;
 
 	fd = ft_open(HEREDOC_FILE, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+	if (fd == -1)
+		return (-1);
 	line = readline("> ");
 	while (line != NULL
 		&& ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) != 0)
@@ -44,7 +46,7 @@ void	ft_write_heredoc(char *delimiter)
 	if (line == NULL)
 		ft_eof_warning(delimiter);
 	free(line);
-	ft_close(fd);
+	return (ft_close(fd));
 }
 
 /* Opens the output file for writing. */

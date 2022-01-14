@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:47:51 by weng              #+#    #+#             */
-/*   Updated: 2022/01/10 17:29:59 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/13 15:55:08 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ static t_ptree	*ft_tree_hdlr_cmd(t_ptree *ptree, t_list **lst)
 		return (NULL);
 	}
 	cmd = ft_parse(lst);
-	if (cmd == NULL)
-		return (NULL);
 	if (ptree == NULL)
 		ptree = ft_ptree_new(cmd, CMD);
 	else

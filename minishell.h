@@ -91,11 +91,12 @@ void	ft_strreplace(char **ptr, char *new);
 // list related functions that are not included in libft
 void	ft_lst_replace_content(t_list *lst, void *content, void (*del)(void *));
 void	ft_lstinsert(t_list *lst, t_list *new);
-t_list	*ft_lstdelempty(t_list **lst);
+t_list	*ft_lstdel_if_equal(t_list **lst, int (*cmp)(void *, void *),
+			void *arg, void (*del)(void *));
 char	**ft_lst_to_arr(t_list *lst);
 
 // lexer functions
-int		ft_istoken(const char *str, char **token);
+int		ft_istoken(const char *str, char **token, int include_space);
 t_list	*ft_tokenise(char *input);
 char	*ft_expand_var(char *str);
 
@@ -133,7 +134,7 @@ int		ft_open(const char *pathname, int flags, mode_t mode);
 int		ft_close(int fd);
 
 // here document, input and output file functions
-void	ft_write_heredoc(char *delimiter);
+int		ft_write_heredoc(char *delimiter);
 int		open_outfile(t_cmd *cmd);
 void	ft_save_restore_fd(void);
 
@@ -148,6 +149,7 @@ int		ft_is_well_bracketed(const char *s);
 char	*ft_remove_quote(char *str);
 
 // environment variable functions
+int		ft_is_valid_varname(const char *name, int include_question);
 char	*ft_getenv(const char *name);
 int		ft_putenv(char *string);
 int		ft_set_exit_value(t_list *lst);
