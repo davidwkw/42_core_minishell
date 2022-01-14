@@ -6,75 +6,11 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/14 11:34:36 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 13:33:00 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-Lists all content within the directory 'dir'. If 'hidden' is 0, only
-return non-hidden files, otherwise only return hidden files.
-*/
-static t_list	*ft_ls(const char *dir, char hidden)
-{
-	DIR			*dirp;
-	t_dirent	*dirent;
-	t_list		*lst;
-	char		*name;
-	extern int	errno;
-
-	lst = NULL;
-	dirp = ft_opendir(dir);
-	if (dirp == NULL)
-		return (NULL);
-	errno = 0;
-	dirent = readdir(dirp);
-	while (dirent != NULL)
-	{
-		name = dirent->d_name;
-		if ((*name == '.') == (hidden != 0))
-			ft_lstadd_back(&lst, ft_lstnew(ft_strdup(name)));
-		dirent = readdir(dirp);
-	}
-	if (errno != 0)
-		perror("readdir");
-	ft_closedir(dirp);
-	return (lst);
-}
-
-/* Returns 1 if 'str' matches the pattern given by 'pattern', or 0 otherwise. */
-static int	ft_str_match(char *str, t_list *pattern)
-{
-	int		i;
-	t_list	*node;
-	char	*content;
-	char	*addr;
-
-	i = -1;
-	addr = str;
-	node = pattern;
-	while (node != NULL)
-	{
-		content = node->content;
-		if (ft_strncmp(content, "*", 2) == 0)
-			addr = ft_strchr(addr, '\0');
-		else if (i == 0)
-		{
-			if (*content == '*')
-				addr = ft_strnstr(addr, content + 1, ft_strlen(addr));
-			else if (ft_strncmp(addr, content, ft_strlen(content)) != 0)
-				addr = NULL;
-		}
-		else
-			addr = ft_strnstr(addr, content, ft_strlen(addr));
-		if (addr == NULL)
-			return (0);
-		addr += ft_strlen(content + (*content == '*'));
-		node = node->next;
-	}
-	return (*addr == '\0');
-}
 
 /* Auxiliary recursive function to be called by ft_star_split. */
 static t_list	*ft_star_split_aux(char *input, t_list *lst)
@@ -114,6 +50,49 @@ static t_list	*ft_star_split(char *input)
 	if (input[ft_strlen(input) - 1] == '*')
 		ft_lstadd_back(&lst, ft_lstnew(ft_strdup("*")));
 	return (lst);
+}
+
+/* Moves the 'str' pointer to the next location matched by 'pattern'. */
+static char	*ft_str_match_move(char *str, t_list *pattern)
+{
+	char	*content;
+
+	if (ft_strncmp(pattern->content, "*", 2) == 0)
+		str = ft_strchr(str, '\0');
+	else
+	{
+		content = ft_remove_quote(pattern->content);
+		str = ft_strnstr(str, content, ft_strlen(str));
+		if (str != NULL)
+			str += ft_strlen(content);
+		free(content);
+	}
+	return (str);
+}
+
+/* Returns 1 if 'str' matches the pattern given by 'pattern', or 0 otherwise. */
+static int	ft_str_match(char *str, t_list *pattern)
+{
+	char	*content;
+
+	if (ft_strncmp(pattern->content, "*", 2) != 0)
+	{
+		content = ft_remove_quote(pattern->content);
+		if (ft_strncmp(str, content, ft_strlen(content)) == 0)
+			str += ft_strlen(content);
+		else
+			str = NULL;
+		free(content);
+		pattern = pattern->next;
+	}
+	else if (ft_strncmp(pattern->content, "*", 2) == 0 && pattern->next != NULL)
+		pattern = pattern->next;
+	while (str != NULL && *str != '\0' && pattern != NULL)
+	{
+		str = ft_str_match_move(str, pattern);
+		pattern = pattern->next;
+	}
+	return (str != NULL && *str == '\0' && pattern == NULL);
 }
 
 /*

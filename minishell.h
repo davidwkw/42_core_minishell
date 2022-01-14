@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 16:44:51 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 13:30:43 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,5 +191,6 @@ void	ft_ptree_print(t_ptree *ptree);
 // dir functions
 DIR		*ft_opendir(const char *name);
 int		ft_closedir(DIR *dirp);
+t_list	*ft_ls(const char *dir, char hidden);
 
 #endif
