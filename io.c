@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 15:03:09 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:41:07 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	ft_write_heredoc(char *delimiter)
 	}
 	if (line == NULL)
 		ft_eof_warning(delimiter);
+	free(delimiter);
 	free(line);
 	return (ft_close(fd));
 }

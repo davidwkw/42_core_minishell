@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 13:52:34 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:34:02 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ t_list	*ft_tokenise(char *input)
 	while (node != NULL)
 	{
 		ft_lst_replace_content(node, ft_expand_var(node->content), free);
-		ft_lst_replace_content(node, ft_remove_quote(node->content), free);
 		node = node->next;
 	}
 	return (lst);

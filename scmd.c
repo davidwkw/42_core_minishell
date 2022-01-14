@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:56:05 by weng              #+#    #+#             */
-/*   Updated: 2021/12/29 16:00:24 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:49:12 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_scmd_add_arg(t_scmd *scmd, t_list *node)
 {
 	char	*content;
 
-	content = ft_strdup(node->content);
+	content = ft_remove_quote(node->content);
 	ft_lstadd_back(&(scmd->argv), ft_lstnew(content));
 	scmd->count++;
 }
