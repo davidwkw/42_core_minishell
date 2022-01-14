@@ -6,21 +6,25 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/12 17:08:10 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 10:28:15 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Lists all files within directory provided as string. */
-static t_list	*ft_list_files(const char *dir, char mode)
+/*
+Lists all content within the directory 'dir'. If 'hidden' is 0, only
+return non-hidden files, otherwise only return hidden files.
+*/
+static t_list	*ft_ls(const char *dir, char hidden)
 {
 	DIR			*dirp;
 	t_dirent	*dirent;
-	t_list		*filenames;
+	t_list		*lst;
+	char		*name;
 	extern int	errno;
 
-	filenames = NULL;
+	lst = NULL;
 	dirp = ft_opendir(dir);
 	if (dirp == NULL)
 		return (NULL);
@@ -28,16 +32,15 @@ static t_list	*ft_list_files(const char *dir, char mode)
 	dirent = readdir(dirp);
 	while (dirent != NULL)
 	{
-		if ((ft_strncmp(dirent->d_name, ".", 2) != 0
-			|| ft_strncmp(dirent->d_name, "..", 3) != 0)
-			&& ((mode == 0 && *(dirent->d_name) != '.') || mode == 1))
-			ft_lstadd_back(&filenames, ft_lstnew(ft_strdup(dirent->d_name)));
+		name = dirent->d_name;
+		if ((*name == '.') == (hidden != 0))
+			ft_lstadd_back(&lst, ft_lstnew(ft_strdup(name)));
 		dirent = readdir(dirp);
 	}
 	if (errno != 0)
 		perror("readdir");
 	ft_closedir(dirp);
-	return (filenames);
+	return (lst);
 }
 
 /* Returns 1 if 'str' matches the pattern given by 'pattern', or 0 otherwise. */
@@ -103,7 +106,7 @@ t_list	*ft_expand_star(const char *dir, char *pattern)
 	t_list	*node;
 
 	segments = ft_star_split(pattern);
-	filenames = ft_list_files(dir, *pattern == '.');
+	filenames = ft_ls(dir, *pattern == '.');
 	node = filenames;
 	while (node != NULL)
 	{
