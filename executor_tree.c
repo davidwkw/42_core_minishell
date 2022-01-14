@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:25:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 12:59:32 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:01:45 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_execute_ptree(t_ptree *ptree)
 	else if (ptree->type == TOKEN)
 	{
 		retval = ft_execute_ptree(ptree->left);
-		if ((ft_strncmp(ptree->content, "||", 3) == 0 && retval != 0)
-			|| (ft_strncmp(ptree->content, "&&", 3) == 0 && retval == 0))
+		if ((ft_strcmp(ptree->content, "||") == 0 && retval != 0)
+			|| (ft_strcmp(ptree->content, "&&") == 0 && retval == 0))
 			return (ft_execute_ptree(ptree->right));
 		return (retval);
 	}

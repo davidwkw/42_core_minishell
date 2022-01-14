@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/14 14:22:45 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:02:33 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	*ft_str_match_move(char *str, t_list *pattern)
 {
 	char	*content;
 
-	if (ft_strncmp(pattern->content, "*", 2) == 0)
+	if (ft_strcmp(pattern->content, "*") == 0)
 		str = ft_strchr(str, '\0');
 	else
 	{
@@ -75,7 +75,7 @@ static int	ft_str_match(char *str, t_list *pattern)
 {
 	char	*content;
 
-	if (ft_strncmp(pattern->content, "*", 2) != 0)
+	if (ft_strcmp(pattern->content, "*") != 0)
 	{
 		content = ft_remove_quote(pattern->content);
 		if (ft_strncmp(str, content, ft_strlen(content)) == 0)
@@ -85,7 +85,7 @@ static int	ft_str_match(char *str, t_list *pattern)
 		free(content);
 		pattern = pattern->next;
 	}
-	else if (ft_strncmp(pattern->content, "*", 2) == 0 && pattern->next != NULL)
+	else if (ft_strcmp(pattern->content, "*") == 0 && pattern->next != NULL)
 		pattern = pattern->next;
 	while (str != NULL && *str != '\0' && pattern != NULL)
 	{

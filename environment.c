@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 16:56:19 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:01:20 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ The name must be "?", or the first character of the name must be one of
 */
 int	ft_is_valid_varname(const char *name, int include_question)
 {
-	if (ft_strncmp(name, "?", 2) == 0 && include_question == 1)
+	if (ft_strcmp(name, "?") == 0 && include_question == 1)
 		return (1);
 	if (*name == '_' || ft_isalpha(*name) == 1)
 		name++;

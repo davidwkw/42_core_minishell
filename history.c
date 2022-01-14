@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:19:12 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/12 11:12:30 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:02:56 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_history(char **args)
 		return (ft_history_list(-1));
 	else if (ft_arrsize(args) > 3)
 		return (ft_history_error(NULL));
-	else if (ft_strncmp(args[1], "-c", 3) == 0)
+	else if (ft_strcmp(args[1], "-c") == 0)
 	{
 		if (args[2] == NULL || ft_isdigit_str(args[2]) == 1)
 			return (ft_history_delete());

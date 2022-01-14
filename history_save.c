@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history_utils.c                                    :+:      :+:    :+:   */
+/*   history_save.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:17:38 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/12 10:57:21 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:02:46 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	ft_history_save(char *cmd)
 	if (fd == -1)
 		return ;
 	last = ft_get_last_line(HISTORY_FILE);
-	if (last == NULL || ft_strncmp(last, cmd, ft_strlen(cmd) + 1) != 0)
+	if (last == NULL || ft_strcmp(last, cmd) != 0)
 	{
 		new = ft_strtrim(cmd, " ");
 		add_history(new);

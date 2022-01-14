@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 17:07:49 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 14:59:54 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	ft_memsort(char **arr)
 		key = arr[j];
 		i = j - 1;
 		while (i >= 0
-			&& ft_strncmp(arr[i], key, ft_strlen(arr[i] + 1)) > 0)
+			&& ft_strcmp(arr[i], key) > 0)
 		{
 			arr[i + 1] = arr[i];
 			i--;
@@ -62,7 +62,7 @@ static void	ft_display_list(void)
 		else
 		{
 			name = ft_substr(*env, 0, equal - *env);
-			if (ft_strncmp(name, "_", 2) != 0 && ft_strncmp(name, "?", 2) != 0)
+			if (ft_strcmp(name, "_") != 0 && ft_strcmp(name, "?") != 0)
 				printf("declare -x %s=\"%s\"\n", name, equal + 1);
 			free(name);
 		}

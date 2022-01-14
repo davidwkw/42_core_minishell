@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/07 23:12:53 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:06:43 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_bif	ft_builtin(char *name)
 	i = -1;
 	while (++i < n)
 	{
-		if (ft_strncmp(name, cmd[i], ft_strlen(cmd[i]) + 1) == 0)
+		if (ft_strcmp(name, cmd[i]) == 0)
 			return (func[i]);
 	}
 	return (NULL);

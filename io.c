@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 15:40:53 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:03:09 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	ft_write_heredoc(char *delimiter)
 	if (fd == -1)
 		return (-1);
 	line = readline("> ");
-	while (line != NULL
-		&& ft_strncmp(line, delimiter, ft_strlen(delimiter) + 1) != 0)
+	while (line != NULL && ft_strcmp(line, delimiter) != 0)
 	{
 		ft_putendl_fd(line, fd);
 		free(line);

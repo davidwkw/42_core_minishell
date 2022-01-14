@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:47:51 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 15:55:08 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:06:06 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,12 @@ static t_ptree	*ft_treeify_aux(t_ptree *ptree, t_list **lst)
 {
 	char	*content;
 
-	while (*lst != NULL && ft_strncmp((*lst)->content, ")", 2 != 0))
+	while (*lst != NULL && ft_strcmp((*lst)->content, ")") != 0)
 	{
 		content = (*lst)->content;
-		if (ft_strncmp(content, "(", 2) == 0)
+		if (ft_strcmp(content, "(") == 0)
 			ptree = ft_tree_hdlr_tree(ptree, lst);
-		else if (ft_strncmp(content, "&&", 3) == 0
-			|| ft_strncmp(content, "||", 3) == 0)
+		else if (ft_strcmp(content, "&&") == 0 || ft_strcmp(content, "||") == 0)
 			ptree = ft_tree_hdlr_token(ptree, lst);
 		else
 			ptree = ft_tree_hdlr_cmd(ptree, lst);

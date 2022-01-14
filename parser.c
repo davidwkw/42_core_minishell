@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 16:06:28 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 15:26:42 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 15:06:28 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	ft_parse_error(t_list *lst)
 static int	ft_is_end_of_command(t_list *lst)
 {
 	return (lst == NULL
-		|| ft_strncmp(lst->content, "&&", 3) == 0
-		|| ft_strncmp(lst->content, "||", 3) == 0
-		|| ft_strncmp(lst->content, ")", 2) == 0);
+		|| ft_strcmp(lst->content, "&&") == 0
+		|| ft_strcmp(lst->content, "||") == 0
+		|| ft_strcmp(lst->content, ")") == 0);
 }
 
 /* Parse the tokens returned from ft_tokenise into a t_cmd struct */

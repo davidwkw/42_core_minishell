@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/21 14:10:22 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 14:59:09 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_exit(char **args)
 		input = ft_getenv("?");
 	n = ft_atoll(input);
 	str = ft_lltoa_base(n, "0123456789");
-	if (ft_strncmp(str, input, ft_strlen(input) + 1) == 0)
+	if (ft_strcmp(str, input) == 0)
 		n = ((n % 256) + 256) % 256;
 	else
 	{

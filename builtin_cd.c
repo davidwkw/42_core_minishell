@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2021/12/30 15:44:12 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 14:58:22 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*ft_parse_dir(char *path)
 		ft_putendl_fd("cd: HOME not set", 2);
 		return (NULL);
 	}
-	if (path == NULL || ft_strncmp(path, "~", 2) == 0)
+	if (path == NULL || ft_strcmp(path, "~") == 0)
 		return (ft_strdup(home));
 	else
 		return (ft_strjoin(home, path + 1));
