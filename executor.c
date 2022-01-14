@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 15:48:51 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 17:16:55 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,10 @@ int	ft_execute_cmd(t_cmd *cmd)
 	int		retval;
 
 	if (cmd == NULL)
+	{
+		ft_putenv("?=1");
 		return (EXIT_FAILURE);
+	}
 	lst = NULL;
 	ft_signal(SIGINT, ft_sigquit_handler);
 	ft_signal(SIGQUIT, ft_sigquit_handler);
