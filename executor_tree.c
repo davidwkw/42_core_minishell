@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:25:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 15:01:45 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 17:06:37 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@ int	ft_execute_ptree(t_ptree *ptree)
 {
 	int	retval;
 
-	if (ptree->type == CMD)
+	if (ptree == NULL)
+	{
+		ft_putenv("?=1");
+		return (-1);
+	}
+	else if (ptree->type == CMD)
 		return (ft_execute_cmd(ptree->content));
 	else if (ptree->type == TOKEN)
 	{

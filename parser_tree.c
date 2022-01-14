@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:47:51 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 15:06:06 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/14 16:52:35 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ t_ptree	*ft_treeify(t_list *lst)
 
 	if (lst == NULL)
 		return (NULL);
-	ptree = NULL;
 	node = lst;
 	ptree = ft_treeify_aux(NULL, &node);
 	ft_lstclear(&lst, free);
