@@ -6,12 +6,11 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:19:12 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/14 15:02:56 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/15 16:13:09 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 /* Clears the history file. */
 static int	ft_history_delete(void)
@@ -75,7 +74,7 @@ Returns a malloc-ed string of the history file path.
 */
 char	*ft_get_history_file(void)
 {
-	static char *history_file = NULL;
+	static char	*history_file = NULL;
 	char		*temp;
 	char		*dir;
 
