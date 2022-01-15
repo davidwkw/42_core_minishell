@@ -171,6 +171,7 @@ char	*ft_strip_newline(char *str);
 int		ft_count_line(const char *pathname);
 void	ft_history_save(char *cmd);
 int		ft_history(char **args);
+char	*ft_get_history_file(void);
 
 // expansion function
 t_list	*ft_expand_star(char *dir, char *pattern);
@@ -194,5 +195,8 @@ void	ft_ptree_print(t_ptree *ptree);
 DIR		*ft_opendir(const char *name);
 int		ft_closedir(DIR *dirp);
 t_list	*ft_ls(const char *dir, char hidden);
+
+// util functions
+int		ft_isdigit_str(const char *str);
 
 #endif

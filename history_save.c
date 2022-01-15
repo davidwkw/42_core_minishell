@@ -97,10 +97,10 @@ void	ft_history_save(char *cmd)
 
 	if (*cmd == ' ')
 		return ;
-	fd = ft_open(HISTORY_FILE, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	fd = ft_open(ft_get_history_file(), O_RDWR | O_APPEND, S_IRUSR | S_IWUSR);
 	if (fd == -1)
 		return ;
-	last = ft_get_last_line(HISTORY_FILE);
+	last = ft_get_last_line(ft_get_history_file());
 	if (last == NULL || ft_strcmp(last, cmd) != 0)
 	{
 		new = ft_strtrim(cmd, " ");

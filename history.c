@@ -12,24 +12,13 @@
 
 #include "minishell.h"
 
-/* Returns 1 if string 'str' only contains digits, 0 otherwise. */
-int	ft_isdigit_str(const char *str)
-{
-	while (*str != '\0')
-	{
-		if (ft_isdigit(*str) == 0)
-			return (0);
-		str++;
-	}
-	return (1);
-}
 
 /* Clears the history file. */
 static int	ft_history_delete(void)
 {
-	unlink(HISTORY_FILE);
+	unlink(ft_get_history_file());
 	rl_clear_history();
-	ft_close(ft_open(HISTORY_FILE, O_CREAT | O_WRONLY, S_IWUSR));
+	ft_close(ft_open(ft_get_history_file(), O_CREAT | O_WRONLY, S_IWUSR));
 	return (EXIT_SUCCESS);
 }
 
@@ -48,10 +37,10 @@ static int	ft_history_list(int n)
 
 	if (n == -1)
 		n = HISTORY_COUNT;
-	count = ft_count_line(HISTORY_FILE);
+	count = ft_count_line(ft_get_history_file());
 	if (n > count)
 		n = count;
-	fd = ft_open(HISTORY_FILE, O_RDONLY, 0);
+	fd = ft_open(ft_get_history_file(), O_RDONLY, 0);
 	if (fd == -1)
 		return (EXIT_FAILURE);
 	i = 0;
@@ -78,6 +67,27 @@ static int	ft_history_error(char *option)
 	}
 	ft_putendl_fd("history: usage history [-c] [n]", 2);
 	return (EXIT_FAILURE);
+}
+
+/*
+Getter function to obtain absolute history file path.
+Returns a malloc-ed string of the history file path.
+*/
+char	*ft_get_history_file(void)
+{
+	static char *history_file = NULL;
+	char		*temp;
+	char		*dir;
+
+	if (history_file == NULL)
+	{
+		dir = getcwd(NULL, 0);
+		temp = ft_strjoin(dir, "/");
+		free(dir);
+		history_file = ft_strjoin(temp, HISTORY_FILE);
+		free(temp);
+	}
+	return (history_file);
 }
 
 /*

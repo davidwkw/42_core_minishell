@@ -52,5 +52,6 @@ int	main(int argc, char **argv, char **envp)
 	printf("exit\n");
 	exit_value = ft_atoi(ft_getenv("?"));
 	ft_arrclear(g_environ, free);
+	free(ft_get_history_file());
 	return (exit_value);
 }
