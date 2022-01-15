@@ -27,7 +27,7 @@ void	ft_init_history(void)
 	int		fd;
 	char	*line;
 
-	fd = ft_open(HISTORY_FILE, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+	fd = ft_open(ft_get_history_file(), O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
