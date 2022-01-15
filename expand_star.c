@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/14 16:03:53 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/15 15:36:59 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,9 @@ static int	ft_str_match(char *str, t_list *pattern)
 
 /*
 Returns a linked list containing the failnames that match the 'pattern'
-within directory 'dir'. If there is no match at all, return a linked
-list containing the 'pattern'.
+within directory 'dir'. If 'pattern' does not contain an unquoted '*',
+or if there is no match at all, return a linked list containing
+string pointed by 'pattern'.
 
 If 'dir' is NULL, it defaults to the current working directory.
 */
@@ -107,6 +108,8 @@ t_list	*ft_expand_star(char *dir, char *pattern)
 	t_list	*substr;
 	t_list	*filenames;
 
+	if (ft_strchr_unquoted(pattern, '*') == NULL)
+		return (ft_lstnew(ft_strdup(pattern)));
 	if (dir == NULL)
 		dir = getcwd(NULL, 0);
 	substr = ft_star_split(pattern);
