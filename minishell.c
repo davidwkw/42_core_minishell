@@ -23,7 +23,7 @@ static int	ft_read_execute(void)
 	t_ptree	*ptree;
 
 	ft_sighandler_shell();
-	line = readline("$ ");
+	line = readline(ft_get_cwd_prompt());
 	if (line == NULL)
 		return (0);
 	if (*line != '\0')
@@ -53,5 +53,6 @@ int	main(int argc, char **argv, char **envp)
 	exit_value = ft_atoi(ft_getenv("?"));
 	ft_arrclear(g_environ, free);
 	free(ft_get_history_file());
+	free(ft_get_cwd_prompt());
 	return (exit_value);
 }
