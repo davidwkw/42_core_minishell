@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:56:05 by weng              #+#    #+#             */
-/*   Updated: 2022/01/16 23:03:21 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/16 23:06:39 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ void	ft_scmd_del(void *scmd)
 }
 
 /* 
-Add an argument to a simple command.
-
-The content of 'node' is duplicated, and a new node is added to the back
-of scmd->argv.
+Add an argument to a simple command, after variable and asterisk
+expansions are carried out.
 */
 void	ft_scmd_add_arg(t_scmd *scmd, t_list *node)
 {
@@ -50,7 +48,8 @@ void	ft_scmd_add_arg(t_scmd *scmd, t_list *node)
 	while (ptr != NULL)
 	{
 		file = ptr->content;
-		ft_lstadd_back(&(scmd->argv), ft_lstnew(ft_remove_quote(file)));
+		if (*file != '\0')
+			ft_lstadd_back(&(scmd->argv), ft_lstnew(ft_remove_quote(file)));
 		ptr = ptr->next;
 	}
 	ft_lstclear(&files, free);
