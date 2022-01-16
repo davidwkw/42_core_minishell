@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 15:32:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 15:34:02 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/16 18:12:48 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,9 @@ quote removal carried out.
 t_list	*ft_tokenise(char *input)
 {
 	t_list	*lst;
-	t_list	*node;
 
 	if (ft_is_well_quoted(input) == 0 || ft_is_well_bracketed(input) == 0)
 		return (NULL);
 	lst = ft_tokenise_aux(input, NULL);
-	node = lst;
-	while (node != NULL)
-	{
-		ft_lst_replace_content(node, ft_expand_var(node->content), free);
-		node = node->next;
-	}
 	return (lst);
 }
