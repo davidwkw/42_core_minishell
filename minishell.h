@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 16:10:46 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/16 11:08:15 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ void	ft_external(char **args);
 void	ft_run(char **arg, int nofork);
 
 // history function
+int		ft_isdigit_str(const char *str);
 char	*ft_strip_newline(char *str);
 int		ft_count_line(const char *pathname);
 void	ft_history_save(char *cmd);
@@ -195,8 +196,5 @@ void	ft_ptree_print(t_ptree *ptree);
 DIR		*ft_opendir(const char *name);
 int		ft_closedir(DIR *dirp);
 t_list	*ft_ls(const char *dir, char hidden);
-
-// util functions
-int		ft_isdigit_str(const char *str);
 
 #endif

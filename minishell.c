@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kwang <kwang@student.42kl.edu.my>          +#+  +:+       +#+        */
+/*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 12:34:32 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/16 15:40:43 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ int	main(int argc, char **argv, char **envp)
 	printf("exit\n");
 	exit_value = ft_atoi(ft_getenv("?"));
 	ft_arrclear(g_environ, free);
-	free(ft_get_history_file());
 	return (exit_value);
 }
