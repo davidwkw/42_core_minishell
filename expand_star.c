@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:06:01 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/15 15:36:59 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/16 16:42:01 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	ft_str_match(char *str, t_list *pattern)
 	}
 	else if (ft_strcmp(pattern->content, "*") == 0 && pattern->next != NULL)
 		pattern = pattern->next;
-	while (str != NULL && *str != '\0' && pattern != NULL)
+	while (str != NULL && pattern != NULL)
 	{
 		str = ft_str_match_move(str, pattern);
 		pattern = pattern->next;
