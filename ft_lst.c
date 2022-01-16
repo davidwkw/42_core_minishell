@@ -6,21 +6,11 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 23:14:33 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 14:16:00 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/16 22:31:02 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-Frees the memory of the element's content using the function 'del' and
-replaces the content of lst with a new content.
-*/
-void	ft_lst_replace_content(t_list *lst, void *content, void (*del)(void *))
-{
-	del(lst->content);
-	lst->content = content;
-}
 
 /* Insert a new node as 'next' of 'lst'. */
 void	ft_lstinsert(t_list *lst, t_list *new)

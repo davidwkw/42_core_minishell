@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:03:38 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 16:44:34 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/16 22:28:08 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,18 +102,20 @@ static t_list	*ft_remove_quote_listify(char *str)
 	t_list	*node;
 	t_list	*lst;
 	char	*end;
+	char	*content;
 
 	lst = ft_lstnew(ft_strdup(str));
 	node = lst;
 	while (node != NULL)
 	{
-		end = ft_find_quote(node->content);
+		content = node->content;
+		end = ft_find_quote(content);
 		if (end != NULL)
 		{
 			ft_lstinsert(node, ft_lstnew(ft_strdup(end + 1)));
-			ft_lst_replace_content(node,
-				ft_substr(node->content, 0, end - (char *) node->content),
-				free);
+			content = ft_substr(content, 0, end - content);
+			free(node->content);
+			node->content = content;
 		}
 		node = node->next;
 	}
