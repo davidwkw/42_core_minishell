@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 10:30:47 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 11:09:44 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int	ft_read_execute(void)
 	ft_sighandler_shell();
 	prompt = ft_get_cwd_prompt();
 	line = readline(prompt);
+	free(prompt);
 	if (line == NULL)
 		return (0);
 	if (*line != '\0')
@@ -54,7 +55,6 @@ static int	ft_read_execute(void)
 		ft_ptree_clear(ptree);
 	}
 	free(line);
-	free(prompt);
 	unlink(HEREDOC_FILE);
 	return (1);
 }
