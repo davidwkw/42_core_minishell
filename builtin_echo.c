@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 14:58:36 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 14:32:57 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	ft_echo(char **args)
 
 	has_newline = 1;
 	i = 1;
-	if (args[1] != NULL && ft_strcmp(args[1], "-n") == 0)
+	while (args[i] != NULL && ft_strcmp(args[i], "-n") == 0)
 	{
 		has_newline = 0;
-		i = 2;
+		i++;
 	}
 	while (args[i] != NULL)
 	{
