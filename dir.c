@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 13:12:38 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 13:42:38 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 16:04:19 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,29 @@ t_list	*ft_ls(const char *dir, char hidden)
 	}
 	ft_closedir(dirp);
 	return (lst);
+}
+
+/* Intelligently join 'dir' and 'path' and return the new string. */
+char	*ft_pathjoin(const char *dir, const char *path)
+{
+	char	*directory;
+	char	*retval;
+
+	if (dir == NULL || ft_strcmp(dir, "") == 0)
+	{
+		if (path != NULL)
+			return (ft_strdup(path));
+		else
+			return (NULL);
+	}
+	if (dir[ft_strlen(dir) - 1] == '/')
+		directory = ft_strdup(dir);
+	else
+		directory = ft_strjoin(dir, "/");
+	if (path != NULL)
+		retval = ft_strjoin(directory, path);
+	else
+		retval = ft_strdup(directory);
+	free(directory);
+	return (retval);
 }

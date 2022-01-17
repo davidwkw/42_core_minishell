@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 11:58:22 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 16:01:59 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ void	ft_external(char **args)
 		&& ft_strncmp(args[0], "./", 2) != 0
 		&& ft_strncmp(args[0], "../", 3) != 0)
 	{
-		pathname = ft_strjoin(dirs[i], "/");
-		pathname = ft_strappend(pathname, args[0]);
+		pathname = ft_pathjoin(dirs[i], args[0]);
 		if (access(pathname, F_OK) == 0)
 			execve(pathname, args, g_environ);
 		free(pathname);

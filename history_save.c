@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:17:38 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/16 15:53:46 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 16:00:37 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,13 @@ Set and return the absolute history file path, which is
 char	*ft_get_history_file(void)
 {
 	static char	*history_file = NULL;
-	char		*temp;
 	char		*dir;
 
 	if (history_file == NULL)
 	{
 		dir = getcwd(NULL, 0);
-		temp = ft_strjoin(dir, "/");
+		history_file = ft_pathjoin(dir, HISTORY_FILE);
 		free(dir);
-		history_file = ft_strjoin(temp, HISTORY_FILE);
-		free(temp);
 	}
 	return (history_file);
 }
