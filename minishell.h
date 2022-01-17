@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 16:03:23 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 16:10:01 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,7 @@ int		ft_arradd_back(void *arr, void *ptr);
 
 // string functions
 char	*ft_strchr_unquoted(const char *str, int c);
-char	*ft_strappend(char *ptr, char *str);
-void	ft_strreplace(char **ptr, char *new);
+char	*ft_strreplace(char **ptr, char *new);
 
 // list related functions that are not included in libft
 t_list	*ft_lstdelif(t_list *lst, int (*cmp)(void *, void *), void *arg,

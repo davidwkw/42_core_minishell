@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 14:41:03 by weng              #+#    #+#             */
-/*   Updated: 2021/12/27 16:15:04 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 16:18:42 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,13 @@ char	*ft_strchr_unquoted(const char *str, int c)
 	}
 }
 
-/*
-Append the string 'str' to the back of the string 'ptr', and return the
-new string.
-
-The original string 'ptr' is be free after the operation.
-*/
-char	*ft_strappend(char *ptr, char *str)
-{
-	char	*retval;
-
-	if (ptr == NULL)
-		retval = ft_strdup(str);
-	else
-		retval = ft_strjoin(ptr, str);
-	free(ptr);
-	return (retval);
-}
-
 /* Replace the string pointed by 'ptr' with 'new'. */
-void	ft_strreplace(char **ptr, char *new)
+char	*ft_strreplace(char **ptr, char *new)
 {
 	char	*temp;
 
 	temp = *ptr;
 	*ptr = new;
 	free(temp);
+	return (*ptr);
 }
