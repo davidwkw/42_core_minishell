@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 23:14:33 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 22:59:41 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 23:38:31 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,21 @@ t_list	*ft_lstdelif(
 }
 
 /*
-Convert a linked list to an array of strings. The contents from the
-linked list are duplicated into the array.
+Convert a linked list to a NULL-terminated array of pointers. The
+contents from the array should not be freed.
 */
-char	**ft_lst_to_arr(t_list *lst)
+void	*ft_lst_to_arr(t_list *lst)
 {
 	int		size;
 	int		i;
-	char	**arr;
+	void	**arr;
 
 	size = ft_lstsize(lst);
 	arr = ft_calloc(sizeof(char *), size + 1);
 	i = -1;
 	while (++i < size)
 	{
-		arr[i] = ft_strdup(lst->content);
+		arr[i] = lst->content;
 		lst = lst->next;
 	}
 	return (arr);

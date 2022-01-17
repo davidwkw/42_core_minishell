@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 23:29:18 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 23:39:11 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ft_run(t_list *argv, int nofork)
 		retval = func(arg);
 	else
 		ft_external(arg);
-	ft_arrclear(arg, free);
+	ft_arrclear(arg, NULL);
 	if (nofork == 0)
 		exit(retval);
 	else

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 14:42:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/12 12:53:37 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 23:42:59 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	*ft_arr_resize(void *arr, size_t size, void (*del)(void *))
 	else
 	{
 		i = size;
-		while (i < size_o)
+		while (i < size_o && del != NULL)
 			del(((void **) arr)[i++]);
 		return (arr);
 	}
@@ -91,9 +91,12 @@ void	ft_arrclear(void *arr, void (*del)(void *))
 
 	if (arr == NULL)
 		return ;
-	array = arr;
-	while (*array != NULL)
-		del(*array++);
+	if (del != NULL)
+	{
+		array = arr;
+		while (*array != NULL)
+			del(*array++);
+	}
 	free(arr);
 }
 

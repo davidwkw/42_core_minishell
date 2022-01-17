@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 23:29:46 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 23:38:45 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*ft_strreplace(char *ptr, char *new);
 t_list	*ft_lstget(t_list *lst, unsigned int n);
 t_list	*ft_lstdelif(t_list *lst, int (*cmp)(void *, void *), void *arg,
 			void (*del)(void *));
-char	**ft_lst_to_arr(t_list *lst);
+void	*ft_lst_to_arr(t_list *lst);
 
 // lexer functions
 int		ft_istoken(const char *str, char **token, int include_space);
