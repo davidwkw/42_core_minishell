@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 13:34:04 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 16:10:28 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 16:28:31 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,15 @@ char	*ft_expand_var_aux(char *prev, char *s)
 
 	start = ft_findenv(s, &name);
 	if (start == NULL)
-		return (ft_strreplace(&prev, ft_strjoin(prev, s)));
+		return (ft_strreplace(prev, ft_strjoin(prev, s)));
 	value = ft_getenv(name);
 	temp = ft_substr(s, 0, start - s);
 	s = start + ft_strlen(name) + 1;
-	prev = ft_strreplace(&prev, ft_strjoin(prev, temp));
+	prev = ft_strreplace(prev, ft_strjoin(prev, temp));
 	free(temp);
 	free(name);
 	if (value != NULL)
-		prev = ft_strreplace(&prev, ft_strjoin(prev, value));
+		prev = ft_strreplace(prev, ft_strjoin(prev, value));
 	return (ft_expand_var_aux(prev, s));
 }
 

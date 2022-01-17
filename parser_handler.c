@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 13:32:31 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 16:29:15 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ static int	ft_hdlr_input(t_cmd *cmd, t_list **lst)
 	filename = ft_redirect_file(node->content);
 	if (filename != NULL && ft_strcmp(content, "<<") == 0)
 	{
-		ft_strreplace(&(cmd->infile), ft_strdup(HEREDOC_FILE));
+		cmd->infile = ft_strreplace(cmd->infile, ft_strdup(HEREDOC_FILE));
 		return (ft_write_heredoc(filename));
 	}
 	else if (filename != NULL && ft_strcmp(content, "<") == 0)
 	{
-		ft_strreplace(&(cmd->infile), filename);
+		cmd->infile = ft_strreplace(cmd->infile, filename);
 		fd = ft_open(filename, O_RDONLY, 0);
 		if (fd == -1)
 			return (-1);
@@ -88,7 +88,7 @@ static int	ft_hdlr_output(t_cmd *cmd, t_list **lst)
 		return (ft_parse_error(node));
 	*lst = node;
 	filename = ft_redirect_file(node->content);
-	ft_strreplace(&(cmd->outfile), filename);
+	cmd->outfile = ft_strreplace(cmd->outfile, filename);
 	if (filename != NULL && ft_strcmp(content, ">>") == 0)
 		cmd->outfile_flag = O_APPEND;
 	else if (filename != NULL && ft_strcmp(content, ">") == 0)

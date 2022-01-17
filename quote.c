@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:03:38 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 16:15:45 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 16:29:45 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char	*ft_remove_quote(char *str)
 	retval = ft_strdup("");
 	while (node != NULL)
 	{
-		ft_strreplace(&retval, ft_strjoin(retval, node->content));
+		retval = ft_strreplace(retval, ft_strjoin(retval, node->content));
 		node = node->next;
 	}
 	ft_lstclear(&lst, free);
