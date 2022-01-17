@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/27 17:03:38 by weng              #+#    #+#             */
-/*   Updated: 2022/01/16 22:28:08 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 15:43:59 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,25 +99,23 @@ static char	*ft_find_quote(const char *str)
 /* Separate a string into a linked list at quotation marks. */
 static t_list	*ft_remove_quote_listify(char *str)
 {
-	t_list	*node;
 	t_list	*lst;
 	char	*end;
 	char	*content;
+	int		quoted;
 
-	lst = ft_lstnew(ft_strdup(str));
-	node = lst;
-	while (node != NULL)
+	lst = NULL;
+	while (*str != '\0')
 	{
-		content = node->content;
-		end = ft_find_quote(content);
+		quoted = (*str == '\'' || *str == '\"');
+		ft_find_quote(str);
+		end = ft_find_quote(str + quoted);
 		if (end != NULL)
-		{
-			ft_lstinsert(node, ft_lstnew(ft_strdup(end + 1)));
-			content = ft_substr(content, 0, end - content);
-			free(node->content);
-			node->content = content;
-		}
-		node = node->next;
+			content = ft_substr(str, quoted, end - str - quoted);
+		else
+			content = ft_strdup(str);
+		ft_lstadd_back(&lst, ft_lstnew(content));
+		str += ft_strlen(content) + 2 * quoted;
 	}
 	return (lst);
 }
