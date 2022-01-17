@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 14:59:09 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 13:00:56 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,12 @@ int	ft_exit(char **args)
 	char		*input;
 	char		*str;
 
-	if (args[1] != NULL)
+	if (args[1] != NULL && args[2] != NULL)
+	{
+		input = "1";
+		ft_putendl_fd("minishell: exit: too many arguments", 2);
+	}
+	else if (args[1] != NULL)
 		input = args[1];
 	else
 		input = ft_getenv("?");
