@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:17:38 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/17 16:00:37 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 16:39:52 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ void	ft_history_save(char *cmd)
 {
 	int		fd;
 	char	*last;
-	char	*new;
 	char	*history_file;
 
 	if (*cmd == ' ')
@@ -123,10 +122,10 @@ void	ft_history_save(char *cmd)
 	last = ft_get_last_line(history_file);
 	if (last == NULL || ft_strcmp(last, cmd) != 0)
 	{
-		new = ft_strtrim(cmd, " ");
-		add_history(new);
-		ft_putendl_fd(new, fd);
-		free(new);
+		while (*cmd == ' ')
+			cmd++;
+		add_history(cmd);
+		ft_putendl_fd(cmd, fd);
 	}
 	free(last);
 	ft_close(fd);
