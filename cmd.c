@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 12:24:17 by weng              #+#    #+#             */
-/*   Updated: 2022/01/10 17:08:33 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 23:08:14 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,4 @@ void	ft_cmd_add_arg(t_cmd *cmd, t_list *node)
 		last = cmd->scmd_lst;
 	}
 	ft_scmd_add_arg(last->content, node);
-}
-
-/* Return the i-th scmd, or NULL if i >= cmd->count */
-t_scmd	*ft_cmd_get_scmd(t_cmd *cmd, int i)
-{
-	t_list	*node;
-
-	if (i >= cmd->count)
-		return (NULL);
-	node = cmd->scmd_lst;
-	while (i-- > 0)
-		node = node->next;
-	return (node->content);
 }

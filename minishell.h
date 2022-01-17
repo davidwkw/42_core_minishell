@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 16:28:39 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 23:14:11 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ char	*ft_strchr_unquoted(const char *str, int c);
 char	*ft_strreplace(char *ptr, char *new);
 
 // list related functions that are not included in libft
+t_list	*ft_lstget(t_list *lst, unsigned int n);
 t_list	*ft_lstdelif(t_list *lst, int (*cmp)(void *, void *), void *arg,
 			void (*del)(void *));
 char	**ft_lst_to_arr(t_list *lst);
@@ -113,7 +114,6 @@ t_cmd	*ft_cmd_new(void);
 void	ft_cmd_del(t_cmd *cmd);
 void	ft_cmd_add_scmd(t_cmd *cmd);
 void	ft_cmd_add_arg(t_cmd *cmd, t_list *node);
-t_scmd	*ft_cmd_get_scmd(t_cmd *cmd, int i);
 
 // parser functions
 t_cmd	*ft_parse(t_list **lst);

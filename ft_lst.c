@@ -6,11 +6,22 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 23:14:33 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 15:45:58 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 22:59:41 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+Return the n-th node from a linked list 'lst', or NULL if 'n' is larger
+than the list size.
+*/
+t_list	*ft_lstget(t_list *lst, unsigned int n)
+{
+	while (lst != NULL && n-- > 0)
+		lst = lst->next;
+	return (lst);
+}
 
 /*
 Remove nodes if cmp(lst->content, arg) evaluates to 0. The content of
