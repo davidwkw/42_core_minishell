@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 16:29:15 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 16:51:35 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ static char	*ft_redirect_file(char *content)
 		retval = NULL;
 	}
 	else
-		retval = ft_remove_quote(files->content);
+	{
+		retval = ft_strtrim(files->content, " ");
+		retval = ft_strreplace(retval, ft_remove_quote(retval));
+	}
 	ft_lstclear(&files, free);
 	free(str);
 	return (retval);
