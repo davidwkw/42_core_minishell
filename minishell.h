@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 23:14:11 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 23:29:46 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ char	*ft_expand_var(char *str);
 t_scmd	*ft_scmd_new(void);
 void	ft_scmd_del(void *scmd);
 void	ft_scmd_add_arg(t_scmd *scmd, t_list *node);
-char	**ft_scmd_to_arr(t_scmd *scmd);
 
 // command functions
 t_cmd	*ft_cmd_new(void);
@@ -166,7 +165,7 @@ int		ft_pwd(char **args);
 int		ft_unset(char **args);
 t_bif	ft_builtin(char *name);
 void	ft_external(char **args);
-void	ft_run(char **arg, int nofork);
+void	ft_run(t_list *argv, int nofork);
 
 // history function
 int		ft_isdigit_str(const char *str);

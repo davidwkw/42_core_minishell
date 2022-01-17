@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:56:05 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 16:48:55 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 23:29:51 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,4 @@ void	ft_scmd_add_arg(t_scmd *scmd, t_list *node)
 	ft_lstclear(&files, free);
 	free(content);
 	scmd->count++;
-}
-
-/* Convert all arguments in a simple command to an array of strings. */
-char	**ft_scmd_to_arr(t_scmd *scmd)
-{
-	return (ft_lst_to_arr(scmd->argv));
 }

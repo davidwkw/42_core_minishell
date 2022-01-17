@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 22:50:01 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 23:29:18 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,20 @@ void	ft_external(char **args)
 }
 
 /* Run a built_in program or an external program. */
-void	ft_run(char **arg, int nofork)
+void	ft_run(t_list *argv, int nofork)
 {
 	t_bif	func;
 	int		retval;
+	char	**arg;
 	char	*str;
 
+	arg = ft_lst_to_arr(argv);
 	func = ft_builtin(arg[0]);
 	if (func != NULL)
 		retval = func(arg);
 	else
 		ft_external(arg);
+	ft_arrclear(arg, free);
 	if (nofork == 0)
 		exit(retval);
 	else
