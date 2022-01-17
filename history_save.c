@@ -6,11 +6,32 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 14:17:38 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/14 15:02:46 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/16 15:53:46 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+Set and return the absolute history file path, which is
+	<directory where minishell is called from>/<HISTORY_FILE>
+*/
+char	*ft_get_history_file(void)
+{
+	static char	*history_file = NULL;
+	char		*temp;
+	char		*dir;
+
+	if (history_file == NULL)
+	{
+		dir = getcwd(NULL, 0);
+		temp = ft_strjoin(dir, "/");
+		free(dir);
+		history_file = ft_strjoin(temp, HISTORY_FILE);
+		free(temp);
+	}
+	return (history_file);
+}
 
 /*
 Returns the number of lines in the file 'pathname', or -1 if there is an
@@ -94,13 +115,15 @@ void	ft_history_save(char *cmd)
 	int		fd;
 	char	*last;
 	char	*new;
+	char	*history_file;
 
 	if (*cmd == ' ')
 		return ;
-	fd = ft_open(ft_get_history_file(), O_RDWR | O_APPEND, S_IRUSR | S_IWUSR);
+	history_file = ft_get_history_file();
+	fd = ft_open(history_file, O_RDWR | O_APPEND, S_IRUSR | S_IWUSR);
 	if (fd == -1)
 		return ;
-	last = ft_get_last_line(ft_get_history_file());
+	last = ft_get_last_line(history_file);
 	if (last == NULL || ft_strcmp(last, cmd) != 0)
 	{
 		new = ft_strtrim(cmd, " ");

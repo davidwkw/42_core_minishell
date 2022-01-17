@@ -94,7 +94,6 @@ char	*ft_strappend(char *ptr, char *str);
 void	ft_strreplace(char **ptr, char *new);
 
 // list related functions that are not included in libft
-void	ft_lst_replace_content(t_list *lst, void *content, void (*del)(void *));
 void	ft_lstinsert(t_list *lst, t_list *new);
 t_list	*ft_lstdelif(t_list *lst, int (*cmp)(void *, void *), void *arg,
 			void (*del)(void *));
@@ -172,6 +171,7 @@ void	ft_external(char **args);
 void	ft_run(char **arg, int nofork);
 
 // history function
+int		ft_isdigit_str(const char *str);
 char	*ft_strip_newline(char *str);
 int		ft_count_line(const char *pathname);
 void	ft_history_save(char *cmd);
@@ -200,8 +200,5 @@ void	ft_ptree_print(t_ptree *ptree);
 DIR		*ft_opendir(const char *name);
 int		ft_closedir(DIR *dirp);
 t_list	*ft_ls(const char *dir, char hidden);
-
-// util functions
-int		ft_isdigit_str(const char *str);
 
 #endif

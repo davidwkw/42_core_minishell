@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 11:25:51 by weng              #+#    #+#             */
-/*   Updated: 2022/01/13 11:33:37 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/15 16:14:10 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,5 @@ int	ft_strcmp(const char *s1, const char *s2)
 		str1++;
 		str2++;
 	}
-		return (*str1 - *str2);
+	return (*str1 - *str2);
 }
