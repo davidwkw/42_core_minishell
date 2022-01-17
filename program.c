@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 15:06:43 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 11:58:22 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	ft_run(char **arg, int nofork)
 {
 	t_bif	func;
 	int		retval;
+	char	*str;
+	char	*val;
 
 	func = ft_builtin(arg[0]);
 	if (func != NULL)
@@ -91,4 +93,12 @@ void	ft_run(char **arg, int nofork)
 		ft_external(arg);
 	if (nofork == 0)
 		exit(retval);
+	else
+	{
+		val = ft_itoa(retval);
+		str = ft_strjoin("?=", val);
+		ft_putenv(str);
+		free(str);
+		free(val);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 15:01:20 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 11:57:17 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ int	ft_set_exit_value(t_list *lst)
 	int		value;
 	char	*str;
 
+	if (lst == NULL)
+		return (ft_atoi(ft_getenv("?")));
 	value = 0;
 	while (lst != NULL)
 	{
