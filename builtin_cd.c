@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 14:58:22 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 22:30:55 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	ft_cd(char **args)
 {
 	char	*str;
 	char	*path;
+	int		retval;
 
 	if (args[1] != NULL && args[2] != NULL)
 	{
@@ -60,12 +61,10 @@ int	ft_cd(char **args)
 		str = ft_strjoin("cd: ", path);
 		perror(str);
 		free(str);
-		free(path);
-		return (EXIT_FAILURE);
+		retval = EXIT_FAILURE;
 	}
 	else
-	{
-		free(path);
-		return (EXIT_SUCCESS);
-	}
+		retval = EXIT_SUCCESS;
+	free(path);
+	return (retval);
 }
