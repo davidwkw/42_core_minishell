@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 17:16:55 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 10:59:03 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,16 @@ int	ft_execute_cmd(t_cmd *cmd)
 		return (EXIT_FAILURE);
 	}
 	lst = NULL;
-	ft_signal(SIGINT, ft_sigquit_handler);
-	ft_signal(SIGQUIT, ft_sigquit_handler);
+	ft_signal(SIGINT, SIG_IGN);
 	ft_save_restore_fd();
 	i = -1;
 	while (++i < cmd->count)
 		ft_record_pid(&lst, ft_execute_scmd(cmd, i));
 	retval = ft_set_exit_value(lst);
+	if (retval == 130)
+		ft_new_prompt_line(NULL);
+	else if (retval == 131)
+		ft_new_prompt_line("Quit");
 	ft_lstclear(&lst, free);
 	ft_save_restore_fd();
 	ft_sighandler_shell();

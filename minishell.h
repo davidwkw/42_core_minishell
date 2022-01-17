@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 10:31:01 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 11:02:15 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ t_list	*ft_expand_star(char *dir, char *pattern);
 
 // signal functions
 t_shdlr	ft_signal(int signum, t_shdlr handler);
-void	ft_sigquit_handler(int signum);
+void	ft_new_prompt_line(char *str);
 void	ft_sighandler_default(void);
 void	ft_sighandler_shell(void);
 

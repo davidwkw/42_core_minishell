@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:37:17 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/11 13:58:36 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 11:02:12 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,23 @@ t_shdlr	ft_signal(int signum, t_shdlr handler)
 	return (retval);
 }
 
+/* Print a new prompt on a new line. */
+void	ft_new_prompt_line(char *str)
+{
+	rl_replace_line("", 0);
+	if (str != NULL)
+		printf("%s", str);
+	printf("\n");
+	rl_on_new_line();
+}
+
 /* (Interactive) Print a new prompt on a newline. */
 static void	ft_sigint_handler(int signum)
 {
 	(void) signum;
-	rl_replace_line("", 0);
-	printf("\n");
-	rl_on_new_line();
+	ft_new_prompt_line(NULL);
 	rl_redisplay();
 	ft_putenv("?=130");
-}
-
-/* Moves to a new line upon termination of a program. */
-void	ft_sigquit_handler(int signum)
-{
-	(void) signum;
-	rl_replace_line("", 0);
-	printf("\n");
-	rl_on_new_line();
 }
 
 /* Revert signal handlers to default handlers. */
