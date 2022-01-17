@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 11:09:44 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 22:46:53 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,13 @@
 /* Return a colorised prompt string. */
 static char	*ft_get_cwd_prompt(void)
 {
-	char	*cwd_prompt;
-	char	*dir;
-	char	*temp;
+	char	*retval;
 
-	dir = getcwd(NULL, 0);
-	temp = ft_strjoin(BOLD GREEN, dir);
-	free(dir);
-	dir = ft_strjoin(temp, NORMAL);
-	free(temp);
-	cwd_prompt = ft_strjoin(dir, "$ ");
-	free(dir);
-	return (cwd_prompt);
+	retval = getcwd(NULL, 0);
+	retval = ft_strreplace(retval, ft_strjoin(BOLD GREEN, retval));
+	retval = ft_strreplace(retval, ft_strjoin(retval, NORMAL));
+	retval = ft_strreplace(retval, ft_strjoin(retval, "$ "));
+	return (retval);
 }
 
 /*
