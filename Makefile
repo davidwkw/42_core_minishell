@@ -37,8 +37,7 @@ SRCS	=	array.c \
 			scmd.c \
 			signal.c \
 			string.c \
-			utils.c \
-			prompt.c
+			utils.c
 OBJS	=	$(SRCS:.c=.o)
 MAIN	=	minishell.c
 

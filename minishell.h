@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 16:10:46 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 10:31:01 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@
 # define HISTORY_FILE ".history"
 # define HISTORY_COUNT 35
 
-#define GREEN "\033[92m"
-#define BOLD "\033[1m"
+// Bash colour codes
+# define GREEN "\033[32m"
+# define NORMAL "\033[0m"
+# define BOLD "\033[1m"
 
 // typedef for dirent
 typedef struct dirent	t_dirent;
@@ -193,9 +195,6 @@ void	ft_init_history(void);
 void	ft_token_print(t_list *token);
 void	ft_cmd_print(t_cmd *cmd);
 void	ft_ptree_print(t_ptree *ptree);
-
-// prompt functions
-char	*ft_get_cwd_prompt(void);
 
 // dir functions
 DIR		*ft_opendir(const char *name);
