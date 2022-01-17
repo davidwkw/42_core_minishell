@@ -6,27 +6,36 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 16:21:32 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 13:32:31 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+Carry out variable expansion, asterisk expansion and quote removal, and
+detect ambiguous redirect.
+*/
 static char	*ft_redirect_file(char *content)
 {
 	t_list	*files;
+	char	*str;
+	char	*retval;
 
-	files = ft_expand_star(NULL, content);
+	str = ft_expand_var(content);
+	files = ft_expand_star(NULL, str);
 	if (ft_lstsize(files) > 1)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(content, 2);
 		ft_putendl_fd(": ambiguous redirect", 2);
-		ft_lstclear(&files, free);
-		return (NULL);
+		retval = NULL;
 	}
 	else
-		return (ft_remove_quote(files->content));
+		retval = ft_remove_quote(files->content);
+	ft_lstclear(&files, free);
+	free(str);
+	return (retval);
 }
 
 /*
