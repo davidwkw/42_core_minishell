@@ -6,18 +6,11 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/25 23:14:33 by weng              #+#    #+#             */
-/*   Updated: 2022/01/16 22:31:02 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/17 15:45:58 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/* Insert a new node as 'next' of 'lst'. */
-void	ft_lstinsert(t_list *lst, t_list *new)
-{
-	new->next = lst->next;
-	lst->next = new;
-}
 
 /*
 Remove nodes if cmp(lst->content, arg) evaluates to 0. The content of
