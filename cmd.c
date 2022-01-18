@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 12:24:17 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 09:13:23 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 10:14:51 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	ft_cmd_del(t_cmd *cmd)
 	if (cmd == NULL)
 		return ;
 	ft_lstclear(&cmd->scmd_lst, (void (*)(void *)) ft_scmd_del);
-	free(cmd->infile);
-	free(cmd->outfile);
 	free(cmd);
 }
 

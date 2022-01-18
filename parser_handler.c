@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 09:44:15 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 10:16:52 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ static int	ft_hdlr_pipe(t_cmd *cmd, t_list **lst)
 {
 	t_scmd	*scmd;
 
-	if (cmd->count == 0 && cmd->infile == NULL && cmd->outfile == NULL)
+	if (cmd->count == 0)
 		return (ft_parse_error(*lst));
 	scmd = ft_lstlast(cmd->scmd_lst)->content;
-	if (scmd->count == 0)
+	if (scmd->count == 0 && scmd->infile == NULL && scmd->outfile == NULL)
 		return (ft_parse_error(*lst));
 	ft_cmd_add_scmd(cmd);
 	return (0);

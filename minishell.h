@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 10:11:40 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 10:13:51 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,6 @@ typedef struct s_cmd
 {
 	int		count;
 	t_list	*scmd_lst;
-	char	*infile;
-	char	*outfile;
-	int		outfile_flag;
 }	t_cmd;
 
 typedef enum e_ptree_type
