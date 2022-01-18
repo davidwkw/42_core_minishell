@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 14:05:57 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 01:23:03 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,21 @@ static pid_t	ft_fork(void)
 Close unnecessary file descriptors. Parent process will save the write
 end of the pipe to a static variable fd_in.
 */
-static void	ft_fd_cleanup(pid_t pid, int *fd_in, int fd_pipe[2], int nofork)
+static void	ft_fd_cleanup(pid_t pid, t_scmd *scmd, int *fd_in, int fd_pipe[2])
 {
-	if (nofork == 1)
+	int	in;
+	int	out;
+
+	if (pid == 0 || pid == 1)
 	{
-		if (*fd_in != -1)
-			ft_pipe_dup_close(*fd_in, STDIN_FILENO);
-		*fd_in = fd_pipe[0];
-		if (fd_pipe[1] != -1)
-			ft_pipe_dup_close(fd_pipe[1], STDOUT_FILENO);
-	}
-	else if (pid == 0)
-	{
-		if (*fd_in != -1)
-			ft_pipe_dup_close(*fd_in, STDIN_FILENO);
+		in = ft_open_infile(scmd, *fd_in);
+		if (in != -1)
+			in = ft_pipe_dup_close(in, STDIN_FILENO);
 		if (fd_pipe[0] != -1)
 			ft_close(fd_pipe[0]);
-		if (fd_pipe[1] != -1)
-			ft_pipe_dup_close(fd_pipe[1], STDOUT_FILENO);
+		out = ft_open_outfile(scmd, fd_pipe[1]);
+		if (out != -1)
+			out = ft_pipe_dup_close(out, STDOUT_FILENO);
 	}
 	else
 	{
@@ -70,26 +67,26 @@ pid_t	ft_execute_scmd(t_scmd *scmd, int sibling, int islast)
 {
 	static int	fd_in = -1;
 	int			fd_pipe[2];
-	int			nofork;
 	pid_t		pid;
+	t_list		*node;
 
-	fd_in = ft_open_infile(scmd, fd_in);
-	if (fd_in == -1 && scmd->infile != NULL)
-		return (-1);
+	node = scmd->infile;
+	while (node != NULL)
+	{
+		if (((t_inout *) node->content)->type == DOUBLE)
+			ft_write_heredoc(((t_inout *) node->content)->filename);
+		node = node->next;
+	}
 	fd_pipe[0] = -1;
 	fd_pipe[1] = -1;
 	if (islast == 0)
 		ft_pipe_create(fd_pipe);
-	fd_pipe[1] = ft_open_outfile(scmd, fd_pipe[1]);
-	if (fd_pipe[1] == -1 && scmd->outfile != NULL)
-		return (-1);
-	nofork = (sibling == 0 && ft_builtin(scmd->argv->content) != NULL);
-	pid = 0;
-	if (nofork != 1)
+	pid = 1;
+	if (sibling != 0 || ft_builtin(scmd->argv->content) == NULL)
 		pid = ft_fork();
-	ft_fd_cleanup(pid, &fd_in, fd_pipe, nofork);
-	if (pid == 0)
-		ft_run(scmd->argv, nofork);
+	ft_fd_cleanup(pid, scmd, &fd_in, fd_pipe);
+	if (pid == 0 || pid == 1)
+		ft_run(scmd->argv, pid == 1);
 	return (pid);
 }
 
@@ -98,7 +95,7 @@ static void	ft_record_pid(t_list **lst, pid_t pid)
 {
 	int	*ptr;
 
-	if (pid == 0)
+	if (pid <= 1)
 		return ;
 	ptr = malloc(sizeof(int));
 	if (ptr != NULL)

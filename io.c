@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 13:26:18 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 01:21:55 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ by line.
 
 A warning is raised if the EOF is detected.
 */
-static int	ft_write_heredoc(char *delimiter)
+int	ft_write_heredoc(char *delimiter)
 {
 	int		fd;
 	char	*line;
@@ -68,10 +68,7 @@ int	ft_open_infile(t_scmd *scmd, int fd)
 		if (inout->type == SINGLE)
 			fd = ft_open(inout->filename, O_RDONLY, 0);
 		else if (inout->type == DOUBLE)
-		{
-			ft_write_heredoc(inout->filename);
 			fd = ft_open(HEREDOC_FILE, O_RDONLY, 0);
-		}
 		else
 			ft_putstr_fd("ft_open_infile: unknown in/out type", 2);
 		if (fd == -1)
