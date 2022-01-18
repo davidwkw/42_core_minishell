@@ -6,11 +6,40 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 16:56:05 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 23:29:51 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 09:42:12 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* Create a new in-out struct */
+t_inout	*ft_inout_new(t_inout_type type, char *filename)
+{
+	t_inout	*retval;
+
+	retval = malloc(sizeof(t_inout));
+	if (retval == NULL)
+	{
+		perror("ft_inout_new");
+		free(filename);
+	}
+	else
+	{
+		retval->type = type;
+		retval->filename = filename;
+	}
+	return (retval);
+}
+
+/* Delete an in-out struct */
+static void	ft_inout_del(t_inout *inout)
+{
+	if (inout != NULL)
+	{
+		free(inout->filename);
+		free(inout);
+	}
+}
 
 /* Create a new simple command */
 t_scmd	*ft_scmd_new(void)
@@ -22,12 +51,11 @@ t_scmd	*ft_scmd_new(void)
 }
 
 /* Delete a simple command. */
-void	ft_scmd_del(void *scmd)
+void	ft_scmd_del(t_scmd *scmd)
 {
-	t_scmd	*scmd_;
-
-	scmd_ = scmd;
-	ft_lstclear(&(scmd_->argv), free);
+	ft_lstclear(&scmd->argv, free);
+	ft_lstclear(&scmd->infile, (void (*)(void *)) ft_inout_del);
+	ft_lstclear(&scmd->outfile, (void (*)(void *)) ft_inout_del);
 	free(scmd);
 }
 

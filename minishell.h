@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 23:38:45 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 09:11:53 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,25 @@
 // typedef for dirent
 typedef struct dirent	t_dirent;
 
+typedef enum e_inout_type
+{
+	SINGLE = 1,
+	DOUBLE = 2
+}	t_inout_type;
+
+typedef struct s_inout
+{
+	t_inout_type	type;
+	char			*filename;
+}	t_inout;
+
 // data structure for simple command
 typedef struct s_scmd
 {
 	int		count;
 	t_list	*argv;
+	t_list	*infile;
+	t_list	*outfile;
 }	t_scmd;
 
 // data structure for command
@@ -105,7 +119,8 @@ char	*ft_expand_var(char *str);
 
 // simple command functions
 t_scmd	*ft_scmd_new(void);
-void	ft_scmd_del(void *scmd);
+void	ft_scmd_del(t_scmd *scmd);
+t_inout	*ft_inout_new(t_inout_type type, char *filename);
 void	ft_scmd_add_arg(t_scmd *scmd, t_list *node);
 
 // command functions
