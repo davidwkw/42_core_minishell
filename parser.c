@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 16:06:28 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 23:15:40 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 13:58:57 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_cmd	*ft_parse(t_list **lst)
 	}
 	while (ft_is_end_of_command(*lst) == 0)
 		*lst = (*lst)->next;
-	last_scmd = ft_lstlast(cmd->scmd_lst)->content;
+	last_scmd = ft_lstlast(cmd->scmd)->content;
 	if (status != -1 && cmd->count > 0 && last_scmd->count == 0)
 		status = ft_parse_error(*lst);
 	if (status == -1)

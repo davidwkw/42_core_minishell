@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:43:37 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 10:18:33 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 13:58:55 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_cmd_print(t_cmd *cmd)
 	printf("Pipeline:\n");
 	printf("----------------------------------------\n");
 	printf("cmd->count = %d\n", cmd->count);
-	node = cmd->scmd_lst;
+	node = cmd->scmd;
 	while (node != NULL)
 	{
 		ft_scmd_print(node->content);

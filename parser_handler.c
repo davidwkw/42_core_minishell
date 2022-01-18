@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 10:16:52 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 13:58:58 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 	filename = ft_redirect_file(node->content);
 	if (filename == NULL)
 		return (-1);
-	scmd = ft_lstlast(cmd->scmd_lst)->content;
+	scmd = ft_lstlast(cmd->scmd)->content;
 	inout = ft_inout_new(ft_strlen(content), filename);
 	if (inout == NULL)
 		return (-1);
@@ -82,7 +82,7 @@ static int	ft_hdlr_pipe(t_cmd *cmd, t_list **lst)
 
 	if (cmd->count == 0)
 		return (ft_parse_error(*lst));
-	scmd = ft_lstlast(cmd->scmd_lst)->content;
+	scmd = ft_lstlast(cmd->scmd)->content;
 	if (scmd->count == 0 && scmd->infile == NULL && scmd->outfile == NULL)
 		return (ft_parse_error(*lst));
 	ft_cmd_add_scmd(cmd);

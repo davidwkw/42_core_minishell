@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 23:27:50 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 14:03:58 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ pid_t	ft_execute_scmd(t_cmd *cmd, int i)
 		ft_pipe_create(fd_pipe);
 	else
 		fd_pipe[1] = open_outfile(cmd);
-	args = ((t_scmd *) ft_lstget(cmd->scmd_lst, i)->content)->argv;
+	args = ((t_scmd *) ft_lstget(cmd->scmd, i)->content)->argv;
 	nofork = (cmd->count == 1 && ft_builtin(args->content) != NULL);
 	pid = 0;
 	if (nofork != 1)

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 12:24:17 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 10:14:51 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 13:58:59 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	ft_cmd_del(t_cmd *cmd)
 {
 	if (cmd == NULL)
 		return ;
-	ft_lstclear(&cmd->scmd_lst, (void (*)(void *)) ft_scmd_del);
+	ft_lstclear(&cmd->scmd, (void (*)(void *)) ft_scmd_del);
 	free(cmd);
 }
 
 /* Add a new simple command to the end of the scmd linked list. */
 void	ft_cmd_add_scmd(t_cmd *cmd)
 {
-	ft_lstadd_back(&cmd->scmd_lst, ft_lstnew(ft_scmd_new()));
+	ft_lstadd_back(&cmd->scmd, ft_lstnew(ft_scmd_new()));
 	cmd->count++;
 }
 
@@ -42,11 +42,11 @@ void	ft_cmd_add_arg(t_cmd *cmd, t_list *node)
 {
 	t_list	*last;
 
-	last = ft_lstlast(cmd->scmd_lst);
+	last = ft_lstlast(cmd->scmd);
 	if (last == NULL)
 	{
 		ft_cmd_add_scmd(cmd);
-		last = cmd->scmd_lst;
+		last = cmd->scmd;
 	}
 	ft_scmd_add_arg(last->content, node);
 }

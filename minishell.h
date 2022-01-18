@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 13:28:40 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 13:57:22 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_scmd
 typedef struct s_cmd
 {
 	int		count;
-	t_list	*scmd_lst;
+	t_list	*scmd;
 }	t_cmd;
 
 typedef enum e_ptree_type
