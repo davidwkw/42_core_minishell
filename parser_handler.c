@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 23:15:28 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 09:44:15 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,13 @@ static char	*ft_redirect_file(char *content)
 Records to the input redirection information. Returns -1 upon error,
 0 otherwise.
 */
-static int	ft_hdlr_input(t_cmd *cmd, t_list **lst)
+static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 {
 	t_list	*node;
 	char	*filename;
 	char	*content;
-	int		fd;
+	t_scmd	*scmd;
+	t_inout	*inout;
 
 	node = (*lst)->next;
 	content = (*lst)->content;
@@ -58,50 +59,17 @@ static int	ft_hdlr_input(t_cmd *cmd, t_list **lst)
 		return (ft_parse_error(node));
 	*lst = node;
 	filename = ft_redirect_file(node->content);
-	if (filename != NULL && ft_strcmp(content, "<<") == 0)
-	{
-		cmd->infile = ft_strreplace(cmd->infile, ft_strdup(HEREDOC_FILE));
-		return (ft_write_heredoc(filename));
-	}
-	else if (filename != NULL && ft_strcmp(content, "<") == 0)
-	{
-		cmd->infile = ft_strreplace(cmd->infile, filename);
-		fd = ft_open(filename, O_RDONLY, 0);
-		if (fd == -1)
-			return (-1);
-		return (ft_close(fd));
-	}
-	return (-1);
-}
-
-/*
-Records to the output redirection information. Returns -1 upon error,
-0 otherwise.
-*/
-static int	ft_hdlr_output(t_cmd *cmd, t_list **lst)
-{
-	t_list	*node;
-	char	*filename;
-	char	*content;
-	int		fd;
-
-	node = (*lst)->next;
-	content = (*lst)->content;
-	if (node == NULL || ft_istoken(node->content, NULL, 0) == 1)
-		return (ft_parse_error(node));
-	*lst = node;
-	filename = ft_redirect_file(node->content);
-	cmd->outfile = ft_strreplace(cmd->outfile, filename);
-	if (filename != NULL && ft_strcmp(content, ">>") == 0)
-		cmd->outfile_flag = O_APPEND;
-	else if (filename != NULL && ft_strcmp(content, ">") == 0)
-		cmd->outfile_flag = O_TRUNC;
+	if (filename == NULL)
+		return (-1);
+	scmd = ft_lstlast(cmd->scmd_lst)->content;
+	inout = ft_inout_new(ft_strlen(content), filename);
+	if (inout == NULL)
+		return (-1);
+	if (*content == '<')
+		ft_lstadd_back(&scmd->infile, ft_lstnew(inout));
 	else
-		return (-1);
-	fd = ft_open(filename, O_CREAT | cmd->outfile_flag, S_IWUSR);
-	if (fd == -1)
-		return (-1);
-	return (ft_close(fd));
+		ft_lstadd_back(&scmd->outfile, ft_lstnew(inout));
+	return (0);
 }
 
 /*
@@ -126,8 +94,8 @@ int	ft_hdlr_token(t_cmd *cmd, t_list **lst)
 {
 	const char	*substr[] = {"<<", ">>", "<", ">", "|"};
 	static int	(*hdlr[])(t_cmd *, t_list **) = {
-		&ft_hdlr_input, &ft_hdlr_output, &ft_hdlr_input,
-		&ft_hdlr_output, &ft_hdlr_pipe};
+		&ft_hdlr_redirect, &ft_hdlr_redirect, &ft_hdlr_redirect,
+		&ft_hdlr_redirect, &ft_hdlr_pipe};
 	int			i;
 	char		*token;
 
