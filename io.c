@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/14 15:41:07 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 13:26:18 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ by line.
 
 A warning is raised if the EOF is detected.
 */
-int	ft_write_heredoc(char *delimiter)
+static int	ft_write_heredoc(char *delimiter)
 {
 	int		fd;
 	char	*line;
@@ -44,17 +44,73 @@ int	ft_write_heredoc(char *delimiter)
 	}
 	if (line == NULL)
 		ft_eof_warning(delimiter);
-	free(delimiter);
 	free(line);
 	return (ft_close(fd));
 }
 
-/* Opens the output file for writing. */
-int	open_outfile(t_cmd *cmd)
+/*
+Returns the file descriptor to the last input file of a simple command,
+or -1 if an error occurs. All other output files in the list will be
+opened and closed in sequence, with heredocument handled appropriately.
+*/
+int	ft_open_infile(t_scmd *scmd, int fd)
 {
-	if (cmd->outfile == NULL)
-		return (-1);
-	return (ft_open(cmd->outfile, O_WRONLY | cmd->outfile_flag, 0));
+	t_list	*node;
+	t_inout	*inout;
+
+	node = scmd->infile;
+	while (node != NULL)
+	{
+		inout = node->content;
+		if (fd >= 0)
+			ft_close(fd);
+		fd = -1;
+		if (inout->type == SINGLE)
+			fd = ft_open(inout->filename, O_RDONLY, 0);
+		else if (inout->type == DOUBLE)
+		{
+			ft_write_heredoc(inout->filename);
+			fd = ft_open(HEREDOC_FILE, O_RDONLY, 0);
+		}
+		else
+			ft_putstr_fd("ft_open_infile: unknown in/out type", 2);
+		if (fd == -1)
+			return (-1);
+		node = node->next;
+	}
+	return (fd);
+}
+
+/*
+Returns the file descriptor to the last output file of a simple command,
+or -1 if an error occurs. All other output files in the list will be
+opened and closed in sequence.
+*/
+int	ft_open_outfile(t_scmd *scmd, int fd)
+{
+	t_list	*node;
+	t_inout	*inout;
+
+	node = scmd->outfile;
+	while (node != NULL)
+	{
+		inout = node->content;
+		if (fd >= 0)
+			ft_close(fd);
+		fd = -1;
+		if (inout->type == SINGLE)
+			fd = ft_open(
+					inout->filename, O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR);
+		else if (inout->type == DOUBLE)
+			fd = ft_open(
+					inout->filename, O_WRONLY | O_CREAT | O_APPEND, S_IWUSR);
+		else
+			ft_putstr_fd("ft_open_outfile: unknown in/out type", 2);
+		if (fd == -1)
+			return (-1);
+		node = node->next;
+	}
+	return (fd);
 }
 
 /* Saves or restores the stdin and stdout file numbers. */
