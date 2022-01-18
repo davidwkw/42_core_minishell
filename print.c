@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:43:37 by weng              #+#    #+#             */
-/*   Updated: 2022/01/11 09:30:11 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 10:18:33 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,53 @@ void	ft_token_print(t_list *token)
 	}
 }
 
+/* Print the data of a t_scmd struct. */
+void	ft_scmd_print(t_scmd *scmd)
+{
+	t_list	*node;
+	t_inout	*inout;
+
+	printf("scmd->count = %d\nscmd->argv: ", scmd->count);
+	node = (scmd->argv);
+	while (node != NULL)
+	{
+		printf("%s ", (char *) node->content);
+		node = node->next;
+	}
+	printf("\n");
+	node = scmd->infile;
+	while (node != NULL)
+	{
+		inout = node->content;
+		printf("infile: type = %d, file = %s\n", inout->type, inout->filename);
+		node = node->next;
+	}
+	node = scmd->outfile;
+	while (node != NULL)
+	{
+		inout = node->content;
+		printf("outfile: type = %d, file = %s\n", inout->type, inout->filename);
+		node = node->next;
+	}
+}
+
 /* Print the data of a t_cmd struct. */
 void	ft_cmd_print(t_cmd *cmd)
 {
-	t_list	*scmd_lst;
-	t_list	*argv;
-	int		i;
+	t_list	*node;
 
 	if (cmd == NULL)
 		return ;
+	printf("----------------------------------------\n");
+	printf("Pipeline:\n");
+	printf("----------------------------------------\n");
 	printf("cmd->count = %d\n", cmd->count);
-	printf("cmd->infile = %s\n", cmd->infile);
-	printf("cmd->outfile = %s\n", cmd->outfile);
-	printf("cmd->outfile_flag = %d\n", cmd->outfile_flag);
-	scmd_lst = cmd->scmd_lst;
-	i = 0;
-	while (scmd_lst != NULL)
+	node = cmd->scmd_lst;
+	while (node != NULL)
 	{
-		argv = ((t_scmd *) scmd_lst->content)->argv;
-		printf("scmd %d: ", i);
-		while (argv != NULL)
-		{
-			printf("%s ", (char *) argv->content);
-			argv = argv->next;
-		}
-		printf("\n");
-		scmd_lst = scmd_lst->next;
-		i++;
+		ft_scmd_print(node->content);
+		printf("----------------------------------------\n");
+		node = node->next;
 	}
 }
 

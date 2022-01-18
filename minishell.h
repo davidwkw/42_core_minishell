@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 09:11:53 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/18 10:11:40 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ void	ft_init_history(void);
 
 // printing related functions used during development / debugging
 void	ft_token_print(t_list *token);
+void	ft_scmd_print(t_scmd *scmd);
 void	ft_cmd_print(t_cmd *cmd);
 void	ft_ptree_print(t_ptree *ptree);
 
