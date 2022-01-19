@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 12:28:34 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 13:37:01 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,16 @@ typedef struct s_scmd
 	t_list	*outfile;
 }	t_scmd;
 
+typedef enum e_bool
+{
+	FALSE = 0,
+	TRUE = 1
+}	t_bool;
+
 // data structure for command
 typedef struct s_cmd
 {
+	int		valid;
 	int		count;
 	t_list	*scmd;
 }	t_cmd;
@@ -128,6 +135,7 @@ void	ft_cmd_add_scmd(t_cmd *cmd);
 void	ft_cmd_add_arg(t_cmd *cmd, t_list *node);
 
 // parser functions
+int		ft_is_end_of_command(t_list *lst);
 t_cmd	*ft_parse(t_list **lst);
 int		ft_parse_error(t_list *lst);
 int		ft_hdlr_token(t_cmd *cmd, t_list **lst);

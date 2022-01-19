@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 12:24:17 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 10:24:02 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 13:37:30 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_cmd	*ft_cmd_new(void)
 	t_cmd	*cmd;
 
 	cmd = ft_calloc(sizeof(t_cmd), 1);
+	if (cmd != NULL)
+		cmd->valid = TRUE;
 	return (cmd);
 }
 

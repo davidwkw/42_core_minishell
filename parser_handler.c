@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 11:08:19 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 14:37:55 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ static char	*ft_redirect_file(char *content)
 	return (retval);
 }
 
-/*
-Records to the input redirection information. Returns -1 upon error,
-0 otherwise.
-*/
+/* Records the redirection information. Returns -1 upon error, 0 otherwise. */
 static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 {
 	char	*filename;
@@ -62,15 +59,15 @@ static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 		filename = ft_redirect_file((*lst)->content);
 	if (filename == NULL)
 		return (-1);
+	if (ft_lstlast(cmd->scmd) == NULL)
+		ft_cmd_add_scmd(cmd);
 	scmd = ft_lstlast(cmd->scmd)->content;
 	inout = ft_inout_new(ft_strlen(content), filename);
-	if (inout == NULL)
-		return (-1);
 	if (*content == '<')
 		ft_lstadd_back(&scmd->infile, ft_lstnew(inout));
 	else
 		ft_lstadd_back(&scmd->outfile, ft_lstnew(inout));
-	return (0);
+	return ((inout != NULL) - 1);
 }
 
 /*
@@ -84,7 +81,8 @@ static int	ft_hdlr_pipe(t_cmd *cmd, t_list **lst)
 	if (cmd->count == 0)
 		return (ft_parse_error(*lst));
 	scmd = ft_lstlast(cmd->scmd)->content;
-	if (scmd->count == 0 && scmd->infile == NULL && scmd->outfile == NULL)
+	if ((scmd->count == 0 && scmd->infile == NULL && scmd->outfile == NULL)
+		|| ft_is_end_of_command((*lst)->next) == 1)
 		return (ft_parse_error(*lst));
 	ft_cmd_add_scmd(cmd);
 	return (0);

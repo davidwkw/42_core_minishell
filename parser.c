@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 16:06:28 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 13:58:57 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 14:33:14 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_parse_error(t_list *lst)
 }
 
 /* Return 1 if token is one of "||", "&&", ")" or NULL, else 0 */
-static int	ft_is_end_of_command(t_list *lst)
+int	ft_is_end_of_command(t_list *lst)
 {
 	return (lst == NULL
 		|| ft_strcmp(lst->content, "&&") == 0
@@ -40,7 +40,6 @@ static int	ft_is_end_of_command(t_list *lst)
 t_cmd	*ft_parse(t_list **lst)
 {
 	t_cmd	*cmd;
-	t_scmd	*last_scmd;
 	int		status;
 
 	cmd = ft_cmd_new();
@@ -55,13 +54,7 @@ t_cmd	*ft_parse(t_list **lst)
 	}
 	while (ft_is_end_of_command(*lst) == 0)
 		*lst = (*lst)->next;
-	last_scmd = ft_lstlast(cmd->scmd)->content;
-	if (status != -1 && cmd->count > 0 && last_scmd->count == 0)
-		status = ft_parse_error(*lst);
 	if (status == -1)
-	{
-		ft_cmd_del(cmd);
-		cmd = NULL;
-	}
+		cmd->valid = FALSE;
 	return (cmd);
 }

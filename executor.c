@@ -103,7 +103,7 @@ int	ft_execute_cmd(t_cmd *cmd)
 	int		i;
 	int		retval;
 
-	if (cmd == NULL)
+	if (cmd->valid == FALSE)
 	{
 		ft_putenv("?=1");
 		return (EXIT_FAILURE);
