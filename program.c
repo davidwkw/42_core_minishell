@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 23:39:11 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 13:54:19 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	ft_run(t_list *argv, int nofork)
 	char	**arg;
 	char	*str;
 
+	if (argv == NULL && nofork == 0)
+		exit(EXIT_SUCCESS);
 	arg = ft_lst_to_arr(argv);
 	func = ft_builtin(arg[0]);
 	if (func != NULL)

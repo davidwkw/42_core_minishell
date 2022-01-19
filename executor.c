@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 11:16:00 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 13:51:00 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ pid_t	ft_execute_scmd(t_scmd *scmd, int sibling, int islast)
 	if (islast == 0)
 		ft_pipe_create(fd_pipe);
 	pid = 1;
-	if (sibling != 0 || ft_builtin(scmd->argv->content) == NULL)
+	if (sibling != 0 || scmd->argv == NULL
+		|| ft_builtin(scmd->argv->content) == NULL)
 		pid = ft_fork();
 	ft_fd_cleanup(pid, scmd, &fd_in, fd_pipe);
 	if (pid == 0 || pid == 1)
