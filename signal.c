@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:37:17 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/19 12:18:44 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 22:40:59 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	ft_new_prompt_line(int exit_code)
 		return ;
 	rl_replace_line("", 0);
 	if (exit_code == 131)
-		printf("%s", "Quit");
-	printf("\n");
+		ft_putstr_fd("Quit", 1);
+	ft_putchar_fd('\n', 1);
 	rl_on_new_line();
 }
 
