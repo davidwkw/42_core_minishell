@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 12:37:17 by kwang             #+#    #+#             */
-/*   Updated: 2022/01/17 11:02:12 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 12:18:44 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ t_shdlr	ft_signal(int signum, t_shdlr handler)
 }
 
 /* Print a new prompt on a new line. */
-void	ft_new_prompt_line(char *str)
+void	ft_new_prompt_line(int exit_code)
 {
+	if (exit_code != 130 && exit_code != 131)
+		return ;
 	rl_replace_line("", 0);
-	if (str != NULL)
-		printf("%s", str);
+	if (exit_code == 131)
+		printf("%s", "Quit");
 	printf("\n");
 	rl_on_new_line();
 }
@@ -37,7 +39,7 @@ void	ft_new_prompt_line(char *str)
 static void	ft_sigint_handler(int signum)
 {
 	(void) signum;
-	ft_new_prompt_line(NULL);
+	ft_new_prompt_line(130);
 	rl_redisplay();
 	ft_putenv("?=130");
 }

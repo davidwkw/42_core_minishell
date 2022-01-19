@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 10:56:44 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 11:16:00 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,7 @@ int	ft_execute_cmd(t_cmd *cmd)
 		ft_record_pid(&lst, ft_execute_scmd(ft_lstget(cmd->scmd, i)->content,
 				cmd->count - 1, i == cmd->count - 1));
 	retval = ft_set_exit_value(lst);
-	if (retval == 130)
-		ft_new_prompt_line(NULL);
-	else if (retval == 131)
-		ft_new_prompt_line("Quit");
+	ft_new_prompt_line(retval);
 	ft_lstclear(&lst, free);
 	ft_save_restore_fd();
 	ft_sighandler_shell();
