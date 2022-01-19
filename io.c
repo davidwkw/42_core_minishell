@@ -6,15 +6,17 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 12:29:50 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 15:03:40 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /* Write warning to stderr when here_document is delimited by end-of-file */
-static void	ft_eof_warning(char *delimiter)
+static void	ft_eof_warning(char *line, char *delimiter)
 {
+	if (line != NULL)
+		return ;
 	ft_putstr_fd("warning: here-document delimited by end-of-file ", 2);
 	ft_putstr_fd("(wanted `", 2);
 	ft_putstr_fd(delimiter, 2);
@@ -34,9 +36,14 @@ char	*ft_write_heredoc(int index, char *delimiter)
 	char	*line;
 
 	filename = ft_get_heredoc(index);
+	delimiter = ft_remove_quote(delimiter);
 	fd = ft_open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd == -1)
+	{
+		free(filename);
+		free(delimiter);
 		return (NULL);
+	}
 	line = readline("> ");
 	while (line != NULL && ft_strcmp(line, delimiter) != 0)
 	{
@@ -44,10 +51,10 @@ char	*ft_write_heredoc(int index, char *delimiter)
 		free(line);
 		line = readline("> ");
 	}
-	if (line == NULL)
-		ft_eof_warning(delimiter);
+	ft_eof_warning(line, delimiter);
 	free(line);
 	ft_close(fd);
+	free(delimiter);
 	return (filename);
 }
 
