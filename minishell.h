@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 15:11:39 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 10:11:00 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_inout
 // data structure for simple command
 typedef struct s_scmd
 {
+	int		index;
 	int		count;
 	t_list	*argv;
 	t_list	*infile;

@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 17:43:37 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 13:58:55 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 10:15:43 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_scmd_print(t_scmd *scmd)
 	t_list	*node;
 	t_inout	*inout;
 
-	printf("scmd->count = %d\nscmd->argv: ", scmd->count);
+	printf("index = %d\ncount = %d\nargv: ", scmd->index, scmd->count);
 	node = (scmd->argv);
 	while (node != NULL)
 	{
@@ -64,8 +64,8 @@ void	ft_cmd_print(t_cmd *cmd)
 		return ;
 	printf("----------------------------------------\n");
 	printf("Pipeline:\n");
-	printf("----------------------------------------\n");
 	printf("cmd->count = %d\n", cmd->count);
+	printf("----------------------------------------\n");
 	node = cmd->scmd;
 	while (node != NULL)
 	{

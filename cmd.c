@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/29 12:24:17 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 13:58:59 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 10:24:02 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ void	ft_cmd_del(t_cmd *cmd)
 /* Add a new simple command to the end of the scmd linked list. */
 void	ft_cmd_add_scmd(t_cmd *cmd)
 {
-	ft_lstadd_back(&cmd->scmd, ft_lstnew(ft_scmd_new()));
+	t_scmd	*scmd;
+
+	scmd = ft_scmd_new();
+	scmd->index = cmd->count;
+	ft_lstadd_back(&cmd->scmd, ft_lstnew(scmd));
 	cmd->count++;
 }
 
