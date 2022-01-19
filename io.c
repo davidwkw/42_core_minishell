@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 10:55:12 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 11:07:04 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,8 @@ int	ft_open_infile(t_scmd *scmd, int fd)
 		if (fd >= 0)
 			ft_close(fd);
 		fd = -1;
-		if (inout->type == SINGLE)
+		if (inout->type == SINGLE || inout->type == DOUBLE)
 			fd = ft_open(inout->filename, O_RDONLY, 0);
-		else if (inout->type == DOUBLE)
-			fd = ft_open(HEREDOC_FILE, O_RDONLY, 0);
 		else
 			ft_putstr_fd("ft_open_infile: unknown in/out type", 2);
 		if (fd == -1)
