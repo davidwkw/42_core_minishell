@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 15:50:11 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 16:01:01 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,25 +83,25 @@ static void	ft_external(char **args, int status)
 void	ft_run(t_list *argv, int nofork, int status)
 {
 	t_bif	func;
-	int		retval;
 	char	**arg;
 	char	*str;
 
 	if (argv == NULL && nofork == 0)
 		exit(status);
-	else if (nofork == 1 && status == EXIT_FAILURE)
+	else if (nofork == 0 && status == EXIT_FAILURE)
 		exit(EXIT_FAILURE);
 	arg = ft_lst_to_arr(argv);
 	func = ft_builtin(arg[0]);
 	if (func == NULL)
 		ft_external(arg, status);
-	retval = func(arg);
+	if (status != EXIT_FAILURE)
+		status = func(arg);
 	ft_arrclear(arg, NULL);
 	if (nofork == 0)
-		exit(retval);
+		exit(status);
 	else
 	{
-		str = ft_itoa(retval);
+		str = ft_itoa(status);
 		str = ft_strreplace(str, ft_strjoin("?=", str));
 		ft_putenv(str);
 		free(str);
