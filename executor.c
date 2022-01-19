@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 10:31:11 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 10:56:44 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,7 @@ pid_t	ft_execute_scmd(t_scmd *scmd, int sibling, int islast)
 	static int	fd_in = -1;
 	int			fd_pipe[2];
 	pid_t		pid;
-	t_list		*node;
-	t_inout		*inout;
 
-	node = scmd->infile;
-	while (node != NULL)
-	{
-		inout = node->content;
-		if (inout->type == DOUBLE)
-			ft_write_heredoc(scmd->index, inout->filename);
-		node = node->next;
-	}
 	fd_pipe[0] = -1;
 	fd_pipe[1] = -1;
 	if (islast == 0)

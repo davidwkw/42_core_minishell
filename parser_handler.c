@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/30 13:21:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/18 13:58:58 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 10:54:30 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,19 @@ Records to the input redirection information. Returns -1 upon error,
 */
 static int	ft_hdlr_redirect(t_cmd *cmd, t_list **lst)
 {
-	t_list	*node;
 	char	*filename;
 	char	*content;
 	t_scmd	*scmd;
 	t_inout	*inout;
 
-	node = (*lst)->next;
 	content = (*lst)->content;
-	if (node == NULL || ft_istoken(node->content, NULL, 0) == 1)
-		return (ft_parse_error(node));
-	*lst = node;
-	filename = ft_redirect_file(node->content);
+	if ((*lst)->next == NULL || ft_istoken((*lst)->next->content, NULL, 0) == 1)
+		return (ft_parse_error((*lst)->next));
+	*lst = (*lst)->next;
+	if (ft_strcmp(content, "<<") == 0)
+		filename = ft_write_heredoc(cmd->count - 1, (*lst)->next->content);
+	else
+		filename = ft_redirect_file((*lst)->next->content);
 	if (filename == NULL)
 		return (-1);
 	scmd = ft_lstlast(cmd->scmd)->content;
