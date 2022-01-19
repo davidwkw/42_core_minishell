@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:41:40 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 13:51:00 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 15:41:41 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static pid_t	ft_fork(void)
 Close unnecessary file descriptors. Parent process will save the write
 end of the pipe to a static variable fd_in.
 */
-static void	ft_fd_cleanup(pid_t pid, t_scmd *scmd, int *fd_in, int fd_pipe[2])
+static int	ft_fd_cleanup(pid_t pid, t_scmd *scmd, int *fd_in, int fd_pipe[2])
 {
 	int	in;
 	int	out;
@@ -42,6 +42,8 @@ static void	ft_fd_cleanup(pid_t pid, t_scmd *scmd, int *fd_in, int fd_pipe[2])
 		out = ft_open_outfile(scmd, fd_pipe[1]);
 		if (out != -1)
 			out = ft_pipe_dup_close(out, STDOUT_FILENO);
+		return ((in == -1 && scmd->infile != NULL)
+			|| (out == -1 && scmd->outfile != NULL));
 	}
 	else
 	{
@@ -50,6 +52,7 @@ static void	ft_fd_cleanup(pid_t pid, t_scmd *scmd, int *fd_in, int fd_pipe[2])
 		*fd_in = fd_pipe[0];
 		if (fd_pipe[1] != -1)
 			ft_close(fd_pipe[1]);
+		return (0);
 	}
 }
 
@@ -68,6 +71,7 @@ pid_t	ft_execute_scmd(t_scmd *scmd, int sibling, int islast)
 	static int	fd_in = -1;
 	int			fd_pipe[2];
 	pid_t		pid;
+	int			status;
 
 	fd_pipe[0] = -1;
 	fd_pipe[1] = -1;
@@ -77,9 +81,9 @@ pid_t	ft_execute_scmd(t_scmd *scmd, int sibling, int islast)
 	if (sibling != 0 || scmd->argv == NULL
 		|| ft_builtin(scmd->argv->content) == NULL)
 		pid = ft_fork();
-	ft_fd_cleanup(pid, scmd, &fd_in, fd_pipe);
+	status = ft_fd_cleanup(pid, scmd, &fd_in, fd_pipe);
 	if (pid == 0 || pid == 1)
-		ft_run(scmd->argv, pid == 1);
+		ft_run(scmd->argv, pid == 1, status);
 	return (pid);
 }
 

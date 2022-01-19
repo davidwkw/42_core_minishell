@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 10:09:22 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 13:54:19 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 15:50:11 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ static void	ft_external_error(char **args)
 }
 
 /* Execute an external program, or raises error if program is not found. */
-void	ft_external(char **args)
+static void	ft_external(char **args, int status)
 {
 	char	**dirs;
 	char	*pathname;
 	int		i;
 
+	if (status == EXIT_FAILURE)
+		exit(EXIT_FAILURE);
 	ft_sighandler_default();
 	dirs = ft_split(ft_getenv("PATH"), ':');
 	i = -1;
@@ -78,7 +80,7 @@ void	ft_external(char **args)
 }
 
 /* Run a built_in program or an external program. */
-void	ft_run(t_list *argv, int nofork)
+void	ft_run(t_list *argv, int nofork, int status)
 {
 	t_bif	func;
 	int		retval;
@@ -86,13 +88,14 @@ void	ft_run(t_list *argv, int nofork)
 	char	*str;
 
 	if (argv == NULL && nofork == 0)
-		exit(EXIT_SUCCESS);
+		exit(status);
+	else if (nofork == 1 && status == EXIT_FAILURE)
+		exit(EXIT_FAILURE);
 	arg = ft_lst_to_arr(argv);
 	func = ft_builtin(arg[0]);
-	if (func != NULL)
-		retval = func(arg);
-	else
-		ft_external(arg);
+	if (func == NULL)
+		ft_external(arg, status);
+	retval = func(arg);
 	ft_arrclear(arg, NULL);
 	if (nofork == 0)
 		exit(retval);

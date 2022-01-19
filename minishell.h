@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:25 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 13:37:01 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 15:49:09 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,8 +188,7 @@ int		ft_export(char **args);
 int		ft_pwd(char **args);
 int		ft_unset(char **args);
 t_bif	ft_builtin(char *name);
-void	ft_external(char **args);
-void	ft_run(t_list *argv, int nofork);
+void	ft_run(t_list *argv, int nofork, int status);
 
 // history function
 int		ft_isdigit_str(const char *str);
