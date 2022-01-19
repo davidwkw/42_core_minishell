@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 10:25:45 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 12:01:59 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 12:31:04 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,24 @@ int	ft_execute_ptree(t_ptree *ptree)
 		ft_putendl_fd("ft_execute_ptree: unknown ptree type.", 2);
 		return (-1);
 	}
+}
+
+/* Return the absolute path the a heredoc file, given an integer 'index'. */
+char	*ft_get_heredoc(int index)
+{
+	static char	*dir = NULL;
+	char		*val;
+	char		*retval;
+
+	if (dir == NULL)
+		dir = getcwd(NULL, 0);
+	if (index < 0)
+		return (NULL);
+	val = ft_itoa(index);
+	retval = ft_pathjoin(dir, HEREDOC_FILE);
+	retval = ft_strreplace(retval, ft_strjoin(retval, val));
+	free(val);
+	return (retval);
 }
 
 /* Returns the maximum no. of simple commands of any pipeline within 'ptree' */
@@ -75,8 +93,7 @@ void	ft_del_heredoc(t_ptree *ptree)
 	max = ft_ptree_max_count(ptree);
 	while (max-- > 0)
 	{
-		filename = ft_itoa(max);
-		filename = ft_strreplace(filename, ft_strjoin(HEREDOC_FILE, filename));
+		filename = ft_get_heredoc(max);
 		unlink(filename);
 		free(filename);
 	}

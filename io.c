@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 14:57:41 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 11:07:04 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/19 12:29:50 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ char	*ft_write_heredoc(int index, char *delimiter)
 	char	*filename;
 	char	*line;
 
-	filename = ft_itoa(index);
-	filename = ft_strreplace(filename, ft_strjoin(HEREDOC_FILE, filename));
+	filename = ft_get_heredoc(index);
 	fd = ft_open(filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd == -1)
 		return (NULL);
