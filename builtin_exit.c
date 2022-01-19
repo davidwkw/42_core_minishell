@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 13:00:56 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/20 00:31:19 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_exit(char **args)
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 	}
 	else if (args[1] != NULL)
-		input = args[1];
+		input = ft_strtrim(args[1], " ");
 	else
 		input = ft_getenv("?");
 	n = ft_atoll(input);
