@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2022/01/20 00:31:19 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/20 10:22:58 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,17 @@ int	ft_exit(char **args)
 	char		*input;
 	char		*str;
 
+	input = "1";
 	if (args[1] != NULL && args[2] != NULL)
-	{
-		input = "1";
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
-	}
 	else if (args[1] != NULL)
 		input = ft_strtrim(args[1], " ");
 	else
 		input = ft_getenv("?");
 	n = ft_atoll(input);
 	str = ft_lltoa_base(n, "0123456789");
-	if (ft_strcmp(str, input) == 0)
+	if (ft_strcmp(str, input) == 0
+		|| (*input == '+' && ft_strcmp(str, input + 1) == 0))
 		n = ((n % 256) + 256) % 256;
 	else
 	{
