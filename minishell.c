@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 17:22:03 by weng              #+#    #+#             */
-/*   Updated: 2022/01/19 11:56:52 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/20 13:07:39 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ static int	ft_read_execute(void)
 		ft_history_save(line);
 		token = ft_tokenise(line);
 		ptree = ft_treeify(token);
-		ft_execute_ptree(ptree);
+		if (ptree != NULL)
+			ft_execute_ptree(ptree);
+		else
+			ft_putenv("?=1");
 		ft_del_heredoc(ptree);
 		ft_ptree_clear(ptree);
 	}
