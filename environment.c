@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 13:55:59 by weng              #+#    #+#             */
-/*   Updated: 2022/01/17 16:28:02 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/20 12:59:39 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	ft_is_valid_varname(const char *name, int include_question)
 		return (1);
 	if (*name == '_' || ft_isalpha(*name) == 1)
 		name++;
+	else
+		return (0);
 	while (*name == '_' || ft_isalnum(*name) == 1)
 		name++;
 	return (*name == '\0');
