@@ -6,7 +6,7 @@
 /*   By: weng <weng@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 14:50:49 by weng              #+#    #+#             */
-/*   Updated: 2022/01/20 10:22:58 by weng             ###   ########.fr       */
+/*   Updated: 2022/01/20 23:06:31 by weng             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ static long long	ft_atoll(const char *nptr)
 	return (retval * sign);
 }
 
+/* Too many arguments passed to exit. */
+static int	ft_error_many(void)
+{
+	ft_putendl_fd("minishell: exit: too many arguments", 2);
+	return (1);
+}
+
+/* Non-numeric parameter passed to exit. */
+static int	ft_error_numeric(char *input)
+{
+	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd(input, 2);
+	ft_putendl_fd(" : numeric argument required", 2);
+	return (2);
+}
+
 /*
 Exit the shell with the status of n, where n is a number between 0 to
 255.
@@ -53,10 +69,7 @@ int	ft_exit(char **args)
 	char		*input;
 	char		*str;
 
-	input = "1";
-	if (args[1] != NULL && args[2] != NULL)
-		ft_putendl_fd("minishell: exit: too many arguments", 2);
-	else if (args[1] != NULL)
+	if (args[1] != NULL)
 		input = ft_strtrim(args[1], " ");
 	else
 		input = ft_getenv("?");
@@ -64,13 +77,13 @@ int	ft_exit(char **args)
 	str = ft_lltoa_base(n, "0123456789");
 	if (ft_strcmp(str, input) == 0
 		|| (*input == '+' && ft_strcmp(str, input + 1) == 0))
-		n = ((n % 256) + 256) % 256;
-	else
 	{
-		n = 2;
-		ft_putstr_fd("exit: ", 2);
-		ft_putstr_fd(input, 2);
-		ft_putendl_fd(" : numeric argument required", 2);
+		if (args[1] != NULL && args[2] != NULL)
+			n = ft_error_many();
+		else
+			n = ((n % 256) + 256) % 256;
 	}
+	else
+		n = ft_error_numeric(input);
 	exit(n);
 }
